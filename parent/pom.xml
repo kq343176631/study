@@ -14,8 +14,8 @@
     <artifactId>parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Micro Service Parent Dependencies</name>
-    <description>Micro Service Parent Dependencies</description>
+    <name>Parent Dependencies</name>
+    <description>Parent Dependencies</description>
     <url>http://study/parent/</url>
     <organization>
         <name>com.style.study</name>
