@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.style.study</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>common</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <name>Common Dependencies</name>
+    <description>Common Dependencies</description>
+    <url>http://study/user-server/</url>
+    <organization>
+        <name>com.style.study</name>
+        <url>http://study.common.com</url>
+    </organization>
+    <developers>
+        <developer>
+            <id>style</id>
+            <name>style</name>
+            <email>343176631@qq.com</email>
+            <roles>
+                <role>root</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
+    <properties>
+        <druid.version>1.1.10</druid.version>
+        <mysql.version>5.1.38</mysql.version>
+        <sqlserver.version>4.0</sqlserver.version>
+        <oracle.version>11.2.0.3</oracle.version>
+        <mybatisplus.version>3.0.6</mybatisplus.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.style.study</groupId>
+            <artifactId>utils</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- MyBatis Plus begin -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatisplus.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>mybatis-plus-generator</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- MyBatis Plus end -->
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+    </dependencies>
+    
+</project>

@@ -11,15 +11,15 @@
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>login-server</artifactId>
+    <artifactId>eureka-server</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <name>Login Server Dependencies</name>
-    <description>Login Server Dependencies</description>
-    <url>http://study/login/</url>
+    <name>Eureka Server Dependencies</name>
+    <description>Eureka Server Dependencies</description>
+    <url>http://study/eureka-server/</url>
     <organization>
         <name>com.style.study</name>
-        <url>http://study.login-server.com</url>
+        <url>http://study.eureka-server.com</url>
     </organization>
     <developers>
         <developer>
@@ -37,7 +37,7 @@
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
 
     </dependencies>
