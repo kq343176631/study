@@ -2,7 +2,6 @@ package com.style.utils.network;
 
 import com.style.utils.filter.FilterUtils;
 import com.style.utils.lang.StringUtils;
-import com.style.utils.loader.PropertyUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,8 +18,8 @@ public class NetUtils {
             return "unknown";
         }
         String ip = null;
-        String xffName = PropertyUtils.getInstance()
-                .getProperty("shiro.remoteAddrHeaderName");
+        //String xffName = PropertyUtils.getInstance().getProperty("shiro.remoteAddrHeaderName");
+        String xffName ="";
         if (StringUtils.isNotBlank(xffName)) {
             ip = request.getHeader(xffName);
         }

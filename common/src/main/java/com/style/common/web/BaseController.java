@@ -3,8 +3,8 @@ package com.style.common.web;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.style.common.constant.Constants;
-import com.style.common.lang.StringUtils;
-import com.style.common.web.ServletUtils;
+import com.style.common.utils.ServletUtils;
+import com.style.utils.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 

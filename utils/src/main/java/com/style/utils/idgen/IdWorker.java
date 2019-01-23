@@ -1,6 +1,6 @@
 package com.style.utils.idgen;
 
-import com.style.utils.core.SystemUtils;
+import com.style.utils.SystemUtils;
 
 import java.util.Random;
 

@@ -36,7 +36,6 @@
     <properties>
 
         <!-- framework version setting -->
-        <docker.plugin.version>1.1.1</docker.plugin.version>
         <spring-cloud.version>Greenwich.RC2</spring-cloud.version>
 
         <!-- environment setting -->
@@ -68,12 +67,28 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Spring test -->
+        <!-- Logging begin -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <!-- Logging end -->
 
     </dependencies>
 

@@ -1,7 +1,6 @@
 package com.style.utils.reflect;
 
 import com.style.utils.lang.ListUtils;
-import com.style.utils.loader.ResourceUtils;
 import com.style.utils.reflect.vfs.VFS;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -94,7 +93,7 @@ public class ClassUtils extends org.apache.commons.lang3.ClassUtils {
                     for (String path : classFiles) {
                         String fullClassName = path.substring(0, path.indexOf('.')).replace('/', '.');
                         try {
-                            Class<?> child = ResourceUtils.getClassLoader().loadClass(fullClassName);
+                            Class<?> child = ClassUtils.class.getClassLoader().loadClass(fullClassName);
                             if (isSubClass(child, parent)) {
                                 matches.add(child);
                             }
@@ -122,7 +121,7 @@ public class ClassUtils extends org.apache.commons.lang3.ClassUtils {
                     for (String path : classFiles) {
                         String fullClassName = path.substring(0, path.indexOf('.')).replace('/', '.');
                         try {
-                            Class<?> clazz = ResourceUtils.getClassLoader().loadClass(fullClassName);
+                            Class<?> clazz = ClassUtils.class.getClassLoader().loadClass(fullClassName);
                             if (hasAnnotation(clazz, annotation)) {
                                 matches.add(clazz);
                             }

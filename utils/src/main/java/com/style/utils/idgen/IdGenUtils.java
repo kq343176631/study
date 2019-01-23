@@ -1,6 +1,6 @@
 package com.style.utils.idgen;
 
-import com.style.utils.code.CodeUtils;
+import com.style.utils.codec.CodecUtils;
 import com.style.utils.lang.ObjectUtils;
 import com.style.utils.lang.StringUtils;
 
@@ -47,7 +47,7 @@ public class IdGenUtils {
     public static String randomBase62(int length) {
         byte[] randomBytes = new byte[length];
         random.nextBytes(randomBytes);
-        return CodeUtils.encodeBase62(randomBytes);
+        return CodecUtils.encodeBase62(randomBytes);
     }
 
     /**

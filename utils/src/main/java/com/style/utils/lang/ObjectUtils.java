@@ -1,12 +1,9 @@
 package com.style.utils.lang;
 
-import com.style.utils.core.Exceptions;
-import com.style.utils.tools.TimeUtils;
+import com.style.utils.TimeUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.nustaq.serialization.FSTConfiguration;
-import org.springframework.core.NamedThreadLocal;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -19,21 +16,8 @@ import java.util.Map;
 /**
  * 对象操作工具类, 继承org.apache.commons.lang3.ObjectUtils类
  */
+@SuppressWarnings("all")
 public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
-
-    private static ThreadLocal<FSTConfiguration> fstConfig;
-
-    static {
-
-        fstConfig = new NamedThreadLocal<FSTConfiguration>("FstConfig") {
-
-            @Override
-            public FSTConfiguration initialValue() {
-
-                return FSTConfiguration.createDefaultConfiguration();
-            }
-        };
-    }
 
     /**
      * 转换为Double类型
@@ -81,7 +65,6 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
         return BooleanUtils.toBoolean(object.toString()) || "1".equals(object.toString());
     }
 
-    @SuppressWarnings("all")
     public static String toString(final Object object) {
         if (object == null) {
             return null;
@@ -117,38 +100,6 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
         }
         String str = val.toString();
         return !"".equals(str) && !"null".equals(str.trim().toLowerCase()) ? str : defaultVal;
-    }
-
-    /**
-     * 克隆一个对象（完全拷贝）
-     *
-     * @param source source
-     */
-    public static Object cloneBean(Object source) {
-        if (source == null) {
-            return null;
-        }
-        byte[] bytes = ObjectUtils.serializeFst(source);
-        return ObjectUtils.unSerializeFst(bytes);
-    }
-
-    /**
-     * 拷贝一个对象（但是子对象无法拷贝）
-     *
-     * @param source           source
-     * @param ignoreProperties ignoreProperties
-     */
-    public static Object copyBean(Object source, String... ignoreProperties) {
-        if (source == null) {
-            return null;
-        }
-        try {
-            Object target = source.getClass().newInstance();
-            org.springframework.beans.BeanUtils.copyProperties(source, target, ignoreProperties);
-            return target;
-        } catch (InstantiationException | IllegalAccessException e) {
-            throw Exceptions.unchecked(e);
-        }
     }
 
     /**
@@ -227,41 +178,4 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
         return object;
     }
 
-    /**
-     * FST 序列化对象
-     *
-     * @param object object
-     * @return byte[]
-     */
-    public static byte[] serializeFst(Object object) {
-        if (object == null) {
-            return null;
-        }
-        long beginTime = System.currentTimeMillis();
-        byte[] bytes = fstConfig.get().asByteArray(object);
-        long totalTime = System.currentTimeMillis() - beginTime;
-        if (totalTime > 3000) {
-            System.out.println("Fst serialize time: " + TimeUtils.formatDateAgo(totalTime));
-        }
-        return bytes;
-    }
-
-    /**
-     * FST 反序列化对象
-     *
-     * @param bytes bytes
-     * @return Object
-     */
-    public static Object unSerializeFst(byte[] bytes) {
-        if (bytes == null) {
-            return null;
-        }
-        long beginTime = System.currentTimeMillis();
-        Object object = fstConfig.get().asObject(bytes);
-        long totalTime = System.currentTimeMillis() - beginTime;
-        if (totalTime > 3000) {
-            System.out.println("Fst unSerialize time: " + TimeUtils.formatDateAgo(totalTime));
-        }
-        return object;
-    }
 }

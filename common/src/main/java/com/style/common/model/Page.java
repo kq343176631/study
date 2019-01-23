@@ -1,10 +1,10 @@
 package com.style.common.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.style.common.filter.FilterUtils;
-import com.style.common.lang.ListUtils;
-import com.style.common.lang.MapUtils;
-import com.style.common.lang.StringUtils;
+import com.style.utils.filter.FilterUtils;
+import com.style.utils.lang.ListUtils;
+import com.style.utils.lang.MapUtils;
+import com.style.utils.lang.StringUtils;
 import com.style.common.web.cookie.CookieUtils;
 
 import javax.servlet.http.HttpServletRequest;

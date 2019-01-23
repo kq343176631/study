@@ -1,7 +1,6 @@
 package com.style.utils.msg;
 
 import com.style.utils.lang.StringUtils;
-import com.style.utils.loader.PropertyUtils;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
 import org.jsoup.Jsoup;
@@ -22,11 +21,10 @@ public class SmsUtils {
      * @param mobile  接受手机号码
      */
     public static String send(String content, String mobile) {
-        PropertyUtils props = PropertyUtils.getInstance();
-        String url = props.getProperty("msg.sms.url");
-        String data = props.getProperty("msg.sms.data");
-        String prefix = props.getProperty("msg.sms.prefix", "");
-        String suffix = props.getProperty("msg.sms.suffix", "");
+        String url = "msg.sms.url";
+        String data = "msg.sms.data";
+        String prefix = "msg.sms.prefix";
+        String suffix = "msg.sms.suffix";
         Connection conn = Jsoup.connect(url);
         conn.postDataCharset("UTF-8");
         conn.method(Method.POST);
