@@ -3,7 +3,7 @@ package com.style.common.constant;
 /**
  * 系统常量类
  */
-public interface Constants {
+public interface Constants{
 
     //===========================================================//
     //===============         基  本  常  量      ================//
@@ -15,11 +15,8 @@ public interface Constants {
     String EMPTY = "";
     String DEFAULT = "default";
 
-    String YES = "1";
-    String NO = "0";
-
-    String SHOW = "1";
-    String HIDE = "0";
+    String YES = "yes";
+    String NO = "no";
 
     String TRUE = "true";
     String FALSE = "false";
@@ -27,11 +24,8 @@ public interface Constants {
     String GET = "GET";
     String POST = "POST";
 
-    String OP_AUTH = "auth";
-    String OP_EDIT = "edit";
-    String OP_ADD = "add";
-    String OP_DEL = "del";
-    String OP_VIEW = "view";
+    String GETTER_PREFIX = "get";
+    String SETTER_PREFIX = "set";
 
     /**
      * 当前页码

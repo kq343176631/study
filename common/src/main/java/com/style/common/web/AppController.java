@@ -1,8 +1,8 @@
 package com.style.common.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.google.common.collect.Maps;
 import com.style.common.constant.ErrorCode;
-import com.style.utils.lang.MapUtils;
 import com.style.common.model.Result;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -30,7 +30,7 @@ public abstract class AppController extends BaseController {
     }
 
     protected Result success(IPage page) {
-        Map<String, Object> data = MapUtils.newHashMap();
+        Map<String, Object> data = Maps.newHashMap();
         data.put("total", page.getTotal());
         data.put("list", page.getRecords());
         return new Result<>(data);

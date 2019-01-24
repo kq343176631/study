@@ -1,6 +1,6 @@
 package com.style.common.web.cookie;
 
-import com.style.utils.lang.StringUtils;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +56,7 @@ public class CookieUtils {
      * @param path   路径
      */
     public static void setCookie(HttpServletResponse response, String name, String value, String path, int maxAge) {
-        if (StringUtils.isNotBlank(name)) {
+        if (!StringUtils.isEmpty(name)) {
             Cookie cookie = new Cookie(name, null);
             cookie.setPath(path);
             cookie.setMaxAge(maxAge);
@@ -113,7 +113,7 @@ public class CookieUtils {
      */
     public static String getCookie(HttpServletRequest request, HttpServletResponse response, String name, String path, boolean isRemove) {
         String value = null;
-        if (StringUtils.isNotBlank(name)) {
+        if (!StringUtils.isEmpty(name)) {
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
                 for (Cookie cookie : cookies) {

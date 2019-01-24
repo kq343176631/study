@@ -15,23 +15,7 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
     <name>Utils Dependencies</name>
-    <description>Utils Dependencies</description>
-    <url>http://study/utils/</url>
-    <organization>
-        <name>com.style.study</name>
-        <url>http://study.utils.com</url>
-    </organization>
-    <developers>
-        <developer>
-            <id>style</id>
-            <name>style</name>
-            <email>343176631@qq.com</email>
-            <roles>
-                <role>root</role>
-            </roles>
-            <timezone>+8</timezone>
-        </developer>
-    </developers>
+    <description>Utils Module</description>
 
     <properties>
 
@@ -47,7 +31,7 @@
 
         <activation.version>1.1.1</activation.version>
         <jsoup.version>1.11.3</jsoup.version>
-        <ant.version>1.9.7</ant.version>
+
         <easypoi.version>3.1.0</easypoi.version>
         <pinyin4j.version>2.5.1</pinyin4j.version>
         <blade-patchca.version>1.1.0</blade-patchca.version>

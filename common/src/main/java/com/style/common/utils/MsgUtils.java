@@ -1,6 +1,5 @@
-package com.style.common.core;
+package com.style.common.utils;
 
-import com.style.common.core.SpringUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 

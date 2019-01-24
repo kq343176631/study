@@ -129,15 +129,14 @@ public class HttpUtils {
         }
         String result;
         try {
-            try {
-                HttpEntity entity = null;
-                try (CloseableHttpResponse response = httpclient.execute(httpRequest)) {
-                    entity = response.getEntity();
-                    result = EntityUtils.toString(entity, charset);
-                } finally {
-                    EntityUtils.consume(entity);
-                }
+            HttpEntity entity = null;
+            try (CloseableHttpResponse response = httpclient.execute(httpRequest)) {
+                entity = response.getEntity();
+                result = EntityUtils.toString(entity, charset);
+            } catch (IOException ex) {
+                return null;
             } finally {
+                EntityUtils.consume(entity);
                 httpclient.close();
             }
         } catch (IOException ex) {

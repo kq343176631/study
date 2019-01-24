@@ -1,8 +1,7 @@
 package com.style.common.mapper;
 
-import com.style.utils.lang.StringUtils;
-import com.style.utils.reflect.ClassUtils;
-import com.style.utils.Exceptions;
+import com.google.common.base.Strings;
+import org.springframework.util.ClassUtils;
 
 import javax.xml.bind.*;
 import javax.xml.bind.annotation.XmlAnyElement;
@@ -46,7 +45,8 @@ public class JaxbMapper {
             createMarshaller(clazz, encoding).marshal(root, writer);
             return writer.toString();
         } catch (JAXBException e) {
-            throw Exceptions.unchecked(e);
+            //throw Exceptions.unchecked(e);
+            return null;
         }
     }
 
@@ -74,7 +74,8 @@ public class JaxbMapper {
 
             return writer.toString();
         } catch (JAXBException e) {
-            throw Exceptions.unchecked(e);
+            //throw Exceptions.unchecked(e);
+            return null;
         }
     }
 
@@ -86,7 +87,8 @@ public class JaxbMapper {
             StringReader reader = new StringReader(xml);
             return (T) createUnmarshaller(clazz).unmarshal(reader);
         } catch (JAXBException e) {
-            throw Exceptions.unchecked(e);
+            //throw Exceptions.unchecked(e);
+            return null;
         }
     }
 
@@ -101,13 +103,14 @@ public class JaxbMapper {
 
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
-            if (StringUtils.isNotBlank(encoding)) {
+            if (!Strings.isNullOrEmpty(encoding)) {
                 marshaller.setProperty(Marshaller.JAXB_ENCODING, encoding);
             }
 
             return marshaller;
         } catch (JAXBException e) {
-            throw Exceptions.unchecked(e);
+            //throw Exceptions.unchecked(e);
+            return null;
         }
     }
 
@@ -119,7 +122,8 @@ public class JaxbMapper {
             JAXBContext jaxbContext = getJaxbContext(clazz);
             return jaxbContext.createUnmarshaller();
         } catch (JAXBException e) {
-            throw Exceptions.unchecked(e);
+            //throw Exceptions.unchecked(e);
+            return null;
         }
     }
 

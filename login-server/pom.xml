@@ -15,23 +15,7 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
     <name>Login Server Dependencies</name>
-    <description>Login Server Dependencies</description>
-    <url>http://study/login/</url>
-    <organization>
-        <name>com.style.study</name>
-        <url>http://study.login-server.com</url>
-    </organization>
-    <developers>
-        <developer>
-            <id>style</id>
-            <name>style</name>
-            <email>343176631@qq.com</email>
-            <roles>
-                <role>root</role>
-            </roles>
-            <timezone>+8</timezone>
-        </developer>
-    </developers>
+    <description>Login Server Module</description>
 
     <dependencies>
 

@@ -14,14 +14,13 @@ public interface Constants {
 
     String YES = "yes";
     String NO = "no";
+
     String TRUE = "true";
     String FALSE = "false";
 
-    String SHOW = "1";
-    String HIDE = "0";
-
     String GET = "GET";
     String POST = "POST";
+
     String GETTER_PREFIX = "get";
     String SETTER_PREFIX = "set";
 

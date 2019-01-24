@@ -7,11 +7,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
-import com.style.utils.lang.ListUtils;
-import org.apache.commons.lang3.StringUtils;
+import com.google.common.collect.Lists;
+import com.style.common.constant.Constants;
+import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -64,7 +66,7 @@ public class JsonMapper extends ObjectMapper {
             @Override
             public void serialize(Object value, JsonGenerator jsonGenerator, SerializerProvider provider) throws IOException, JsonProcessingException {
 
-                jsonGenerator.writeString(StringUtils.EMPTY);
+                jsonGenerator.writeString(Constants.EMPTY);
             }
         });
     }
@@ -204,13 +206,13 @@ public class JsonMapper extends ObjectMapper {
      * JSON字符串转换为 List<Map<String, Object>>
      */
     public static List<Map<String, Object>> fromJsonForMapList(String jsonString) {
-        List<Map<String, Object>> result = ListUtils.newArrayList();
-        if (StringUtils.startsWith(jsonString, "{")) {
+        List<Map<String, Object>> result = Lists.newArrayList();
+        if (jsonString.startsWith("{")) {
             Map<String, Object> map = fromJson(jsonString, Map.class);
             if (map != null) {
                 result.add(map);
             }
-        } else if (StringUtils.startsWith(jsonString, "[")) {
+        } else if (jsonString.startsWith("[")) {
             List<Map<String, Object>> list = fromJson(jsonString, List.class);
             if (list != null) {
                 result = list;
