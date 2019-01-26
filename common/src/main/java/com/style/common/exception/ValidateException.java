@@ -1,6 +1,6 @@
 package com.style.common.exception;
 
-import com.style.common.utils.MsgUtils;
+import com.style.common.utils.MessageUtils;
 
 public class ValidateException extends RuntimeException {
 
@@ -12,24 +12,24 @@ public class ValidateException extends RuntimeException {
 
     public ValidateException(String code) {
         this.code = code;
-        this.msg = MsgUtils.getMessage(code);
+        this.msg = MessageUtils.getMessage(code);
     }
 
     public ValidateException(String code, String... params) {
         this.code = code;
-        this.msg = MsgUtils.getMessage(code, params);
+        this.msg = MessageUtils.getMessage(code, params);
     }
 
     public ValidateException(String code, Throwable e) {
         super(e);
         this.code = code;
-        this.msg = MsgUtils.getMessage(code);
+        this.msg = MessageUtils.getMessage(code);
     }
 
     public ValidateException(String code, Throwable e, String... params) {
         super(e);
         this.code = code;
-        this.msg = MsgUtils.getMessage(code, params);
+        this.msg = MessageUtils.getMessage(code, params);
     }
 
     public String getMsg() {

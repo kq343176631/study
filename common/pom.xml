@@ -33,13 +33,6 @@
 
     <dependencies>
 
-        <!-- utils -->
-        <!--<dependency>-->
-            <!--<groupId>com.style.study</groupId>-->
-            <!--<artifactId>utils</artifactId>-->
-            <!--<version>1.0.0</version>-->
-        <!--</dependency>-->
-
         <!-- Java xml -->
         <dependency>
             <groupId>dom4j</groupId>

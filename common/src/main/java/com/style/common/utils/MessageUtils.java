@@ -6,7 +6,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 /**
  * 国际化
  */
-public class MsgUtils {
+public class MessageUtils {
 
     private static MessageSource messageSource = (MessageSource) SpringUtils.getBean("messageSource");
 

@@ -1,12 +1,12 @@
 package com.style.common.web.servlet;
 
-import com.style.common.web.http.HttpHeaders;
 import com.style.common.mapper.JsonMapper;
 import com.style.common.mapper.XmlMapper;
+import com.style.common.utils.StringUtil;
+import com.style.common.web.http.HttpHeaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -59,6 +59,38 @@ public class ServletUtils {
     }
 
     /**
+     * 获得用户远程地址
+     */
+    public static String getRemoteAddr(HttpServletRequest request) {
+        String remoteAddr = request.getHeader("X-Real-IP");
+        if (StringUtil.isNotBlank(remoteAddr)) {
+            remoteAddr = request.getHeader("X-Forwarded-For");
+        } else if (StringUtil.isNotBlank(remoteAddr)) {
+            remoteAddr = request.getHeader("Proxy-Client-IP");
+        } else if (StringUtil.isNotBlank(remoteAddr)) {
+            remoteAddr = request.getHeader("WL-Proxy-Client-IP");
+        }
+        return remoteAddr != null ? remoteAddr : request.getRemoteAddr();
+    }
+
+    /**
+     * 从请求对象中扩展参数数据，格式：JSON 或  param_ 开头的参数
+     *
+     * @param request 请求对象
+     * @return 返回Map对象
+     */
+    public static Map<String, Object> getExtParams(ServletRequest request) {
+        Map<String, Object> paramMap;
+        String params = StringUtil.trim(request.getParameter(DEFAULT_PARAMS_PARAM));
+        if (StringUtil.isNotBlank(params) && params.startsWith("{")) {
+            paramMap = JsonMapper.fromJson(params, Map.class);
+        } else {
+            paramMap = getParametersStartingWith(ServletUtils.getRequest(), DEFAULT_PARAM_PREFIX_PARAM);
+        }
+        return paramMap;
+    }
+
+    /**
      * 取得带相同前缀的Request Parameters, copy from spring WebUtils.
      * 返回的结果的Parameter名已去除前缀.
      */
@@ -97,11 +129,11 @@ public class ServletUtils {
         HttpServletRequest request = ServletUtils.getRequest();
         String uri;
         if (request != null && (uri = request.getRequestURI()) != null) {
-            if (StringUtils.endsWithIgnoreCase(uri, ".xml")) {
+            if (StringUtil.endsWithIgnoreCase(uri, ".xml")) {
                 return XmlMapper.toXml(object);
             } else {
                 String functionName = request.getParameter("__callback");
-                if (!StringUtils.isEmpty(functionName)) {
+                if (StringUtil.isNotBlank(functionName)) {
                     return renderString(response, JsonMapper.toJsonp(functionName, object));
                 } else {
                     return renderString(response, JsonMapper.toJson(object));
@@ -143,8 +175,60 @@ public class ServletUtils {
         return null;
     }
 
+    /**
+     * 是否是Ajax异步请求
+     */
+    public static boolean isAjaxRequest(HttpServletRequest request) {
+        String accept = request.getHeader("accept");
+        if (accept != null && accept.contains("application/json")) {
+            return true;
+        }
+        String xRequestedWith = request.getHeader("X-Requested-With");
+        if (xRequestedWith != null && xRequestedWith.contains("XMLHttpRequest")) {
+            return true;
+        }
+        String uri = request.getRequestURI();
+        if (StringUtil.inStringIgnoreCase(uri, ".json", ".xml")) {
+            return true;
+        }
+        String ajax = request.getParameter("__ajax");
+        return StringUtil.inStringIgnoreCase(ajax, "json", "xml");
+    }
 
-
+    /**
+     * 判断访问URI是否是静态文件请求
+     *
+     * @param uri uri
+     * @return boolean
+     */
+    /*public static boolean isStaticFile(String uri) {
+        if (staticFiles == null) {
+            PropertyUtils pl = PropertyUtils.getInstance();
+            try {
+                staticFiles = StringUtils.split(pl.getProperty("web.staticFile"), ",");
+                staticFileExcludeUri = StringUtils.split(pl.getProperty("web.staticFileExcludeUri"), ",");
+            } catch (NoSuchElementException ex) {
+                // 什么也不做
+            }
+            if (staticFiles == null) {
+                try {
+                    throw new Exception("检测到“web.yml”中没有配置“web.staticFile”属性。"
+                            + "配置示例：\n#静态文件后缀\nweb.staticFile=.css,.js,.png,.jpg,.gif,"
+                            + ".jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        if (staticFileExcludeUri != null) {
+            for (String s : staticFileExcludeUri) {
+                if (StringUtils.contains(uri, s)) {
+                    return false;
+                }
+            }
+        }
+        return StringUtils.endsWithAny(uri, staticFiles);
+    }*/
 
     /**
      * 设置客户端缓存过期时间 的Header.
