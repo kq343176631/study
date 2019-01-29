@@ -2,9 +2,9 @@ package com.style.crud.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.style.basic.constant.Constants;
-import com.style.basic.utils.StringUtil;
-import com.style.basic.web.servlet.ServletUtils;
+import com.style.common.constant.Constants;
+import com.style.common.utils.StringUtil;
+import com.style.common.web.servlet.ServletUtils;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -1,6 +1,6 @@
 package com.style.cache.redis;
 
-import com.style.basic.utils.SpringUtils;
+import com.style.common.utils.SpringUtils;
 import net.oschina.j2cache.*;
 import org.springframework.data.redis.core.RedisTemplate;
 

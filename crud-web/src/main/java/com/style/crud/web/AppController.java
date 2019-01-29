@@ -2,8 +2,8 @@ package com.style.crud.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Maps;
-import com.style.basic.constant.ErrorCode;
-import com.style.basic.model.Result;
+import com.style.common.constant.ErrorCode;
+import com.style.common.model.Result;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Map;

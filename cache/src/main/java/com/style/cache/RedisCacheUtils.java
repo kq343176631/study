@@ -1,6 +1,6 @@
 package com.style.cache;
 
-import com.style.basic.utils.SpringUtils;
+import com.style.common.utils.SpringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.Cache;
