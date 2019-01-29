@@ -19,6 +19,12 @@
 
     <properties>
 
+        <druid.version>1.1.10</druid.version>
+        <mysql.version>5.1.38</mysql.version>
+        <sqlserver.version>4.0</sqlserver.version>
+        <oracle.version>11.2.0.3</oracle.version>
+        <mybatisplus.version>3.0.6</mybatisplus.version>
+
         <swagger.version>2.7.0</swagger.version>
         <httpclient.version>4.5.6</httpclient.version>
         <hibernate-validator.version>6.0.12.Final</hibernate-validator.version>
@@ -82,6 +88,51 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger.version}</version>
         </dependency>
+
+        <!-- JDBC device begin -->
+        <!-- mysql驱动 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- oracle驱动 -->
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>${oracle.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- sqlserver驱动 -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>sqljdbc4</artifactId>
+            <version>${sqlserver.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- postgresql驱动 -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- JDBC device end -->
+
+        <!-- MyBatis Plus begin -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatisplus.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>mybatis-plus-generator</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- MyBatis Plus end -->
 
         <!-- AOP Aspectj begin -->
         <dependency>

@@ -1,6 +1,6 @@
 package com.style.common.utils;
 
-import com.style.crud.entity.User;
+import com.style.common.entity.User;
 
 public class UserUtils {
 
