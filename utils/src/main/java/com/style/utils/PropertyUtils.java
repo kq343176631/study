@@ -1,4 +1,4 @@
-package com.style.common.utils;
+package com.style.utils;
 
 import com.style.utils.file.FileUtils;
 import com.style.utils.lang.ArrayUtils;

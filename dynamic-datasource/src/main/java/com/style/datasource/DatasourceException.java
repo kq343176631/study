@@ -1,12 +1,8 @@
-package com.style.common.exception;
+package com.style.datasource;
 
-import com.style.common.constant.ErrorCode;
 import com.style.utils.MessageUtils;
 
-/**
- * 验证异常
- */
-public class ValidateException extends RuntimeException {
+public class DatasourceException extends Exception {
 
     private static final long serialVersionUID = 1L;
 
@@ -14,37 +10,37 @@ public class ValidateException extends RuntimeException {
 
     private String msg;
 
-    public ValidateException(int code) {
+    public DatasourceException(int code) {
         this.code = code;
         this.msg = MessageUtils.getMessage(code);
     }
 
-    public ValidateException(int code, String... params) {
+    public DatasourceException(int code, String... params) {
         this.code = code;
         this.msg = MessageUtils.getMessage(code, params);
     }
 
-    public ValidateException(int code, Throwable e) {
+    public DatasourceException(int code, Throwable e) {
         super(e);
         this.code = code;
         this.msg = MessageUtils.getMessage(code);
     }
 
-    public ValidateException(int code, Throwable e, String... params) {
+    public DatasourceException(int code, Throwable e, String... params) {
         super(e);
         this.code = code;
         this.msg = MessageUtils.getMessage(code, params);
     }
 
-    public ValidateException(String msg) {
+    public DatasourceException(String msg) {
         super(msg);
-        this.code = ErrorCode.INTERNAL_SERVER_ERROR;
+        this.code = 500;
         this.msg = msg;
     }
 
-    public ValidateException(String msg, Throwable e) {
+    public DatasourceException(String msg, Throwable e) {
         super(msg, e);
-        this.code = ErrorCode.INTERNAL_SERVER_ERROR;
+        this.code = 500;
         this.msg = msg;
     }
 

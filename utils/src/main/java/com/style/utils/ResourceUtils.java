@@ -1,6 +1,5 @@
-package com.style.common.utils;
+package com.style.utils;
 
-import com.style.utils.Exceptions;
 import com.style.utils.file.IOUtils;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
