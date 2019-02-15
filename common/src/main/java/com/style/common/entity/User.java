@@ -9,8 +9,10 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper=false)
 public class User extends BaseEntity<User> {
 
-    public static final String USER_TYPE_EMPLOYEE = "";
     private static final long serialVersionUID = 1L;
+
+    public static final String USER_TYPE_EMPLOYEE = "";
+
     private String loginName;// 登录名
     private String password;// 密码
     private String no;		// 工号

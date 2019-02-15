@@ -1,3 +1,4 @@
+
 package com.style.common.constant;
 
 /**
@@ -5,124 +6,46 @@ package com.style.common.constant;
  * <p>
  * 如：10001（10代表系统模块，001代表业务代码）
  * </p>
+ *
+ * @author Mark sunlightcs@gmail.com
+ * @since 1.0.0
  */
-public enum ErrorCode {
-    /**
-     * 系统提示信息
-     */
-    SUCCESS("0","成功"),
-    INTERNAL_SERVER_ERROR("500","服务内部错误"),
+public interface ErrorCode {
 
-    REQUIRED_IDENTIFY_NOT_EXIST("1001", "请求标识对象不存在"),
+    int INTERNAL_SERVER_ERROR = 500;
+    int UNAUTHORIZED = 401;
+    int FORBIDDEN = 403;
 
-    OVERSTEP("1002", "数量超出上限"),
+    int NOT_NULL = 10001;
+    int DB_RECORD_EXISTS = 10002;
+    int PARAMS_GET_ERROR = 10003;
+    int ACCOUNT_PASSWORD_ERROR = 10004;
+    int ACCOUNT_DISABLE = 10005;
+    int IDENTIFIER_NOT_NULL = 10006;
+    int CAPTCHA_ERROR = 10007;
+    int SUB_MENU_EXIST = 10008;
+    int PASSWORD_ERROR = 10009;
+    int ACCOUNT_NOT_EXIST = 10010;
+    int SUPERIOR_DEPT_ERROR = 10011;
+    int SUPERIOR_MENU_ERROR = 10012;
+    int DATA_SCOPE_PARAMS_ERROR = 10013;
+    int DEPT_SUB_DELETE_ERROR = 10014;
+    int DEPT_USER_DELETE_ERROR = 10015;
+    int ACT_DEPLOY_ERROR = 10016;
+    int ACT_MODEL_IMG_ERROR = 10017;
+    int ACT_MODEL_EXPORT_ERROR = 10018;
+    int UPLOAD_FILE_EMPTY = 10019;
+    int TOKEN_NOT_EMPTY = 10020;
+    int TOKEN_INVALID = 10021;
+    int ACCOUNT_LOCK = 10022;
+    int ACT_DEPLOY_FORMAT_ERROR = 10023;
+    int OSS_UPLOAD_FILE_ERROR = 10024;
+    int SEND_SMS_ERROR = 10025;
+    int MAIL_TEMPLATE_NOT_EXISTS = 10026;
+    int REDIS_ERROR = 10027;
+    int JOB_ERROR = 10028;
+    int INVALID_SYMBOL = 10029;
+    int JSON_FORMAT_ERROR = 10030;
+    int SMS_CONFIG = 10031;
 
-    ILLEGAL_PARAMETER("1003", "非法参数"),
-
-    MISMATCH("4001", "请求参数类型不匹配"),
-
-    MISS_PARAM("4002", "缺少必须的参数"),
-
-    RESOURCE_NOT_READABLE("4003", "数据转化错误"),
-
-    RESOURCE_NOT_FOUND("404", "请求的资源不存在"),
-
-    METHOD_NOT_SUPPORTED("405", "不支持的请求方法"),
-
-    MEDIA_TYPE_NOT_ACCEPT("406", "无法接受请求中的媒体类型"),
-
-    MEDIA_TYPE_NOT_SUPPORTED("415", "不支持的媒体类型"),
-
-    SERVER_ERROR("500", "获取数据异常"),
-
-    ACCOUNT_NOT_EXIST("5001", "账号不存在"),
-
-    ACCOUNT_IS_EXIST("5002", "账号已经存在"),
-
-    NOT_LOGIN_ERROR("5003", "账号未登录"),
-
-    PARSE_PROPERTY_ERROR("5004", "属性解析错误"),
-
-    PASSWORD_NOT_MATCH("5005", "密码不正确"),
-
-    MOBILE_IS_EXIST("5006", "手机号已存在"),
-
-    CAPTCHA_ERROR_OR_EXPIRE("5007", "验证码不正确或已过期"),
-
-    UNSUPPORTED_FILE_TYPE("5008", "不支持的文件类型"),
-
-    MODIFY_PROPERTY_IS_NULL("5009", "修改属性为空"),
-
-    FILE_UPLOAD_ERROR("5010", "文件上传出错"),
-
-    DATA_SAVE_EXCEPTION("5011", "数据保存异常"),
-
-    PUSH_MESSAGE_ERROR("5012", "推送消息异常"),
-
-    LOCKED_ACCOUNT_EXCEPTION("5013", "账号已锁定"),
-
-    UNSUPPORTED_PARAMETER_FORMAT("5014", "不支持的参数格式"),
-
-    INCORRECT_PASSWORD_FORMATER_("5015", "密码格式不正确"),
-
-    USER_ACCOUNT_LOGIN_ERROR("5016", "无法登陆,此账户权限不足"),
-
-    USER_CAPTCHA_ERROR("5017", "验证码错误");
-
-    /**
-     * 编号
-     */
-    private String code;
-
-    /**
-     * 提示
-     */
-    private String msg;
-
-    /**
-     * 构造函数
-     *
-     * @param code 编号
-     * @param msg  提示
-     */
-    ErrorCode(String code, String msg) {
-        this.code = code;
-        this.msg = msg;
-    }
-
-    /**
-     * get-编号
-     *
-     * @return code
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     * set-编号
-     *
-     * @param code code
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    /**
-     * get-提示
-     *
-     * @return msg
-     */
-    public String getMsg() {
-        return msg;
-    }
-
-    /**
-     * set-提示
-     *
-     * @param msg msg
-     */
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
 }

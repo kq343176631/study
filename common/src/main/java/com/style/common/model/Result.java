@@ -1,6 +1,6 @@
 package com.style.common.model;
 
-import com.style.common.constant.ErrorCode;
+import com.style.common.utils.MessageUtils;
 
 import java.io.Serializable;
 
@@ -12,37 +12,49 @@ public class Result<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // 编码：0表示成功，其他值表示失败。
-    private String code = "0";
+    private int code = 0;
 
     // 消息内容
-    private String msg = "成功";
+    private String msg = "success";
 
     // 响应数据
-    private T data = null;
+    private T data;
 
     public Result() {
 
+    }
+
+    public Result(int code) {
+        this.code = code;
+        this.msg = MessageUtils.getMessage(this.code);
+    }
+
+    public Result(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
     }
 
     public Result(T data) {
         this.data = data;
     }
 
-    public Result(ErrorCode code) {
-        this(code, null);
-    }
-
-    public Result(ErrorCode code, T data) {
-        this.code = code.getCode();
-        this.msg = code.getMsg();
+    public Result(int code, T data) {
+        this.code = code;
+        this.msg = MessageUtils.getMessage(this.code);
         this.data = data;
     }
 
-    public String getCode() {
+    public Result(int code, String msg, T data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+    }
+
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 

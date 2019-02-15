@@ -29,13 +29,6 @@ public abstract class AppController extends BaseController {
         return new Result<>();
     }
 
-    protected Result success(IPage page) {
-        Map<String, Object> data = Maps.newHashMap();
-        data.put("total", page.getTotal());
-        data.put("list", page.getRecords());
-        return new Result<>(data);
-    }
-
     protected <T> Result<T> success(T data) {
         return new Result<>(data);
     }
@@ -44,11 +37,11 @@ public abstract class AppController extends BaseController {
         return new Result<>(ErrorCode.INTERNAL_SERVER_ERROR, null);
     }
 
-    protected Result error(ErrorCode code) {
+    protected Result error(int code) {
         return new Result<>(code, null);
     }
 
-    protected <T> Result<T> error(ErrorCode code, T data) {
+    protected <T> Result<T> error(int code, T data) {
         return new Result<>(code, data);
     }
 
