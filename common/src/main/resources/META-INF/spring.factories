@@ -1,0 +1,22 @@
+# PropertySource Loaders
+org.springframework.boot.env.PropertySourceLoader=\
+com.style.common.utils.SystemLoader
+
+
+
+# Application Context Initializer
+org.springframework.context.ApplicationContextInitializer=
+
+
+
+# Application Listeners
+org.springframework.context.ApplicationListener=
+
+
+
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.style.datasource.config.DataSourceAutoConfiguration,\
+com.style.common.config.TransactionAutoConfiguration,\
+com.style.common.config.MyBatisAutoConfiguration,
+
