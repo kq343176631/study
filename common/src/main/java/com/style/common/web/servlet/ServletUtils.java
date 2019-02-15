@@ -2,8 +2,8 @@ package com.style.common.web.servlet;
 
 import com.style.common.mapper.JsonMapper;
 import com.style.common.mapper.XmlMapper;
-import com.style.common.utils.StringUtil;
 import com.style.common.web.http.HttpHeaders;
+import com.style.utils.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
@@ -63,11 +63,11 @@ public class ServletUtils {
      */
     public static String getRemoteAddr(HttpServletRequest request) {
         String remoteAddr = request.getHeader("X-Real-IP");
-        if (StringUtil.isNotBlank(remoteAddr)) {
+        if (StringUtils.isNotBlank(remoteAddr)) {
             remoteAddr = request.getHeader("X-Forwarded-For");
-        } else if (StringUtil.isNotBlank(remoteAddr)) {
+        } else if (StringUtils.isNotBlank(remoteAddr)) {
             remoteAddr = request.getHeader("Proxy-Client-IP");
-        } else if (StringUtil.isNotBlank(remoteAddr)) {
+        } else if (StringUtils.isNotBlank(remoteAddr)) {
             remoteAddr = request.getHeader("WL-Proxy-Client-IP");
         }
         return remoteAddr != null ? remoteAddr : request.getRemoteAddr();
@@ -81,8 +81,8 @@ public class ServletUtils {
      */
     public static Map<String, Object> getExtParams(ServletRequest request) {
         Map<String, Object> paramMap;
-        String params = StringUtil.trim(request.getParameter(DEFAULT_PARAMS_PARAM));
-        if (StringUtil.isNotBlank(params) && params.startsWith("{")) {
+        String params = StringUtils.trim(request.getParameter(DEFAULT_PARAMS_PARAM));
+        if (StringUtils.isNotBlank(params) && StringUtils.startsWith(params, "{")) {
             paramMap = JsonMapper.fromJson(params, Map.class);
         } else {
             paramMap = getParametersStartingWith(ServletUtils.getRequest(), DEFAULT_PARAM_PREFIX_PARAM);
@@ -129,11 +129,11 @@ public class ServletUtils {
         HttpServletRequest request = ServletUtils.getRequest();
         String uri;
         if (request != null && (uri = request.getRequestURI()) != null) {
-            if (StringUtil.endsWithIgnoreCase(uri, ".xml")) {
+            if (StringUtils.endsWithIgnoreCase(uri, ".xml")) {
                 return XmlMapper.toXml(object);
             } else {
                 String functionName = request.getParameter("__callback");
-                if (StringUtil.isNotBlank(functionName)) {
+                if (StringUtils.isNotBlank(functionName)) {
                     return renderString(response, JsonMapper.toJsonp(functionName, object));
                 } else {
                     return renderString(response, JsonMapper.toJson(object));
@@ -188,11 +188,11 @@ public class ServletUtils {
             return true;
         }
         String uri = request.getRequestURI();
-        if (StringUtil.inStringIgnoreCase(uri, ".json", ".xml")) {
+        if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml")) {
             return true;
         }
         String ajax = request.getParameter("__ajax");
-        return StringUtil.inStringIgnoreCase(ajax, "json", "xml");
+        return StringUtils.inStringIgnoreCase(ajax, "json", "xml");
     }
 
     /**
@@ -201,7 +201,7 @@ public class ServletUtils {
      * @param uri uri
      * @return boolean
      */
-    /*public static boolean isStaticFile(String uri) {
+   /* public static boolean isStaticFile(String uri) {
         if (staticFiles == null) {
             PropertyUtils pl = PropertyUtils.getInstance();
             try {
@@ -229,7 +229,6 @@ public class ServletUtils {
         }
         return StringUtils.endsWithAny(uri, staticFiles);
     }*/
-
     /**
      * 设置客户端缓存过期时间 的Header.
      */

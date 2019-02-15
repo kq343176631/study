@@ -1,6 +1,6 @@
 package com.style.common.mapper;
 
-import com.style.common.utils.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +53,7 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper {
      * 反序列化POJO或简单Collection如List<String>.
      */
     public <T> T fromXmlString(String xmlString, Class<T> clazz) {
-        if (StringUtil.isEmpty(xmlString) || "<CLOB>".equals(xmlString)) {
+        if (StringUtils.isEmpty(xmlString) || "<CLOB>".equals(xmlString)) {
             return null;
         }
         try {

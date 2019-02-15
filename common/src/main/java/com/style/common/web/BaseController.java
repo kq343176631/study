@@ -3,8 +3,8 @@ package com.style.common.web;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.style.common.constant.Constants;
-import com.style.common.utils.StringUtil;
 import com.style.common.web.servlet.ServletUtils;
+import com.style.utils.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,10 +29,10 @@ public abstract class BaseController {
         //解析分页参数
         String strPageNo = request.getParameter(Constants.PAGE_NO);
         String strPageSize = request.getParameter(Constants.PAGE_SIZE);
-        if (StringUtil.isNumeric(strPageNo)) {
+        if (StringUtils.isNumeric(strPageNo)) {
             pageNo = Long.parseLong(strPageNo);
         }
-        if (StringUtil.isNumeric(strPageSize)) {
+        if (StringUtils.isNumeric(strPageSize)) {
             pageSize = Long.parseLong(strPageSize);
         }
 
@@ -43,7 +43,7 @@ public abstract class BaseController {
         String orderBy = request.getParameter(Constants.ORDER_BY);
         String order = request.getParameter(Constants.ORDER);
         //前端排序
-        if (StringUtil.isNotEmpty(orderBy) && StringUtil.isNotEmpty(order)) {
+        if (StringUtils.isNotEmpty(orderBy) && StringUtils.isNotEmpty(order)) {
             if (Constants.ASC.equalsIgnoreCase(order)) {
                 return page.setAsc(orderBy);
             } else {

@@ -1,7 +1,8 @@
 package com.style.common.mapper;
 
-import com.style.common.utils.StringUtil;
-import org.springframework.util.ClassUtils;
+import com.style.utils.Exceptions;
+import com.style.utils.lang.StringUtils;
+import com.style.utils.reflect.ClassUtils;
 
 import javax.xml.bind.*;
 import javax.xml.bind.annotation.XmlAnyElement;
@@ -45,7 +46,7 @@ public class JaxbMapper {
             createMarshaller(clazz, encoding).marshal(root, writer);
             return writer.toString();
         } catch (JAXBException e) {
-            throw unchecked(e);
+            throw Exceptions.unchecked(e);
         }
     }
 
@@ -73,7 +74,7 @@ public class JaxbMapper {
 
             return writer.toString();
         } catch (JAXBException e) {
-            throw unchecked(e);
+            throw Exceptions.unchecked(e);
         }
     }
 
@@ -85,7 +86,7 @@ public class JaxbMapper {
             StringReader reader = new StringReader(xml);
             return (T) createUnmarshaller(clazz).unmarshal(reader);
         } catch (JAXBException e) {
-            throw unchecked(e);
+            throw Exceptions.unchecked(e);
         }
     }
 
@@ -100,13 +101,13 @@ public class JaxbMapper {
 
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
-            if (StringUtil.isNotBlank(encoding)) {
+            if (StringUtils.isNotBlank(encoding)) {
                 marshaller.setProperty(Marshaller.JAXB_ENCODING, encoding);
             }
 
             return marshaller;
         } catch (JAXBException e) {
-            throw unchecked(e);
+            throw Exceptions.unchecked(e);
         }
     }
 
@@ -118,7 +119,7 @@ public class JaxbMapper {
             JAXBContext jaxbContext = getJaxbContext(clazz);
             return jaxbContext.createUnmarshaller();
         } catch (JAXBException e) {
-            throw unchecked(e);
+            throw Exceptions.unchecked(e);
         }
     }
 
@@ -145,17 +146,6 @@ public class JaxbMapper {
     public static class CollectionWrapper {
         @XmlAnyElement
         protected Collection<?> collection;
-    }
-
-    /**
-     * 将CheckedException转换为UncheckedException.
-     */
-    public static RuntimeException unchecked(Throwable throwable) {
-        if (throwable instanceof RuntimeException) {
-            return (RuntimeException) throwable;
-        } else {
-            return new RuntimeException(throwable);
-        }
     }
 }
 

@@ -1,7 +1,6 @@
 package com.style.utils.reflect;
 
 import com.style.utils.lang.StringUtils;
-import com.style.utils.Constants;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +17,12 @@ import java.lang.reflect.Modifier;
 public class ReflectUtils {
 
     private static Logger logger = LoggerFactory.getLogger(ReflectUtils.class);
+
+    private static String POINT = ".";
+
+    private static String GETTER_PREFIX = "get";
+
+    private static String SETTER_PREFIX = "set";
 
     /**
      * 直接读取对象属性值, 无视private/protected修饰符, 不经过getter函数.
@@ -66,12 +71,12 @@ public class ReflectUtils {
      */
     public static <E> void invokeSetter(Object object, String propertyName, E value) {
         Object result = object;
-        String[] names = StringUtils.split(propertyName, Constants.POINT);
+        String[] names = StringUtils.split(propertyName, POINT);
         for (int i = 0; i < names.length; i++) {
             if (i < names.length - 1) {
-                result = invokeMethod(result, Constants.GETTER_PREFIX + StringUtils.capitalize(names[i]));
+                result = invokeMethod(result, GETTER_PREFIX + StringUtils.capitalize(names[i]));
             } else {
-                invokeMethod(result, Constants.SETTER_PREFIX + StringUtils.capitalize(names[i]), value);
+                invokeMethod(result, SETTER_PREFIX + StringUtils.capitalize(names[i]), value);
             }
         }
     }
@@ -85,8 +90,8 @@ public class ReflectUtils {
      */
     public static <E> E invokeGetter(Object object, String propertyName) {
         Object result = object;
-        for (String methodName : StringUtils.split(propertyName, Constants.POINT)) {
-            result = invokeMethod(result, Constants.GETTER_PREFIX + StringUtils.capitalize(methodName));
+        for (String methodName : StringUtils.split(propertyName, POINT)) {
+            result = invokeMethod(result, GETTER_PREFIX + StringUtils.capitalize(methodName));
         }
         return (E) result;
     }

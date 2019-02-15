@@ -1,7 +1,6 @@
-package com.style.utils;
+package com.style.utils.file;
 
 import com.style.utils.codec.CodecUtils;
-import com.style.utils.file.FileUtils;
 import com.style.utils.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

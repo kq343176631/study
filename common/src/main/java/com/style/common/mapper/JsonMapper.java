@@ -7,9 +7,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
-import com.google.common.collect.Lists;
-import com.style.common.constant.Constants;
-import com.style.common.utils.StringUtil;
+import com.style.utils.lang.ListUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -65,7 +64,7 @@ public class JsonMapper extends ObjectMapper {
             @Override
             public void serialize(Object value, JsonGenerator jsonGenerator, SerializerProvider provider) throws IOException, JsonProcessingException {
 
-                jsonGenerator.writeString(Constants.EMPTY);
+                jsonGenerator.writeString(StringUtils.EMPTY);
             }
         });
     }
@@ -98,7 +97,7 @@ public class JsonMapper extends ObjectMapper {
      * 如需反序列化复杂Collection如List<MyBean>, 请使用fromJson(String,JavaType)
      */
     public <T> T fromJsonString(String jsonString, Class<T> clazz) {
-        if (StringUtil.isEmpty(jsonString) || "<CLOB>".equals(jsonString)) {
+        if (StringUtils.isEmpty(jsonString) || "<CLOB>".equals(jsonString)) {
             return null;
         }
         try {
@@ -113,7 +112,7 @@ public class JsonMapper extends ObjectMapper {
      * 反序列化复杂Collection如List<Bean>, 先使用函数createCollectionType构造类型,然后调用本函数.
      */
     public <T> T fromJsonString(String jsonString, JavaType javaType) {
-        if (StringUtil.isEmpty(jsonString) || "<CLOB>".equals(jsonString)) {
+        if (StringUtils.isEmpty(jsonString) || "<CLOB>".equals(jsonString)) {
             return null;
         }
         try {
@@ -205,13 +204,13 @@ public class JsonMapper extends ObjectMapper {
      * JSON字符串转换为 List<Map<String, Object>>
      */
     public static List<Map<String, Object>> fromJsonForMapList(String jsonString) {
-        List<Map<String, Object>> result = Lists.newArrayList();
-        if (StringUtil.startsWith(jsonString, "{")) {
+        List<Map<String, Object>> result = ListUtils.newArrayList();
+        if (StringUtils.startsWith(jsonString, "{")) {
             Map<String, Object> map = fromJson(jsonString, Map.class);
             if (map != null) {
                 result.add(map);
             }
-        } else if (StringUtil.startsWith(jsonString, "[")) {
+        } else if (StringUtils.startsWith(jsonString, "[")) {
             List<Map<String, Object>> list = fromJson(jsonString, List.class);
             if (list != null) {
                 result = list;

@@ -1,5 +1,7 @@
 package com.style.common.utils;
 
+import com.style.utils.Exceptions;
+import com.style.utils.file.IOUtils;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -56,6 +58,20 @@ public class ResourceUtils extends org.springframework.util.ResourceUtils {
     }
 
     /**
+     * 获取资源文件内容
+     *
+     * @param location location
+     * @author ThinkGem
+     */
+    public static String getResourceFileContent(String location) {
+        try (InputStream is = ResourceUtils.getResourceFileStream(location)) {
+            return IOUtils.toString(is, "UTF-8");
+        } catch (IOException e) {
+            throw Exceptions.unchecked(e);
+        }
+    }
+
+    /**
      * Spring 搜索资源文件
      *
      * @param locationPattern locationPattern
@@ -65,8 +81,7 @@ public class ResourceUtils extends org.springframework.util.ResourceUtils {
         try {
             return resourceResolver.getResources(locationPattern);
         } catch (IOException e) {
-            //throw Exceptions.unchecked(e);
-            return null;
+            throw Exceptions.unchecked(e);
         }
     }
 }
