@@ -1,7 +1,7 @@
 
 package com.style.cache.redis;
 
-import com.style.utils.lang.StringUtils;
+import com.style.common.lang.StringUtils;
 import net.oschina.j2cache.Level2Cache;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;

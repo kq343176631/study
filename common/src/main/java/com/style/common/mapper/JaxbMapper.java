@@ -1,8 +1,8 @@
 package com.style.common.mapper;
 
 import com.style.utils.Exceptions;
-import com.style.utils.lang.StringUtils;
-import com.style.utils.reflect.ClassUtils;
+import com.style.common.lang.StringUtils;
+import com.style.common.reflect.ClassUtils;
 
 import javax.xml.bind.*;
 import javax.xml.bind.annotation.XmlAnyElement;

@@ -1,6 +1,6 @@
 package com.style.cache.j2cache;
 
-import com.style.utils.lang.StringUtils;
+import com.style.common.lang.StringUtils;
 import net.oschina.j2cache.CacheChannel;
 import org.springframework.cache.support.AbstractValueAdaptingCache;
 
