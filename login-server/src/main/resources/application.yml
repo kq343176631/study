@@ -1,18 +1,54 @@
+
+
+#=========================================================#
+#=================== Server settings =====================#
+#=========================================================#
+
 server:
   port: 9000
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+
+
+#=========================================================#
+#=================== Spring settings =====================#
+#=========================================================#
 
 spring:
   application:
-    name: login-server
+    name: login-server   # 应用程序名称
+  profiles:
+    active: default   # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
+  config:
+    location:   # 外部文件位置
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  main:
+    bannerMode: "off"
+  quartz:
+    auto-startup: false
 
-eureka:
-  client:
-    register-with-eureka: true #是否将自己注册到eureka服务器中，单机情况无需注册。
-    fetch-registry: true #是否从eureka中获取注册信息。
-    service-url: #eureka客户端与服务端的交互地址。
-      defaultZone: http://localhost:8989/eureka/,http://localhost:9898/eureka/
-  instance:
-    hostname: localhost
-    #ip-address: 127.0.0.1
-    prefer-ip-address: true #是否将自己的IP地址注册到服务器中。
-    instance-id: ${spring.application.name}:${server.port} #自定义实例ID
+
+
+#=========================================================#
+#=================== Logging settings ====================#
+#=========================================================#
+logging:
+  config: classpath:configs/log/logback-spring.xml
+
+#eureka:
+#  client:
+#    register-with-eureka: true #是否将自己注册到eureka服务器中，单机情况无需注册。
+#    fetch-registry: true #是否从eureka中获取注册信息。
+#    service-url: #eureka客户端与服务端的交互地址。
+#      defaultZone: http://localhost:8989/eureka/,http://localhost:9898/eureka/
+#  instance:
+#    hostname: localhost
+#    #ip-address: 127.0.0.1
+#    prefer-ip-address: true #是否将自己的IP地址注册到服务器中。
+#    instance-id: ${spring.application.name}:${server.port} #自定义实例ID

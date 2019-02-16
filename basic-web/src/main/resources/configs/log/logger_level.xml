@@ -1,0 +1,23 @@
+<included>
+
+    <logger name="org.apache.ibatis" level="DEBUG"/>
+    <logger name="org.mybatis.spring" level="DEBUG"/>
+    <logger name="org.springframework.jdbc" level="DEBUG"/>
+    <logger name="org.mybatis.spring.transaction" level="DEBUG"/>
+    <logger name="org.apache.catalina.webresources.Cache" level="ERROR"/>
+    <logger name="org.springframework.boot.context.embedded" level="INFO"/>
+    <logger name="com.atomikos.icatch.config.UserTransactionServiceImp" level="ERROR"/>
+    <logger name="com.atomikos.jdbc.AbstractDataSourceBean" level="ERROR"/>
+
+    <logger name="com.style" level="DEBUG"/>
+
+    <logger name="com.style.common.cache" level="INFO"/>
+    <logger name="com.style.common.core" level="INFO"/>
+
+    <logger name="com.style.common.interceptor" level="DEBUG"/>
+    <logger name="com.style.common.mybatis" level="DEBUG"/>
+    <logger name="com.style.modules.security" level="DEBUG"/>
+    <logger name="com.style.modules.system" level="DEBUG"/>
+
+
+</included>

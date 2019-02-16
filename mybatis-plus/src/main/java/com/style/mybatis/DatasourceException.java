@@ -1,6 +1,6 @@
 package com.style.mybatis;
 
-import com.style.utils.MessageUtils;
+import com.style.common.message.MessageUtils;
 
 public class DatasourceException extends Exception {
 

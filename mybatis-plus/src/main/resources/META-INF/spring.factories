@@ -1,7 +1,5 @@
 
-# Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.style.mybatis.config.DataSourceAutoConfiguration,\
 com.style.mybatis.config.TransactionAutoConfiguration,\
-com.style.mybatis.config.MyBatisAutoConfiguration,
-
+com.style.mybatis.config.MybatisPlusAutoConfiguration

@@ -1,13 +1,10 @@
 package com.style.web.handler;
 
 import com.style.common.constant.ErrorCode;
-import com.style.mybatis.entity.SysLog;
 import com.style.common.exception.ValidateException;
 import com.style.common.model.Result;
-import com.style.mybatis.service.impl.SysLogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -18,9 +15,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-
-    @Autowired
-    private SysLogService sysLogService;
 
     /**
      * 处理自定义异常
@@ -41,7 +35,7 @@ public class GlobalExceptionHandler {
      * 保存异常日志
      */
     private void saveLog(Exception ex) {
-        SysLog log = new SysLog();
+        //SysLog log = new SysLog();
 
         //请求相关信息
 		/*HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
@@ -58,6 +52,6 @@ public class GlobalExceptionHandler {
 		log.setErrorInfo(ExceptionUtils.getErrorStackTrace(ex));*/
 
         //保存
-        sysLogService.save(log);
+        //sysLogService.save(log);
     }
 }

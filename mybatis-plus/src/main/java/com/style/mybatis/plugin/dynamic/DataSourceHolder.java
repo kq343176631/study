@@ -1,7 +1,7 @@
 package com.style.mybatis.plugin.dynamic;
 
 import com.style.common.lang.StringUtils;
-import com.style.utils.GlobalUtils;
+import com.style.common.system.GlobalUtils;
 
 /**
  * 本地数据源持有者

@@ -1,6 +1,6 @@
 package com.style.web.http;
 
-import com.style.common.filter.FilterUtils;
+import com.style.common.FilterUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;

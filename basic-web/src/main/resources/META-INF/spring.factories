@@ -1,6 +1,6 @@
 # PropertySource Loaders
 org.springframework.boot.env.PropertySourceLoader=\
-com.style.web.utils.SystemLoader
+com.style.common.system.LoaderUtils
 
 
 
@@ -16,7 +16,5 @@ org.springframework.context.ApplicationListener=
 
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.style.mybatis.config.DataSourceAutoConfiguration,\
-com.style.mybatis.config.TransactionAutoConfiguration,\
-com.style.mybatis.config.MybatisPlusAutoConfiguration,
-
+com.style.web.config.WebCoreAutoConfiguration,\
+com.style.web.config.WebMvcAutoConfiguration
