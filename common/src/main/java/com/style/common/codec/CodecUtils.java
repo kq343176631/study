@@ -1,6 +1,6 @@
 package com.style.common.codec;
 
-import com.style.common.Exceptions;
+import com.style.common.exception.ExceptionUtils;
 import com.style.common.lang.StringUtils;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Base64;
@@ -42,7 +42,7 @@ public class CodecUtils {
         try {
             return Hex.decodeHex(input.toCharArray());
         } catch (DecoderException e) {
-            throw Exceptions.unchecked(e);
+            throw ExceptionUtils.unchecked(e);
         }
     }
 
@@ -117,7 +117,7 @@ public class CodecUtils {
         try {
             return URLEncoder.encode(part, encoding);
         } catch (UnsupportedEncodingException e) {
-            throw Exceptions.unchecked(e);
+            throw ExceptionUtils.unchecked(e);
         }
     }
 
@@ -131,7 +131,7 @@ public class CodecUtils {
         try {
             return URLDecoder.decode(part, encoding);
         } catch (UnsupportedEncodingException e) {
-            throw Exceptions.unchecked(e);
+            throw ExceptionUtils.unchecked(e);
         }
     }
 

@@ -1,6 +1,6 @@
 package com.style.common.codec;
 
-import com.style.common.Exceptions;
+import com.style.common.exception.ExceptionUtils;
 import org.apache.commons.lang3.Validate;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class DigestUtils {
             }
             return messageDigest.digest();
         } catch (GeneralSecurityException e) {
-            throw Exceptions.unchecked(e);
+            throw ExceptionUtils.unchecked(e);
         }
     }
 
@@ -74,7 +74,7 @@ public class DigestUtils {
             }
             return result;
         } catch (GeneralSecurityException e) {
-            throw Exceptions.unchecked(e);
+            throw ExceptionUtils.unchecked(e);
         }
     }
 }

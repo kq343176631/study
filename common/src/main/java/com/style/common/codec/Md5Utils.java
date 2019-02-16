@@ -1,6 +1,6 @@
 package com.style.common.codec;
 
-import com.style.common.file.IOUtils;
+import com.style.common.stream.IOUtils;
 
 import java.io.File;
 import java.io.IOException;

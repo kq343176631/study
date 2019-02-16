@@ -1,6 +1,6 @@
 package com.style.common.codec;
 
-import com.style.common.Exceptions;
+import com.style.common.exception.ExceptionUtils;
 import com.style.common.lang.StringUtils;
 
 import javax.crypto.Cipher;
@@ -144,7 +144,7 @@ public class AesUtils {
             cipher.init(mode, secretKey);
             return cipher.doFinal(input);
         } catch (GeneralSecurityException e) {
-            throw Exceptions.unchecked(e);
+            throw ExceptionUtils.unchecked(e);
         }
     }
 
@@ -164,7 +164,7 @@ public class AesUtils {
             cipher.init(mode, secretKey, ivSpec);
             return cipher.doFinal(input);
         } catch (GeneralSecurityException e) {
-            throw Exceptions.unchecked(e);
+            throw ExceptionUtils.unchecked(e);
         }
     }
 
@@ -193,7 +193,7 @@ public class AesUtils {
             SecretKey secretKey = keyGenerator.generateKey();
             return secretKey.getEncoded();
         } catch (GeneralSecurityException e) {
-            throw Exceptions.unchecked(e);
+            throw ExceptionUtils.unchecked(e);
         }
     }
 

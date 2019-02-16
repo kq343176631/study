@@ -1,7 +1,7 @@
 package com.style.web.servlet;
 
-import com.style.common.mapper.JsonMapper;
-import com.style.common.mapper.XmlMapper;
+import com.style.web.mapper.JsonMapper;
+import com.style.web.mapper.XmlMapper;
 import com.style.web.http.HttpHeaders;
 import com.style.common.lang.StringUtils;
 import org.slf4j.Logger;
