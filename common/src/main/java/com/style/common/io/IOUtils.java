@@ -69,24 +69,5 @@ public class IOUtils extends org.apache.commons.io.IOUtils {
         }
         return fileOutputStream;
     }
-
-    /**
-     * Closes a <code>Closeable</code> unconditionally.
-     */
-    public static void closeQuietly(final InputStream input) {
-        closeQuietly((Closeable) input);
-    }
-
-    /**
-     * Closes a <code>Closeable</code> unconditionally.
-     */
-    public static void closeQuietly(final Closeable closeable) {
-        try {
-            if (closeable != null) {
-                closeable.close();
-            }
-        } catch (final IOException ioe) {
-            // ignore
-        }
-    }
+    
 }
