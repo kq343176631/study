@@ -13,6 +13,7 @@ import java.util.Properties;
  * 加载系统配置文件
  */
 public class PropertyLoader implements org.springframework.boot.env.PropertySourceLoader {
+
     // 记录资源是否加载过，防止重复加载。
     private static boolean isLoadPropertySource = false;
 

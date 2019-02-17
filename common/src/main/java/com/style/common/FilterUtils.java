@@ -17,29 +17,22 @@ public class FilterUtils {
     private static final Logger logger = LoggerFactory.getLogger(FilterUtils.class);
 
     // 预编译SQL过滤正则表达式
-    private static Pattern sqlPattern = Pattern.compile(
-            "(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|(\\b(select|update|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|drop|execute)\\b)",
-            Pattern.CASE_INSENSITIVE
-    );
+    private static Pattern sqlPattern = Pattern.compile("(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|(\\b(select|update|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|into|drop|execute)\\b)", Pattern.CASE_INSENSITIVE);
+
 
     // 预编译XSS过滤正则表达式
     private static List<Pattern> xssPatterns = ListUtils.newArrayList(
-            Pattern.compile("(<\\s*(script|link|style|iframe)([\\s\\S]*?)(>|<\\/\\s*\\1\\s*>))|(</\\s*(script|link|style|iframe)\\s*>)",
-                    Pattern.CASE_INSENSITIVE),
-            Pattern.compile("\\s*(href|src)\\s*=\\s*(\"\\s*(javascript|vbscript):[^\"]+\"|'\\s*(javascript|vbscript):[^']+'|(javascript|vbscript):[^\\s]+)\\s*(?=>)",
-                    Pattern.CASE_INSENSITIVE),
-            Pattern.compile("\\s*on[a-z]+\\s*=\\s*(\"[^\"]+\"|'[^']+'|[^\\s]+)\\s*(?=>)",
-                    Pattern.CASE_INSENSITIVE),
-            Pattern.compile("(eval\\((.|\\n)*\\)|xpression\\((.|\\n)*\\))",
-                    Pattern.CASE_INSENSITIVE)
+            Pattern.compile("(<\\s*(script|link|style|iframe)([\\s\\S]*?)(>|<\\/\\s*\\1\\s*>))|(</\\s*(script|link|style|iframe)\\s*>)", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("\\s*(href|src)\\s*=\\s*(\"\\s*(javascript|vbscript):[^\"]+\"|'\\s*(javascript|vbscript):[^']+'|(javascript|vbscript):[^\\s]+)\\s*(?=>)", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("\\s*on[a-z]+\\s*=\\s*(\"[^\"]+\"|'[^']+'|[^\\s]+)\\s*(?=>)", Pattern.CASE_INSENSITIVE),
+            Pattern.compile("(eval\\((.*?)\\)|xpression\\((.*?)\\))", Pattern.CASE_INSENSITIVE)
     );
 
     /**
      * 执行 SQL 过滤
-     *
-     * @param input input
      */
     public static String doSqlFilter(String input) {
+
         if (StringUtils.isBlank(input)) {
             return null;
         }
@@ -64,28 +57,25 @@ public class FilterUtils {
     /**
      * 执行 SQL 过滤（使用正则表达式）
      *
-     * @param input input
      */
-    public static String doSqlFilterWithRegx(String input) {
-        if (StringUtils.isBlank(input)) {
-            return null;
+    public static String doSqlFilterWithRegx(String text) {
+        if (text != null) {
+            String value = text;
+            Matcher matcher = sqlPattern.matcher(text);
+            if (matcher.find()) {
+                value = matcher.replaceAll(StringUtils.EMPTY);
+            }
+            if (logger.isWarnEnabled() && !value.equals(text)) {
+                logger.info("sqlFilter: {}   <=<=<=   {}", value, text);
+                return StringUtils.EMPTY;
+            }
+            return value;
         }
-        String value = input;
-        Matcher matcher = sqlPattern.matcher(input);
-        if (matcher.find()) {
-            value = matcher.replaceAll(StringUtils.EMPTY);
-        }
-        if (logger.isWarnEnabled() && !value.equals(input)) {
-            logger.info("sqlFilter: {}   <=<=<=   {}", value, input);
-            return StringUtils.EMPTY;
-        }
-        return value;
+        return null;
     }
 
     /**
      * 执行 XSS 过滤
-     *
-     * @param html html
      */
     public static String doXssFilter(String html) {
         return Jsoup.clean(html, getXssWhitelist());
@@ -93,35 +83,54 @@ public class FilterUtils {
 
     /**
      * 执行 XSS 过滤（使用正则表达式）
-     *
-     * @param html html
      */
-    public static String doXssFilterWithRegx(String html) {
+    public static String doXssFilterWithRegx(String text) {
 
-        if (StringUtils.isBlank(html)) {
-            return null;
-        }
-        String oriValue = StringUtils.trim(html);
-        String value = oriValue;
-        for (Pattern pattern : xssPatterns) {
-            Matcher matcher = pattern.matcher(value);
-            if (matcher.find()) {
-                value = matcher.replaceAll(StringUtils.EMPTY);
+        String oriValue = StringUtils.trim(text);
+        if (text != null) {
+            String value = oriValue;
+            for (Pattern pattern : xssPatterns) {
+                Matcher matcher = pattern.matcher(value);
+                if (matcher.find()) {
+                    value = matcher.replaceAll(StringUtils.EMPTY);
+                }
             }
+            // 如果开始不是HTML，XML，JOSN格式，则再进行HTML的 "、<、> 转码。
+            if (!StringUtils.startsWithIgnoreCase(value, "<!--HTML-->")    // HTML
+                    && !StringUtils.startsWithIgnoreCase(value, "<?xml ")    // XML
+                    && !StringUtils.contains(value, "id=\"FormHtml\"")        // JFlow
+                    && !(StringUtils.startsWith(value, "{") && StringUtils.endsWith(value, "}")) // JSON Object
+                    && !(StringUtils.startsWith(value, "[") && StringUtils.endsWith(value, "]")) // JSON Array
+                    ) {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < value.length(); i++) {
+                    char c = value.charAt(i);
+                    switch (c) {
+                        case '>':
+                            sb.append("＞");
+                            break;
+                        case '<':
+                            sb.append("＜");
+                            break;
+                        case '\'':
+                            sb.append("＇");
+                            break;
+                        case '\"':
+                            sb.append("＂");
+                            break;
+                        default:
+                            sb.append(c);
+                            break;
+                    }
+                }
+                value = sb.toString();
+            }
+            if (logger.isInfoEnabled() && !value.equals(oriValue)) {
+                logger.info("xssFilter: {}   <=<=<=   {}", value, text);
+            }
+            return value;
         }
-        // 如果开始不是HTML，XML，JOSN格式，则再进行HTML的 "、<、> 转码。
-        if (!StringUtils.startsWithIgnoreCase(value, "<!--HTML-->")    // HTML
-                && !StringUtils.startsWithIgnoreCase(value, "<?xml ")    // XML
-                && !StringUtils.contains(value, "id=\"FormHtml\"")        // JFlow
-                && !(StringUtils.startsWith(value, "{") && StringUtils.endsWith(value, "}")) // JSON Object
-                && !(StringUtils.startsWith(value, "[") && StringUtils.endsWith(value, "]")) // JSON Array
-                ) {
-            value = value.replaceAll("\"", "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-        }
-        if (logger.isInfoEnabled() && !value.equals(oriValue)) {
-            logger.info("xssFilter: {}   <=<=<=   {}", value, html);
-        }
-        return value;
+        return null;
     }
 
     /**

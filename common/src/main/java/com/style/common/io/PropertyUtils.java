@@ -29,12 +29,17 @@ public class PropertyUtils {
 
     // 默认加载的文件，可通过继承覆盖（若有相同Key，优先加载后面的）
     public static final String[] DEFAULT_CONFIG_FILE = new String[]{
-            "classpath:config/bootstrap.yml", "classpath:bootstrap.yml",
-            "classpath:config/application.yml", "classpath:application.yml"};
+            "classpath:config/bootstrap.yml",
+            "classpath:bootstrap.yml",
+            "classpath:config/application.yml",
+            "classpath:application.yml"};
 
     private static Logger logger = PropertyUtils.initLogger();
+
     private final Set<String> configSet = SetUtils.newLinkedHashSet();
+
     private final Properties properties = new Properties();
+
     private static Environment environment;
 
     /**
@@ -48,11 +53,10 @@ public class PropertyUtils {
         public static void releadInstance(){
             // 获取平台及模块相关的配置文件
             Set<String> configSet = SetUtils.newLinkedHashSet();
-            Resource[] resources = ResourceUtils.getResources("classpath*:/config/jeesite-*.*");
+            Resource[] resources = ResourceUtils.getResources("classpath*:/configs/sys-*.*");
             for(Resource resource : resources){
-                configSet.add("classpath:config/"+resource.getFilename());
+                configSet.add("classpath:configs/"+resource.getFilename());
             }
-            //configSet.add("classpath:config/jeesite.yml");
             // 获取全局设置默认的配置文件（以下是支持环境配置的属性文件）
             Set<String> set = SetUtils.newLinkedHashSet();
             for (String configFile : DEFAULT_CONFIG_FILE){
@@ -91,7 +95,7 @@ public class PropertyUtils {
                 }
             }
             configFiles = configSet.toArray(new String[configSet.size()]);
-            logger.debug("Loading jeesite config: {}", (Object)configFiles);
+            logger.debug("Loading style config: {}", (Object)configFiles);
             INSTANCE = new PropertyUtils(configFiles);
         }
     }

@@ -11,6 +11,18 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ListUtils extends org.apache.commons.collections.ListUtils {
 
     /**
+     * 将列表转换为数组
+     *
+     * @param list  list
+     * @param array array
+     * @param <T>   t
+     * @return arrays
+     */
+    public static <T> T[] toArray(List<T> list, T[] array) {
+        return list.toArray(array);
+    }
+
+    /**
      * 是否包含字符串
      *
      * @param str  验证字符串
