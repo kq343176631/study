@@ -1,4 +1,4 @@
-package com.style.common.message;
+package com.style.common.msg;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

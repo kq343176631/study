@@ -13,60 +13,60 @@ import java.util.concurrent.ConcurrentMap;
 public class MapUtils extends org.apache.commons.collections.MapUtils {
 
     public static <K, V> HashMap<K, V> newHashMap() {
-        return new HashMap<K, V>();
+        return new HashMap<>();
     }
 
     public static <K, V> HashMap<K, V> newHashMap(int initialCapacity) {
-        return new HashMap<K, V>(initialCapacity);
+        return new HashMap<>(initialCapacity);
     }
 
     public static <K, V> HashMap<K, V> newHashMap(Map<? extends K, ? extends V> map) {
-        return new HashMap<K, V>(map);
+        return new HashMap<>(map);
     }
 
     public static <K, V> LinkedHashMap<K, V> newLinkedHashMap() {
-        return new LinkedHashMap<K, V>();
+        return new LinkedHashMap<>();
     }
 
     public static <K, V> LinkedHashMap<K, V> newLinkedHashMap(Map<? extends K, ? extends V> map) {
-        return new LinkedHashMap<K, V>(map);
+        return new LinkedHashMap<>(map);
     }
 
     public static <K, V> ConcurrentMap<K, V> newConcurrentMap() {
-        return new ConcurrentHashMap<K, V>();
+        return new ConcurrentHashMap<>();
     }
 
     @SuppressWarnings("rawtypes")
     public static <K extends Comparable, V> TreeMap<K, V> newTreeMap() {
-        return new TreeMap<K, V>();
+        return new TreeMap<>();
     }
 
     public static <K, V> TreeMap<K, V> newTreeMap(SortedMap<K, ? extends V> map) {
-        return new TreeMap<K, V>(map);
+        return new TreeMap<>(map);
     }
 
     public static <C, K extends C, V> TreeMap<K, V> newTreeMap(Comparator<C> comparator) {
-        return new TreeMap<K, V>(comparator);
+        return new TreeMap<>(comparator);
     }
 
     public static <K extends Enum<K>, V> EnumMap<K, V> newEnumMap(Class<K> type) {
-        return new EnumMap<K, V>((type));
+        return new EnumMap<>((type));
     }
 
     public static <K extends Enum<K>, V> EnumMap<K, V> newEnumMap(Map<K, ? extends V> map) {
-        return new EnumMap<K, V>(map);
+        return new EnumMap<>(map);
     }
 
     public static <K, V> IdentityHashMap<K, V> newIdentityHashMap() {
-        return new IdentityHashMap<K, V>();
+        return new IdentityHashMap<>();
     }
 
     /**
      * List<Map<String, V>转换为List<T>
      */
     public static <T, V> List<T> toObjectList(Class<T> clazz, List<HashMap<String, V>> list) throws IllegalAccessException,
-            InvocationTargetException, NoSuchMethodException, InstantiationException {
-        List<T> retList = new ArrayList<T>();
+            InvocationTargetException, InstantiationException {
+        List<T> retList = new ArrayList<>();
         if (list != null && !list.isEmpty()) {
             for (HashMap<String, V> m : list) {
                 retList.add(toObject(clazz, m));
@@ -105,7 +105,7 @@ public class MapUtils extends org.apache.commons.collections.MapUtils {
      *
      * @param map 待转换Map
      */
-    public static <T, V> T toObject(T object, Map<String, V> map) throws InstantiationException, IllegalAccessException, InvocationTargetException {
+    public static <T, V> T toObject(T object, Map<String, V> map) throws IllegalAccessException, InvocationTargetException {
         return toObject(object, map, false);
     }
 
@@ -116,7 +116,7 @@ public class MapUtils extends org.apache.commons.collections.MapUtils {
      * @param map         待转换Map
      * @param toCamelCase 是否采用驼峰命名法转换
      */
-    public static <T, V> T toObject(T object, Map<String, V> map, boolean toCamelCase) throws InstantiationException, IllegalAccessException,
+    public static <T, V> T toObject(T object, Map<String, V> map, boolean toCamelCase) throws IllegalAccessException,
             InvocationTargetException {
         if (toCamelCase) {
             map = toCamelCaseMap(map);
@@ -149,11 +149,11 @@ public class MapUtils extends org.apache.commons.collections.MapUtils {
      * 转换为Collection<Map<K, V>>
      *
      * @param collection 待转换对象集合
-     * @return 转换后的Collection<Map   <   K   ,       V>>
+     * @return 转换后的Collection<Map       <       K       ,               V>>
      */
     public static <T> Collection<Map<String, String>> toMapList(Collection<T> collection) throws IllegalAccessException, InvocationTargetException,
             NoSuchMethodException {
-        List<Map<String, String>> retList = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> retList = new ArrayList<>();
         if (collection != null && !collection.isEmpty()) {
             for (Object object : collection) {
                 Map<String, String> map = toMap(object);
@@ -167,11 +167,11 @@ public class MapUtils extends org.apache.commons.collections.MapUtils {
      * 转换为Collection,同时为字段做驼峰转换<Map<K, V>>
      *
      * @param collection 待转换对象集合
-     * @return 转换后的Collection<Map   <   K   ,       V>>
+     * @return 转换后的Collection<Map       <       K       ,               V>>
      */
     public static <T> Collection<Map<String, String>> toMapListForFlat(Collection<T> collection) throws IllegalAccessException,
             InvocationTargetException, NoSuchMethodException {
-        List<Map<String, String>> retList = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> retList = new ArrayList<>();
         if (collection != null && !collection.isEmpty()) {
             for (Object object : collection) {
                 Map<String, String> map = toMapForFlat(object);

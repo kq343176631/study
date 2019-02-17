@@ -64,9 +64,6 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
     /**
      * 转换为字符串
-     *
-     * @param obj
-     * @return
      */
     public static String toString(final Object obj) {
         return toString(obj, StringUtils.EMPTY);
@@ -74,10 +71,6 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
     /**
      * 如果对象为空，则使用defaultVal值
-     *
-     * @param obj
-     * @param defaultVal
-     * @return
      */
     public static String toString(final Object obj, final String defaultVal) {
         return obj == null ? defaultVal : obj.toString();
@@ -107,9 +100,6 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
     /**
      * 拷贝一个对象（但是子对象无法拷贝）
-     *
-     * @param source
-     * @param ignoreProperties
      */
     public static Object copyBean(Object source, String... ignoreProperties) {
         if (source == null) {
@@ -126,9 +116,6 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
     /**
      * 序列化对象
-     *
-     * @param object
-     * @return
      */
     public static byte[] serialize(Object object) {
         if (object == null) {
@@ -137,7 +124,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
         long beginTime = System.currentTimeMillis();
         byte[] bytes = null;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
-             ObjectOutputStream oos = new ObjectOutputStream(baos);) {
+             ObjectOutputStream oos = new ObjectOutputStream(baos)) {
             oos.writeObject(object);
             bytes = baos.toByteArray();
         } catch (Exception e) {
@@ -152,19 +139,16 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
     /**
      * 反序列化对象
-     *
-     * @param bytes
-     * @return
      */
-    public static Object unserialize(byte[] bytes) {
+    public static Object unSerialize(byte[] bytes) {
         if (bytes == null) {
             return null;
         }
         long beginTime = System.currentTimeMillis();
         Object object = null;
         if (bytes.length > 0) {
-            try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-                 ObjectInputStream ois = new ObjectInputStream(bais);) {
+            try (ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+                 ObjectInputStream ois = new ObjectInputStream(in)) {
                 object = ois.readObject();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -172,7 +156,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
         }
         long totalTime = System.currentTimeMillis() - beginTime;
         if (totalTime > 3000) {
-            System.out.println("Unserialize time: " + TimeUtils.formatDateAgo(totalTime));
+            System.out.println("UnSerialize time: " + TimeUtils.formatDateAgo(totalTime));
         }
         return object;
     }
@@ -186,9 +170,6 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
     /**
      * FST 序列化对象
-     *
-     * @param object
-     * @return
      */
     public static byte[] serializeFst(Object object) {
         if (object == null) {
@@ -205,9 +186,6 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
     /**
      * FST 反序列化对象
-     *
-     * @param bytes
-     * @return
      */
     public static Object unserializeFst(byte[] bytes) {
         if (bytes == null) {
@@ -224,16 +202,13 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
     /**
      * 克隆一个对象（完全拷贝）
-     *
-     * @param source
      */
     public static Object cloneBean(Object source) {
         if (source == null) {
             return null;
         }
         byte[] bytes = ObjectUtils.serializeFst(source);
-        Object target = ObjectUtils.unserializeFst(bytes);
-        return target;
+        return ObjectUtils.unserializeFst(bytes);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.style.common.message;
+package com.style.common;
 
 import com.style.common.SpringUtils;
 import org.springframework.context.MessageSource;

@@ -33,9 +33,8 @@ public class DigestUtils {
      *
      * @param input      需要散列的字符串
      * @param algorithm  散列算法（"SHA-1"、"MD5"）
-     * @param salt
+     * @param salt       salt
      * @param iterations 迭代次数
-     * @return
      */
     public static byte[] digest(byte[] input, String algorithm, byte[] salt, int iterations) {
         try {

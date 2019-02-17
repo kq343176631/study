@@ -1,4 +1,3 @@
-
 package com.style.common.media;
 
 import com.google.zxing.*;

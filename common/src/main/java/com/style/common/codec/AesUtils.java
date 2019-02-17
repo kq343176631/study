@@ -20,32 +20,32 @@ public class AesUtils {
 
     private static final String AES_CBC = "AES/CBC/PKCS5Padding";
 
-    /**
-     * 生成AES密钥, 默认长度为128位(16字节).
-     */
-    private static final int DEFAULT_AES_KEYSIZE = 128;
+    private static final String DEFAULT_URL_ENCODING = "UTF-8";
 
     /**
      * 生成随机向量, 默认大小为cipher.getBlockSize(), 16字节
      */
-    private static final int DEFAULT_IVSIZE = 16;
+    private static final int DEFAULT_IV_SIZE = 16;
+
+    /**
+     * 生成AES密钥, 默认长度为128位(16字节).
+     */
+    private static final int DEFAULT_AES_KEY_SIZE = 128;
 
     /**
      * 用于生成 generateIV 随机数对象
      */
     private static final SecureRandom RANDOM = new SecureRandom();
 
-
-    private static final String DEFAULT_URL_ENCODING = "UTF-8";
-
-    private static final byte[] DEFAULT_KEY = new byte[]{-97, 88, -94, 9, 70, -76, 126, 25, 0, 3, -20, 113, 108, 28, 69, 125};
-
     /**
      * 生成AES密钥,返回字节数组, 默认长度为128位(16字节).
      */
     public static String genKeyString() {
-        return EncodeUtils.encodeHex(genKey(DEFAULT_AES_KEYSIZE));
+        return EncodeUtils.encodeHex(genKey(DEFAULT_AES_KEY_SIZE));
     }
+
+    private static final byte[] DEFAULT_KEY = new byte[]{-97, 88, -94, 9, 70, -76, 126, 25, 0, 3, -20, 113, 108, 28, 69, 125};
+
 
     /**
      * 使用AES加密原始字符串.
@@ -105,16 +105,16 @@ public class AesUtils {
      * 生成AES密钥,返回字节数组, 默认长度为128位(16字节).
      */
     public static byte[] genKey() {
-        return genKey(DEFAULT_AES_KEYSIZE);
+        return genKey(DEFAULT_AES_KEY_SIZE);
     }
 
     /**
      * 生成AES密钥,可选长度为128,192,256位.
      */
-    public static byte[] genKey(int keysize) {
+    public static byte[] genKey(int keySize) {
         try {
             KeyGenerator keyGenerator = KeyGenerator.getInstance(AES);
-            keyGenerator.init(keysize);
+            keyGenerator.init(keySize);
             SecretKey secretKey = keyGenerator.generateKey();
             return secretKey.getEncoded();
         } catch (GeneralSecurityException e) {
@@ -126,7 +126,7 @@ public class AesUtils {
      * 生成随机向量,默认大小为cipher.getBlockSize(), 16字节.
      */
     public static byte[] genIV() {
-        byte[] bytes = new byte[DEFAULT_IVSIZE];
+        byte[] bytes = new byte[DEFAULT_IV_SIZE];
         RANDOM.nextBytes(bytes);
         return bytes;
     }

@@ -2,7 +2,6 @@ package com.style.common.io;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -99,7 +98,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
         // 准备复制文件
         // 读取的位数
-        int readByte = 0;
+        int readByte;
         InputStream ins = null;
         OutputStream outs = null;
         try {
@@ -203,6 +202,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         boolean flag = true;
         // 列出源目录下的所有文件名和子目录名
         File[] files = srcDir.listFiles();
+        if (files == null || files.length <= 0) {
+            return false;
+        }
         for (int i = 0; i < files.length; i++) {
             // 如果是一个单个文件，则直接复制
             if (files[i].isFile()) {
@@ -310,6 +312,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         boolean flag = true;
         // 列出全部文件及子目录
         File[] files = dirFile.listFiles();
+        if (files == null || files.length <= 0) {
+            return false;
+        }
         for (int i = 0; i < files.length; i++) {
             // 删除子文件
             if (files[i].isFile()) {
@@ -469,7 +474,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
                                 String descFileName) {
         // 判断目录是否存在
         if (srcDirName == null) {
-            logger.debug("文件压缩失败，目录 " + srcDirName + " 不存在!");
+            logger.debug("文件压缩失败，目录不存在!");
             return;
         }
         File fileDir = new File(srcDirName);
@@ -516,11 +521,11 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         try {
             // 根据ZIP文件创建ZipFile对象
             ZipFile zipFile = new ZipFile(zipFileName);
-            ZipEntry entry = null;
-            String entryName = null;
-            String descFileDir = null;
+            ZipEntry entry;
+            String entryName;
+            String descFileDir;
             byte[] buf = new byte[4096];
-            int readByte = 0;
+            int readByte;
             // 获取ZIP文件里所有的entry
             @SuppressWarnings("rawtypes")
             Enumeration enums = zipFile.getEntries();
@@ -568,6 +573,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     public static void zipDirectoryToZipFile(String dirPath, File fileDir, ZipOutputStream zouts) {
         if (fileDir.isDirectory()) {
             File[] files = fileDir.listFiles();
+            if (files == null) {
+                return;
+            }
             // 空的文件夹
             if (files.length == 0) {
                 // 目录信息
@@ -603,11 +611,11 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
      * @param zouts   输出流
      */
     public static void zipFilesToZipFile(String dirPath, File file, ZipOutputStream zouts) {
-        FileInputStream fin = null;
-        ZipEntry entry = null;
+        FileInputStream fin;
+        ZipEntry entry;
         // 创建复制缓冲区
         byte[] buf = new byte[4096];
-        int readByte = 0;
+        int readByte;
         if (file.isFile()) {
             try {
                 // 创建一个文件输入流
@@ -673,7 +681,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
                 return match.getMimeType();
             }
         } catch (Exception e) {
-            ; // 什么也不做
+            // 什么也不做
         }
         return StringUtils.EMPTY;
     }
@@ -708,7 +716,11 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
      */
     public static List<String> findChildrenList(File dir, boolean searchDirs) {
         List<String> files = ListUtils.newArrayList();
-        for (String subFiles : dir.list()) {
+        String[] dirs = dir.list();
+        if (dirs == null) {
+            return null;
+        }
+        for (String subFiles : dirs) {
             File file = new File(dir + "/" + subFiles);
             if (((searchDirs) && (file.isDirectory())) || ((!searchDirs) && (!file.isDirectory()))) {
                 files.add(file.getName());
@@ -752,7 +764,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
      * 根据图片Base64获取文件扩展名
      */
     public static String getFileExtensionByImageBase64(String imageBase64) {
-        String extension = null;
+        String extension;
         String type = StringUtils.substringBetween(imageBase64, "data:", ";base64,");
         if (StringUtils.inStringIgnoreCase(type, "image/jpeg")) {
             extension = "jpg";
@@ -789,9 +801,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
                 }
                 projectPath = file.toString();
             }
-        } catch (FileNotFoundException e) {
-            // 忽略异常
-        } catch (IOException e) {
+        } catch (Exception e) {
             // 忽略异常
         }
         // 取不到，取当前工作路径
@@ -804,8 +814,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     /**
      * 获取工程源文件所在路径
      */
-    public static String getWebappPath() {
-        String webappPath = "";
+    public static String getWebAppPath() {
+        String webAppPath = "";
         try {
             File file = ResourceUtils.getResource("").getFile();
             if (file != null) {
@@ -824,18 +834,16 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
                         break;
                     }
                 }
-                webappPath = file.toString();
+                webAppPath = file.toString();
             }
-        } catch (FileNotFoundException e) {
-            // 忽略异常
-        } catch (IOException e) {
+        } catch (Exception e) {
             // 忽略异常
         }
         // 取不到，取当前工作路径
-        if (StringUtils.isBlank(webappPath)) {
-            webappPath = System.getProperty("user.dir");
+        if (StringUtils.isBlank(webAppPath)) {
+            webAppPath = System.getProperty("user.dir");
         }
-        return webappPath;
+        return webAppPath;
     }
 
 }

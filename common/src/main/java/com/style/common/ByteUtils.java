@@ -18,7 +18,7 @@ public class ByteUtils {
 
         double size = 1.0 * byteSize;
 
-        String type = "B";
+        String type;
         if ((int) Math.floor(size / UNIT) <= 0) { //不足1KB
             type = "B";
             return format(size, type);
@@ -57,7 +57,7 @@ public class ByteUtils {
     }
 
     private static String format(double size, String type) {
-        int precision = 0;
+        int precision;
 
         if (size * 1000 % 10 > 0) {
             precision = 3;

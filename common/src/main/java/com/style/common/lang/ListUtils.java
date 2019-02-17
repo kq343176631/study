@@ -41,18 +41,18 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
     }
 
     public static <E> ArrayList<E> newArrayList() {
-        return new ArrayList<E>();
+        return new ArrayList<>();
     }
 
     @SafeVarargs
     public static <E> ArrayList<E> newArrayList(E... elements) {
-        ArrayList<E> list = new ArrayList<E>(elements.length);
+        ArrayList<E> list = new ArrayList<>(elements.length);
         Collections.addAll(list, elements);
         return list;
     }
 
     public static <E> ArrayList<E> newArrayList(Iterable<? extends E> elements) {
-        return (elements instanceof Collection) ? new ArrayList<E>(cast(elements))
+        return (elements instanceof Collection) ? new ArrayList<>(cast(elements))
                 : newArrayList(elements.iterator());
     }
 
@@ -63,7 +63,7 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
     }
 
     public static <E> LinkedList<E> newLinkedList() {
-        return new LinkedList<E>();
+        return new LinkedList<>();
     }
 
     public static <E> LinkedList<E> newLinkedList(Iterable<? extends E> elements) {
@@ -73,13 +73,13 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
     }
 
     public static <E> CopyOnWriteArrayList<E> newCopyOnWriteArrayList() {
-        return new CopyOnWriteArrayList<E>();
+        return new CopyOnWriteArrayList<>();
     }
 
     public static <E> CopyOnWriteArrayList<E> newCopyOnWriteArrayList(Iterable<? extends E> elements) {
         Collection<? extends E> elementsCollection = (elements instanceof Collection)
                 ? cast(elements) : newArrayList(elements);
-        return new CopyOnWriteArrayList<E>(elementsCollection);
+        return new CopyOnWriteArrayList<>(elementsCollection);
     }
 
     private static <T> Collection<T> cast(Iterable<T> iterable) {
@@ -170,7 +170,7 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
      * 返回a+b的新List.
      */
     public static <T> List<T> union(final Collection<T> a, final Collection<T> b) {
-        List<T> result = new ArrayList<T>(a);
+        List<T> result = new ArrayList<>(a);
         result.addAll(b);
         return result;
     }
@@ -179,7 +179,7 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
      * 返回a-b的新List.
      */
     public static <T> List<T> subtract(final Collection<T> a, final Collection<T> b) {
-        List<T> list = new ArrayList<T>(a);
+        List<T> list = new ArrayList<>(a);
         for (T element : b) {
             list.remove(element);
         }
@@ -190,7 +190,7 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
      * 返回a与b的交集的新List.
      */
     public static <T> List<T> intersection(Collection<T> a, Collection<T> b) {
-        List<T> list = new ArrayList<T>();
+        List<T> list = new ArrayList<>();
         for (T element : a) {
             if (b.contains(element)) {
                 list.add(element);
@@ -207,13 +207,12 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
      * @param pageNo    当前页码
      * @param pageSize  每页显示条数
      * @param totalPage 总页码数
-     * @author ThinkGem
      */
     private static <T> List<T> getPageList(List<T> list, int pageNo, int pageSize, int totalPage) {
         int fromIndex = 0; // 从哪里开始截取
         int toIndex = 0; // 截取几个
         if (list == null || list.size() == 0) {
-            return new ArrayList<T>();
+            return new ArrayList<>();
         }
         // 当前页小于或等于总页数时执行
         if (pageNo <= totalPage && pageNo != 0) {
@@ -242,7 +241,7 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
                 Collections.sort(list, new Comparator<T>() {
                     @Override
                     public int compare(T o1, T o2) {
-                        String s1 = StringUtils.EMPTY, s2 = StringUtils.EMPTY;
+                        String s1, s2;
                         if (o1 instanceof Map) {
                             s1 = ObjectUtils.toString(((Map) o1).get(ss[0]));
                             s2 = ObjectUtils.toString(((Map) o2).get(ss[0]));

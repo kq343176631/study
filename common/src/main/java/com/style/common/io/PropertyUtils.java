@@ -27,7 +27,9 @@ import org.springframework.core.io.Resource;
 @SuppressWarnings("all")
 public class PropertyUtils {
 
-    // 默认加载的文件，可通过继承覆盖（若有相同Key，优先加载后面的）
+    /**
+     * 默认加载的文件，可通过继承覆盖（若有相同Key，优先加载后面的）
+     */
     public static final String[] DEFAULT_CONFIG_FILE = new String[]{
             "classpath:config/bootstrap.yml",
             "classpath:bootstrap.yml",

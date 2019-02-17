@@ -20,23 +20,58 @@ import java.util.List;
 public class VideoUtils {
 
     private static final Logger log = LoggerFactory.getLogger(VideoUtils.class);
-    private static String ffmpegFile;        // ffmpeg.exe所放的路径
-    private static String mencoderFile;        //  mencoder.exe所放的路径
-    private static String qtFaststartFile;    //  qt-faststart.exe所放的路径
+    /**
+     * ffmpeg.exe所放的路径
+     */
+    private static String ffmPegFile;
+    /**
+     * mencoder.exe所放的路径
+     */
+    private static String menCoderFile;
+    /**
+     * qt-faststart.exe所放的路径
+     */
+    private static String qtFastStartFile;
 
-    private String inputFile = "";                // 需转换的原始文件名称
-    private String inputFileExtension = "";        // 当前文件的文件后缀
+    /**
+     * 需转换的原始文件名称
+     */
+    private String inputFile = "";
+    /**
+     * 当前文件的文件后缀
+     */
+    private String inputFileExtension = "";
 
-    private String outputFile = "";                // 输出文件名称
-    private String outputFileExtension = "mp4";    // 最终转换的文件格式 mp4 flv
+    /**
+     * 输出文件名称
+     */
+    private String outputFile = "";
+    /**
+     * 最终转换的文件格式 mp4 flv
+     */
+    private String outputFileExtension = "mp4";
+    /**
+     * 生成缩略图文件名
+     */
+    private String imgFile = "";
+    /**
+     * 生成视频图片截图后缀 jpg gif
+     */
+    private String imgFileExtension = "jpg";
+    /**
+     * 视频默认宽高 800
+     */
+    private String width = null;
 
-    private String imgFile = "";                // 生成缩略图文件名
-    private String imgFileExtension = "jpg";    // 生成视频图片截图后缀 jpg gif
+    /**
+     * 视频默认宽高 600
+     */
+    private String height = null;
 
-    private String width = null;//"800";		// 视频默认宽高
-    private String height = null;//"600";		// 视频默认宽高
-
-    private boolean status = false;    // 是否正常状态
+    /**
+     * 是否正常状态
+     */
+    private boolean status = false;
 
     /**
      * 构造函数
@@ -140,7 +175,7 @@ public class VideoUtils {
         }
         if (statusTemp) {
             log.debug("将mp4视频的元数据信息转到视频第一帧");
-            statusTemp = processQtFaststart(tempFile, outputFile);
+            statusTemp = processQtFastStart(tempFile, outputFile);
         }
         log.debug("删除临时文件");
         FileUtils.deleteFile(tempFile);
@@ -150,9 +185,6 @@ public class VideoUtils {
 
     /**
      * 检查文件是否存在
-     *
-     * @param inputFile
-     * @return boolean
      */
     public boolean checkfile(String inputFile) {
         File file = new File(inputFile);
@@ -165,13 +197,10 @@ public class VideoUtils {
 
     /**
      * ffmpeg 截取缩略图
-     *
-     * @param inputFile
-     * @return boolean
      */
     public boolean processFfmpegCutpic(String inputFile, String outputFile) {
-        List<String> command = new java.util.ArrayList<String>();
-        command.add(getFfmpegFile());
+        List<String> command = new java.util.ArrayList<>();
+        command.add(getFfmPegFile());
         command.add("-i");
         command.add(inputFile);
         if ((imgFileExtension.toLowerCase()).equals("gif")) {
@@ -187,10 +216,6 @@ public class VideoUtils {
             command.add("-f");
             command.add("image2");
         }
-//		if (StringUtils.isNotBlank(width) && StringUtils.isNotBlank(height)){
-//			command.add("-s");
-//			command.add((width + "x" + height));
-//		}
         command.add("-y");
         command.add(imgFile);
         return process(command);
@@ -203,8 +228,8 @@ public class VideoUtils {
      * @return boolean
      */
     private boolean processFfmpeg(String inputFile, String outputFile) {
-        List<String> command = new java.util.ArrayList<String>();
-        command.add(getFfmpegFile());
+        List<String> command = new java.util.ArrayList<>();
+        command.add(getFfmPegFile());
         command.add("-i");
         command.add(inputFile);
         command.add("-f");
@@ -244,8 +269,8 @@ public class VideoUtils {
      * @return boolean
      */
     private boolean processMencoder(String inputFile, String outputFile) {
-        List<String> command = new ArrayList<String>();
-        command.add(getMencoderFile());
+        List<String> command = new ArrayList<>();
+        command.add(getMenCoderFile());
         command.add(inputFile);
         command.add("-oac");
         command.add("mp3lame");
@@ -270,12 +295,10 @@ public class VideoUtils {
 
     /**
      * 将mp4视频的元数据信息转到视频第一帧
-     *
-     * @return boolean
      */
-    private boolean processQtFaststart(String inputFile, String outputFile) {
-        List<String> command = new ArrayList<String>();
-        command.add(getQtFaststartFile());
+    private boolean processQtFastStart(String inputFile, String outputFile) {
+        List<String> command = new ArrayList<>();
+        command.add(getQtFastStartFile());
         command.add(inputFile);
         command.add(outputFile);
         return process(command);
@@ -283,14 +306,10 @@ public class VideoUtils {
 
     /**
      * 执行命令
-     *
-     * @param command
-     * @return boolean
      */
     private boolean process(List<String> command) {
         try {
             log.debug(ListUtils.convertToString(command, " "));
-//			Process process = new ProcessBuilder(command).redirectErrorStream(true).start();
             Process process = Runtime.getRuntime().exec(command.toArray(new String[command.size()]));
             new PrintErrorReader(process.getErrorStream()).start();
             new PrintInputStream(process.getInputStream()).start();
@@ -306,37 +325,37 @@ public class VideoUtils {
         }
     }
 
-    public static String getFfmpegFile() {
-        if (ffmpegFile == null) {
-            ffmpegFile = PropertyUtils.getInstance().getProperty("video.ffmpegFile");
+    public static String getFfmPegFile() {
+        if (ffmPegFile == null) {
+            ffmPegFile = PropertyUtils.getInstance().getProperty("video.ffmpegFile");
         }
-        return ffmpegFile;
+        return ffmPegFile;
     }
 
-    public static void setFfmpegFile(String ffmpegFile) {
-        VideoUtils.ffmpegFile = ffmpegFile;
+    public static void setFfmPegFile(String ffmPegFile) {
+        VideoUtils.ffmPegFile = ffmPegFile;
     }
 
-    public static String getMencoderFile() {
-        if (mencoderFile == null) {
-            mencoderFile = PropertyUtils.getInstance().getProperty("video.mencoderFile");
+    public static String getMenCoderFile() {
+        if (menCoderFile == null) {
+            menCoderFile = PropertyUtils.getInstance().getProperty("video.menCoderFile");
         }
-        return mencoderFile;
+        return menCoderFile;
     }
 
-    public static void setMencoderFile(String mencoderFile) {
-        VideoUtils.mencoderFile = mencoderFile;
+    public static void setMenCoderFile(String menCoderFile) {
+        VideoUtils.menCoderFile = menCoderFile;
     }
 
-    public static String getQtFaststartFile() {
-        if (qtFaststartFile == null) {
-            qtFaststartFile = PropertyUtils.getInstance().getProperty("video.qtFaststartFile");
+    public static String getQtFastStartFile() {
+        if (qtFastStartFile == null) {
+            qtFastStartFile = PropertyUtils.getInstance().getProperty("video.qtFaststartFile");
         }
-        return qtFaststartFile;
+        return qtFastStartFile;
     }
 
-    public static void setQtFaststartFile(String qtFaststartFile) {
-        VideoUtils.qtFaststartFile = qtFaststartFile;
+    public static void setQtFastStartFile(String qtFastStartFile) {
+        VideoUtils.qtFastStartFile = qtFastStartFile;
     }
 
     public String getInputFile() {
@@ -404,7 +423,8 @@ public class VideoUtils {
     }
 
     class PrintInputStream extends Thread {
-        java.io.InputStream __is = null;
+
+        java.io.InputStream __is;
 
         public PrintInputStream(java.io.InputStream is) {
             __is = is;
@@ -414,7 +434,7 @@ public class VideoUtils {
         public void run() {
             try {
                 BufferedReader br = new BufferedReader(new InputStreamReader(__is));
-                String line = null;
+                String line;
                 while ((line = br.readLine()) != null) {
                     log.debug(line);
                 }
@@ -425,7 +445,8 @@ public class VideoUtils {
     }
 
     class PrintErrorReader extends Thread {
-        java.io.InputStream __is = null;
+
+        java.io.InputStream __is;
 
         public PrintErrorReader(java.io.InputStream is) {
             __is = is;
@@ -435,7 +456,7 @@ public class VideoUtils {
         public void run() {
             try {
                 BufferedReader br = new BufferedReader(new InputStreamReader(__is));
-                String line = null;
+                String line;
                 while ((line = br.readLine()) != null) {
                     log.error(line);
                 }

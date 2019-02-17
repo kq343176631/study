@@ -95,7 +95,7 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
      * 格式化数值类型
      */
     public static String formatNumber(Object data, String pattern) {
-        DecimalFormat df = null;
+        DecimalFormat df;
         if (pattern == null) {
             df = new DecimalFormat();
         } else {

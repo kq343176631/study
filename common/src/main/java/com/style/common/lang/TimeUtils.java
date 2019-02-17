@@ -1,9 +1,5 @@
 package com.style.common.lang;
 
-import com.style.common.lang.DateUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
-
-import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -14,8 +10,7 @@ public class TimeUtils {
     /**
      * 将毫秒数转换为：xx天，xx时，xx分，xx秒
      */
-    public static String formatDateAgo(long millisecond) {
-        long ms = millisecond;
+    public static String formatDateAgo(long ms) {
         int ss = 1000;
         int mi = ss * 60;
         int hh = mi * 60;
@@ -55,7 +50,7 @@ public class TimeUtils {
      * 将过去的时间转为为，刚刚，xx秒，xx分钟，xx小时前、xx天前，大于3天的显示日期
      */
     public static String formatTimeAgo(Date dateTime) {
-        String interval = null;
+        String interval ;
         // 得出的时间间隔是毫秒
         long time = System.currentTimeMillis() - dateTime.getTime();
         // 如果时间间隔小于10秒则显示“刚刚”time/10得出的时间间隔的单位是秒

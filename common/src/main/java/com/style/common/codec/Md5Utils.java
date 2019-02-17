@@ -81,7 +81,7 @@ public class Md5Utils {
     public static String md5File(File file, int size) {
         if (file != null && file.exists()) {
             try (InputStream in = FileUtils.openInputStream(file)) {
-                byte[] bytes = null;
+                byte[] bytes;
                 if (size != -1 && file.length() >= size) {
                     bytes = IOUtils.toByteArray(in, size);
                 } else {

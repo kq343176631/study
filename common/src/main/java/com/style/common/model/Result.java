@@ -1,6 +1,6 @@
 package com.style.common.model;
 
-import com.style.common.message.MessageUtils;
+import com.style.common.MessageUtils;
 
 import java.io.Serializable;
 

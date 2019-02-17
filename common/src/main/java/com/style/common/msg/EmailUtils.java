@@ -1,4 +1,4 @@
-package com.style.common.message;
+package com.style.common.msg;
 
 import com.style.common.io.PropertyUtils;
 import org.apache.commons.mail.HtmlEmail;

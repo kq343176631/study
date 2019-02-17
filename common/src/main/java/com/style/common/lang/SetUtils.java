@@ -10,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class SetUtils extends org.apache.commons.collections.SetUtils {
 
     public static <E> HashSet<E> newHashSet() {
-        return new HashSet<E>();
+        return new HashSet<>();
     }
 
     @SafeVarargs
@@ -21,11 +21,11 @@ public class SetUtils extends org.apache.commons.collections.SetUtils {
     }
 
     public static <E> HashSet<E> newHashSet(int initialCapacity) {
-        return new HashSet<E>(initialCapacity);
+        return new HashSet<>(initialCapacity);
     }
 
     public static <E> HashSet<E> newHashSet(Iterable<? extends E> elements) {
-        return (elements instanceof Collection) ? new HashSet<E>(cast(elements)) : newHashSet(elements.iterator());
+        return (elements instanceof Collection) ? new HashSet<>(cast(elements)) : newHashSet(elements.iterator());
     }
 
     public static <E> HashSet<E> newHashSet(Iterator<? extends E> elements) {
@@ -35,7 +35,7 @@ public class SetUtils extends org.apache.commons.collections.SetUtils {
     }
 
     public static <E> Set<E> newConcurrentHashSet() {
-        return Collections.newSetFromMap(new ConcurrentHashMap<E, Boolean>());
+        return Collections.newSetFromMap(new ConcurrentHashMap<>());
     }
 
     public static <E> Set<E> newConcurrentHashSet(Iterable<? extends E> elements) {
@@ -45,16 +45,16 @@ public class SetUtils extends org.apache.commons.collections.SetUtils {
     }
 
     public static <E> LinkedHashSet<E> newLinkedHashSet() {
-        return new LinkedHashSet<E>();
+        return new LinkedHashSet<>();
     }
 
     public static <E> LinkedHashSet<E> newLinkedHashSet(int initialCapacity) {
-        return new LinkedHashSet<E>(initialCapacity);
+        return new LinkedHashSet<>(initialCapacity);
     }
 
     public static <E> LinkedHashSet<E> newLinkedHashSet(Iterable<? extends E> elements) {
         if (elements instanceof Collection) {
-            return new LinkedHashSet<E>(cast(elements));
+            return new LinkedHashSet<>(cast(elements));
         }
         LinkedHashSet<E> set = newLinkedHashSet();
         addAll(set, elements);
@@ -63,7 +63,7 @@ public class SetUtils extends org.apache.commons.collections.SetUtils {
 
     @SuppressWarnings("rawtypes")
     public static <E extends Comparable> TreeSet<E> newTreeSet() {
-        return new TreeSet<E>();
+        return new TreeSet<>();
     }
 
     @SuppressWarnings("rawtypes")
@@ -74,20 +74,20 @@ public class SetUtils extends org.apache.commons.collections.SetUtils {
     }
 
     public static <E> TreeSet<E> newTreeSet(Comparator<? super E> comparator) {
-        return new TreeSet<E>(comparator);
+        return new TreeSet<>(comparator);
     }
 
     public static <E> Set<E> newIdentityHashSet() {
-        return Collections.newSetFromMap(MapUtils.<E, Boolean> newIdentityHashMap());
+        return Collections.newSetFromMap(MapUtils.newIdentityHashMap());
     }
 
     public static <E> CopyOnWriteArraySet<E> newCopyOnWriteArraySet() {
-        return new CopyOnWriteArraySet<E>();
+        return new CopyOnWriteArraySet<>();
     }
 
     public static <E> CopyOnWriteArraySet<E> newCopyOnWriteArraySet(Iterable<? extends E> elements) {
         Collection<? extends E> elementsCollection = (elements instanceof Collection) ? cast(elements) : ListUtils.newArrayList(elements);
-        return new CopyOnWriteArraySet<E>(elementsCollection);
+        return new CopyOnWriteArraySet<>(elementsCollection);
     }
 
     private static <T> Collection<T> cast(Iterable<T> iterable) {

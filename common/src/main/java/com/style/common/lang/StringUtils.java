@@ -319,8 +319,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         StringBuilder val = new StringBuilder();
         String[] vals = split(objectString, ".");
         for (int i = 0; i < vals.length; i++) {
-            val.append("." + vals[i]);
-            result.append("!" + (val.substring(1)) + "?'':");
+            val.append(".").append(vals[i]);
+            result.append("!").append((val.substring(1))).append("?'':");
         }
         result.append(val.substring(1));
         return result.toString();

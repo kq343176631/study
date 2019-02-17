@@ -75,7 +75,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
      * @param pattern 格式（yyyy-MM-dd） pattern可以为："yyyy-MM-dd" "HH:mm:ss" "E"
      * @param amont   数量，前为负数，后为正数
      * @param type    类型，可参考Calendar的常量(如：Calendar.HOUR、Calendar.MINUTE、Calendar.SECOND)
-     * @return
      */
     public static String getDate(String pattern, int amont, int type) {
         Calendar calendar = Calendar.getInstance();
@@ -185,7 +184,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         String month = yyyyMM.substring(4, 6);
         String day31 = ",01,03,05,07,08,10,12,";
         String day30 = "04,06,09,11";
-        int day = 0;
+        int day;
         if (day31.contains(month)) {
             day = 31;
         } else if (day30.contains(month)) {
