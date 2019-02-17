@@ -45,6 +45,11 @@ public class GlobalUtils {
         return value;
     }
 
+    public String getProperty(String key, String defaultValue) {
+        String value = getProperty(key);
+        return value != null ? value : defaultValue;
+    }
+
     /**
      * 检查系统是否启用动态数据源
      *
