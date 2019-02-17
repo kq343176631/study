@@ -1,4 +1,4 @@
-package com.style.mybatis;
+package com.style.mybatis.exception;
 
 import com.style.common.MessageUtils;
 

@@ -1,4 +1,4 @@
-package com.style.mybatis;
+package com.style.mybatis.properties;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

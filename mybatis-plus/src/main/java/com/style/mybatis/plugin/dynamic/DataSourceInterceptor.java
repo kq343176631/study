@@ -1,7 +1,7 @@
 package com.style.mybatis.plugin.dynamic;
 
 import com.style.common.lang.StringUtils;
-import com.style.mybatis.DatasourceException;
+import com.style.mybatis.exception.DatasourceException;
 import com.style.mybatis.annotation.DataSource;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;

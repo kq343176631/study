@@ -85,7 +85,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource implements Disp
      * @return DataSource
      */
     public DataSource getTargetDataSource(String dataSourceName) {
-        if (StringUtils.isNotBlank(dataSourceName) && !"default".equals(dataSourceName)) {
+        if (StringUtils.isNotBlank(dataSourceName) && !DataSourceHolder.getDefaultDataSourceName().equals(dataSourceName)) {
             Object object = this.targetDataSources.get(dataSourceName);
             if (object != null) {
                 return (DataSource) object;

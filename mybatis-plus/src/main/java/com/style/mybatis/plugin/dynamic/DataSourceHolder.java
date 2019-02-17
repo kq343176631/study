@@ -1,6 +1,5 @@
 package com.style.mybatis.plugin.dynamic;
 
-import com.style.common.GlobalUtils;
 import com.style.common.lang.StringUtils;
 
 /**
