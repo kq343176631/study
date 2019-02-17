@@ -40,7 +40,7 @@ public class MybatisPlusAutoConfiguration {
     /**
      * sqlSessionFactoryBean
      */
-    @Bean("SqlSessionFactory")
+    @Bean("sqlSessionFactory")
     @DependsOn("dataSource")
     public SqlSessionFactory sqlSessionFactoryBean(DataSource dataSource) throws Exception {
 

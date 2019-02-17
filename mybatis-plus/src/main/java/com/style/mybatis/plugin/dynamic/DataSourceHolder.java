@@ -11,7 +11,7 @@ public class DataSourceHolder {
     /**
      * 定义默认数据源
      */
-    private static final String DEFAULT_DATA_SOURCE_NAME = GlobalUtils.getDefaultDataSourceName();
+    private static final String DEFAULT_DATA_SOURCE_NAME = "default";
 
     /**
      * 使用本地变量保存 dataSourceName

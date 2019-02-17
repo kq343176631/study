@@ -3,11 +3,12 @@ package com.style.mybatis.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.xa.DruidXADataSource;
 import com.atomikos.jdbc.AtomikosSQLException;
-import com.style.common.GlobalUtils;
 import com.style.common.lang.MapUtils;
-import com.style.mybatis.DatasourceException;
-import com.style.mybatis.plugin.dynamic.ConnectionPool;
+import com.style.mybatis.DataSourceProperties;
+import com.style.mybatis.DynamicDataSourceProperties;
 import com.style.mybatis.plugin.dynamic.DynamicDataSource;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,24 +17,37 @@ import org.springframework.context.annotation.Primary;
 import javax.sql.DataSource;
 import javax.sql.XADataSource;
 import java.sql.SQLException;
+import java.util.Map;
 
 /**
  * 数据源配置
  */
 @Configuration
+@EnableConfigurationProperties
 public class DataSourceAutoConfiguration {
-
-    public static String DATA_SOURCE_KEY_PREFIX = "target-datasource";
-
-    public static String DATA_SOURCE_NAME_KEY_PREFIX = "target-datasource.datasource-name";
 
     public static String XA_DATA_SOURCE_CLASS_NAME = "com.alibaba.druid.pool.xa.DruidXADataSource";
 
-    public static boolean enableDynamicDatasource = false;
-
-
     public DataSourceAutoConfiguration() {
 
+    }
+
+    /**
+     * 默认数据源
+     */
+    @Bean("defaultDataSourceProperties")
+    @ConfigurationProperties(prefix = "spring.datasource.druid")
+    public DataSourceProperties defaultDataSourceProperties() {
+        return new DataSourceProperties();
+    }
+
+    /**
+     * 其他数据源
+     */
+    @Bean("dynamicDataSourceProperties")
+    @ConfigurationProperties(prefix = "dynamic")
+    public DynamicDataSourceProperties dynamicDataSourceProperties() {
+        return new DynamicDataSourceProperties();
     }
 
     /**
@@ -41,59 +55,64 @@ public class DataSourceAutoConfiguration {
      */
     @Bean("dataSource")
     @Primary
-    public DataSource dataSource() throws SQLException, DatasourceException {
-        DataSource dataSource = determineDataSource();
-        String defaultDataSourceName = GlobalUtils.getDefaultDataSourceName();
-        // 动态数据源
-        if (dataSource instanceof DynamicDataSource) {
-            DynamicDataSource dynamicDataSource = (DynamicDataSource) dataSource;
-            dynamicDataSource.setDefaultTargetDataSource(convertAtomikosDataSource(defaultDataSourceName,
-                    initDataSource(defaultDataSourceName, new DruidXADataSource())));
-            dynamicDataSource.setTargetDataSources(MapUtils.newConcurrentMap());
+    public DataSource dataSource(DataSourceProperties defaultDataSourceProperties, DynamicDataSourceProperties dynamicDataSourceProperties) {
+
+        if (dynamicDataSourceProperties != null && dynamicDataSourceProperties.getDatasource().size() > 0) {
+            // 动态数据源
+            DynamicDataSource dynamicDataSource = new DynamicDataSource();
+            // 默认数据源
+            dynamicDataSource.setDefaultTargetDataSource(convertAtomikosDataSource("default",
+                    (DruidXADataSource) initDataSource(defaultDataSourceProperties, new DruidXADataSource())));
+            // 其他数据源
+            Map<String, DataSourceProperties> dataSourcePropertiesMap = dynamicDataSourceProperties.getDatasource();
+            Map<Object, Object> targetDataSources = MapUtils.newConcurrentMap();
+            dataSourcePropertiesMap.forEach((datasourceName, dataSourceProperties) -> {
+
+                DataSource dataSource = initDataSource(dataSourceProperties, new DruidXADataSource());
+
+                targetDataSources.put(datasourceName, convertAtomikosDataSource(datasourceName, (DruidXADataSource) dataSource));
+            });
+            dynamicDataSource.setTargetDataSources(targetDataSources);
             return dynamicDataSource;
         }
-        return initDataSource(defaultDataSourceName, dataSource);
+        return initDataSource(defaultDataSourceProperties, new DruidDataSource());
     }
 
     /**
-     * 选择数据源
-     */
-    private DataSource determineDataSource() {
-        if (GlobalUtils.isEnableDynamicDataSource()) {
-            return new DynamicDataSource();
-        }
-        return new DruidDataSource();
-    }
-
-    /**
-     * @param dataSourceName dataSourceName
-     * @param dataSource     dataSource
+     * @param properties      properties
+     * @param druidDataSource dataSource
      * @return dataSource
-     * @throws SQLException SQLException
      */
-    public static DataSource initDataSource(String dataSourceName, DataSource dataSource) throws SQLException {
-        ConnectionPool entity = getDataSourceConfig(dataSourceName);
-        if (dataSource instanceof DruidDataSource) {
-            DruidDataSource druidDataSource = (DruidDataSource) dataSource;
-            druidDataSource.setDriverClassName(entity.getDriverClassName());
-            druidDataSource.setUrl(entity.getUrl());
-            druidDataSource.setUsername(entity.getUsername());
-            druidDataSource.setPassword(entity.getPassword());
-            druidDataSource.setTestOnBorrow(entity.getTestOnBorrow());
-            druidDataSource.setTestOnReturn(entity.getTestOnReturn());
-            druidDataSource.setInitialSize(entity.getPoolInitSize());
-            druidDataSource.setMinIdle(entity.getPoolMinSize());
-            druidDataSource.setMaxActive(entity.getPoolMaxSize());
-            druidDataSource.setMaxWait(entity.getMaxWait());
-            druidDataSource.setTimeBetweenEvictionRunsMillis(entity.getTimeBetweenEvictionRunsMillis());
-            druidDataSource.setMinEvictableIdleTimeMillis(entity.getMinEvictableIdleTimeMillis());
-            druidDataSource.setRemoveAbandoned(entity.getRemoveAbandoned());
-            druidDataSource.setRemoveAbandonedTimeout(entity.getRemoveAbandonedTimeout());
-            if (!(druidDataSource instanceof XADataSource)) {
+    public static DataSource initDataSource(DataSourceProperties properties, DruidDataSource druidDataSource) {
+
+        druidDataSource.setDriverClassName(properties.getDriverClassName());
+        druidDataSource.setUrl(properties.getUrl());
+        druidDataSource.setUsername(properties.getUsername());
+        druidDataSource.setPassword(properties.getPassword());
+
+        druidDataSource.setInitialSize(properties.getInitialSize());
+        druidDataSource.setMaxActive(properties.getMaxActive());
+        druidDataSource.setMinIdle(properties.getMinIdle());
+        druidDataSource.setMaxWait(properties.getMaxWait());
+        druidDataSource.setTimeBetweenEvictionRunsMillis(properties.getTimeBetweenEvictionRunsMillis());
+        druidDataSource.setMinEvictableIdleTimeMillis(properties.getMinEvictableIdleTimeMillis());
+        druidDataSource.setMaxEvictableIdleTimeMillis(properties.getMaxEvictableIdleTimeMillis());
+        druidDataSource.setValidationQuery(properties.getValidationQuery());
+        druidDataSource.setValidationQueryTimeout(properties.getValidationQueryTimeout());
+        druidDataSource.setTestOnBorrow(properties.isTestOnBorrow());
+        druidDataSource.setTestOnReturn(properties.isTestOnReturn());
+        druidDataSource.setPoolPreparedStatements(properties.isPoolPreparedStatements());
+        druidDataSource.setMaxOpenPreparedStatements(properties.getMaxOpenPreparedStatements());
+        druidDataSource.setSharePreparedStatements(properties.isSharePreparedStatements());
+
+        if (!(druidDataSource instanceof XADataSource)) {
+            try {
                 druidDataSource.init();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
-        return dataSource;
+        return druidDataSource;
     }
 
     /**
@@ -102,43 +121,21 @@ public class DataSourceAutoConfiguration {
      * @param dataSourceName dataSourceName
      * @param dataSource     dataSource
      * @return AtomikosDataSourceBean
-     * @throws AtomikosSQLException AtomikosSQLException
      */
-    public static AtomikosDataSourceBean convertAtomikosDataSource(String dataSourceName, DataSource dataSource) throws AtomikosSQLException, DatasourceException {
-        AtomikosDataSourceBean atomikosDataSourceBean;
-        if (dataSource instanceof XADataSource) {
-            atomikosDataSourceBean = new AtomikosDataSourceBean();
-            atomikosDataSourceBean.setXaDataSource((XADataSource) dataSource);
-            atomikosDataSourceBean.setMinPoolSize(3);
-            atomikosDataSourceBean.setMaxPoolSize(15);
-            atomikosDataSourceBean.setBorrowConnectionTimeout(60);
-            atomikosDataSourceBean.setUniqueResourceName(dataSourceName);
-            atomikosDataSourceBean.setXaDataSourceClassName(XA_DATA_SOURCE_CLASS_NAME);
+    public static AtomikosDataSourceBean convertAtomikosDataSource(String dataSourceName, XADataSource dataSource) {
+        AtomikosDataSourceBean atomikosDataSourceBean = new AtomikosDataSourceBean();
+        atomikosDataSourceBean.setXaDataSource(dataSource);
+        atomikosDataSourceBean.setMinPoolSize(3);
+        atomikosDataSourceBean.setMaxPoolSize(15);
+        atomikosDataSourceBean.setBorrowConnectionTimeout(60);
+        atomikosDataSourceBean.setUniqueResourceName(dataSourceName);
+        atomikosDataSourceBean.setXaDataSourceClassName(XA_DATA_SOURCE_CLASS_NAME);
+        try {
             atomikosDataSourceBean.init();
-        } else {
-            throw new DatasourceException("当前数据源不支持XA协议");
+        } catch (AtomikosSQLException e) {
+            e.printStackTrace();
         }
         return atomikosDataSourceBean;
     }
 
-    /**
-     * 获取数据源配置信息
-     *
-     * @param dataSourceName dataSourceName
-     * @return dataSourceEntity
-     */
-    public static ConnectionPool getDataSourceConfig(String dataSourceName) {
-        String dataSourceKey = DATA_SOURCE_KEY_PREFIX;
-        return new ConnectionPool(dataSourceName,
-                GlobalUtils.getProperty(dataSourceKey + "." + dataSourceName + "." + "driver"),
-                GlobalUtils.getProperty(dataSourceKey + "." + dataSourceName + "." + "url"),
-                GlobalUtils.getProperty(dataSourceKey + "." + dataSourceName + "." + "username"),
-                GlobalUtils.getProperty(dataSourceKey + "." + dataSourceName + "." + "password")
-        );
-    }
-
-    public boolean isEnableDynamicDatasource() {
-
-        return false;
-    }
 }

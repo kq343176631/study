@@ -94,7 +94,7 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
-        // 日子拦截器
+        /*// 日子拦截器
         InterceptorRegistration logRegistration = registry.addInterceptor(new LogInterceptor());
         String logPathPatterns = GlobalUtils.getProperty("web.interceptor.log.addPathPatterns");
         String logExcludePathPatterns = GlobalUtils.getProperty("web.interceptor.log.excludePathPatterns");
@@ -126,7 +126,7 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
             if (StringUtils.isNotBlank(uri)) {
                 mobileRegistration.excludePathPatterns(StringUtils.trim(uri));
             }
-        }
+        }*/
     }
 
     /**
