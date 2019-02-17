@@ -12,6 +12,7 @@ public class Sha1Utils {
 
     /**
      * 生成随机的Byte[]作为salt密钥.
+     *
      * @param numBytes byte数组的大小
      */
     public static byte[] genSalt(int numBytes) {

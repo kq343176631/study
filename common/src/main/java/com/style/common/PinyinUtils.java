@@ -14,10 +14,11 @@ import java.util.regex.Pattern;
  */
 public class PinyinUtils {
 
-    private static class Static{
+    private static class Static {
         private static Pattern idPatt = Pattern.compile("\\W");
         private static HanyuPinyinOutputFormat defaultFormat;
-        static{
+
+        static {
             defaultFormat = new HanyuPinyinOutputFormat();
             defaultFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
             defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
@@ -27,6 +28,7 @@ public class PinyinUtils {
 
     /**
      * 获取汉字串拼音首字母，替换调非法标示符字符，英文字符不变，去除空格
+     *
      * @param chinese 汉字串
      * @return 汉语拼音首字母
      */
@@ -36,13 +38,14 @@ public class PinyinUtils {
 
     /**
      * 获取汉字串拼音首字母，替换调非法标示符字符，英文字符不变，去除空格
+     *
      * @param chinese 汉字串
-     * @param isId 是否标示符（true：将去掉特殊字符）
+     * @param isId    是否标示符（true：将去掉特殊字符）
      * @return 汉语拼音首字母
      */
     public static String getFirstSpell(String chinese, boolean isId) {
         chinese = getDbc(chinese);
-        if (chinese == null){
+        if (chinese == null) {
             return null;
         }
         StringBuffer pybf = new StringBuffer();
@@ -53,7 +56,7 @@ public class PinyinUtils {
                     String[] temp = PinyinHelper.toHanyuPinyinStringArray(arr[i], Static.defaultFormat);
                     if (temp != null) {
                         pybf.append(temp[0].charAt(0));
-                    }else{
+                    } else {
                         pybf.append(String.valueOf(arr[i]));
                     }
                 } catch (BadHanyuPinyinOutputFormatCombination e) {
@@ -63,7 +66,7 @@ public class PinyinUtils {
                 pybf.append(arr[i]);
             }
         }
-        if (isId){
+        if (isId) {
             return Static.idPatt.matcher(pybf.toString()).replaceAll("").trim();
         }
         return pybf.toString();
@@ -71,6 +74,7 @@ public class PinyinUtils {
 
     /**
      * 获取汉字串全拼，英文字符不变
+     *
      * @param chinese 汉字串
      * @return 汉语拼音
      */
@@ -80,13 +84,14 @@ public class PinyinUtils {
 
     /**
      * 获取汉字串全拼，英文字符不变
+     *
      * @param chinese 汉字串
-     * @param isId 是否标示符（true：将去掉特殊字符）
+     * @param isId    是否标示符（true：将去掉特殊字符）
      * @return 汉语拼音
      */
     public static String getFullSpell(String chinese, boolean isId) {
         chinese = getDbc(chinese);
-        if (chinese == null){
+        if (chinese == null) {
             return null;
         }
         StringBuffer pybf = new StringBuffer();
@@ -95,9 +100,9 @@ public class PinyinUtils {
             if (arr[i] > 128) {
                 try {
                     String[] ss = PinyinHelper.toHanyuPinyinStringArray(arr[i], Static.defaultFormat);
-                    if (ss != null && ss.length > 0){
+                    if (ss != null && ss.length > 0) {
                         pybf.append(ss[0]);
-                    }else{
+                    } else {
                         pybf.append(String.valueOf(arr[i]));
                     }
                 } catch (BadHanyuPinyinOutputFormatCombination e) {
@@ -107,7 +112,7 @@ public class PinyinUtils {
                 pybf.append(arr[i]);
             }
         }
-        if (isId){
+        if (isId) {
             return Static.idPatt.matcher(pybf.toString()).replaceAll("").trim();
         }
         return pybf.toString();
@@ -115,11 +120,12 @@ public class PinyinUtils {
 
     /**
      * 半角转全角
+     *
      * @param input String.
      * @return 全角字符串.
      */
     public static String getSbc(String input) {
-        if (input == null){
+        if (input == null) {
             return null;
         }
         char c[] = input.toCharArray();
@@ -135,11 +141,12 @@ public class PinyinUtils {
 
     /**
      * 全角转半角
+     *
      * @param input String.
      * @return 半角字符串
      */
     public static String getDbc(String input) {
-        if (input == null){
+        if (input == null) {
             return null;
         }
         char c[] = input.toCharArray();

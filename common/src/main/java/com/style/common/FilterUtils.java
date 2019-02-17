@@ -56,7 +56,6 @@ public class FilterUtils {
 
     /**
      * 执行 SQL 过滤（使用正则表达式）
-     *
      */
     public static String doSqlFilterWithRegx(String text) {
         if (text != null) {

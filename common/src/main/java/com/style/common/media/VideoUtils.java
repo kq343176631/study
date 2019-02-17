@@ -20,26 +20,27 @@ import java.util.List;
 public class VideoUtils {
 
     private static final Logger log = LoggerFactory.getLogger(VideoUtils.class);
-    private static String ffmpegFile; 		// ffmpeg.exe所放的路径
-    private static String mencoderFile;		//  mencoder.exe所放的路径
-    private static String qtFaststartFile;	//  qt-faststart.exe所放的路径
+    private static String ffmpegFile;        // ffmpeg.exe所放的路径
+    private static String mencoderFile;        //  mencoder.exe所放的路径
+    private static String qtFaststartFile;    //  qt-faststart.exe所放的路径
 
-    private String inputFile = "";				// 需转换的原始文件名称
-    private String inputFileExtension = "";		// 当前文件的文件后缀
+    private String inputFile = "";                // 需转换的原始文件名称
+    private String inputFileExtension = "";        // 当前文件的文件后缀
 
-    private String outputFile = "";				// 输出文件名称
-    private String outputFileExtension = "mp4";	// 最终转换的文件格式 mp4 flv
+    private String outputFile = "";                // 输出文件名称
+    private String outputFileExtension = "mp4";    // 最终转换的文件格式 mp4 flv
 
-    private String imgFile = "";				// 生成缩略图文件名
-    private String imgFileExtension = "jpg";	// 生成视频图片截图后缀 jpg gif
+    private String imgFile = "";                // 生成缩略图文件名
+    private String imgFileExtension = "jpg";    // 生成视频图片截图后缀 jpg gif
 
     private String width = null;//"800";		// 视频默认宽高
     private String height = null;//"600";		// 视频默认宽高
 
-    private boolean status = false; 	// 是否正常状态
+    private boolean status = false;    // 是否正常状态
 
     /**
      * 构造函数
+     *
      * @param inputFile 需要转换视频文件的绝对路径和名称
      */
     public VideoUtils(String inputFile) {
@@ -48,9 +49,10 @@ public class VideoUtils {
 
     /**
      * 构造函数
-     * @param inputFile 需要转换视频文件的绝对路径和名称
+     *
+     * @param inputFile  需要转换视频文件的绝对路径和名称
      * @param outputFile 视频文件转换后的输出文件路径和名称
-     * @param imgFile 视频文件截图的图片路径和名称
+     * @param imgFile    视频文件截图的图片路径和名称
      */
     public VideoUtils(String inputFile, String outputFile, String imgFile) {
         this.inputFile = FileUtils.path(inputFile);
@@ -62,13 +64,14 @@ public class VideoUtils {
 
     /**
      * 构造函数
-     * @param inputFile 需要转换视频文件的绝对路径和名称
+     *
+     * @param inputFile  需要转换视频文件的绝对路径和名称
      * @param outputFile 视频文件转换后的输出文件路径和名称
-     * @param imgFile 视频文件截图的图片路径和名称
-     * @param width 转换后视频和图片的宽度
-     * @param height 转换后视频和图片的高度
+     * @param imgFile    视频文件截图的图片路径和名称
+     * @param width      转换后视频和图片的宽度
+     * @param height     转换后视频和图片的高度
      */
-    public VideoUtils(String inputFile, String outputFile, String imgFile, String width, String height){
+    public VideoUtils(String inputFile, String outputFile, String imgFile, String width, String height) {
         this(inputFile, outputFile, imgFile);
         this.width = width;
         this.height = height;
@@ -76,6 +79,7 @@ public class VideoUtils {
 
     /**
      * 检查文件格式。根据文件格式 分类解析
+     *
      * @return int 0：ffmpag；1：mencoder；0：不支持的格式
      */
     private int checkContentType() {
@@ -93,6 +97,7 @@ public class VideoUtils {
 
     /**
      * 截取图片
+     *
      * @return boolean
      */
     public boolean cutPic() {
@@ -102,9 +107,9 @@ public class VideoUtils {
             statusTemp = processFfmpegCutpic(inputFile, outputFile);
             try {
                 File imgfile = new File(imgFile);
-                if (imgfile.exists()){
+                if (imgfile.exists()) {
                     ImageUtils.thumbnails(imgfile, 800, 600, null);
-                }else{
+                } else {
                     statusTemp = false;
                 }
             } catch (Exception e) {
@@ -118,6 +123,7 @@ public class VideoUtils {
 
     /**
      * 转换视频
+     *
      * @return boolean
      */
     public boolean convert() {
@@ -132,7 +138,7 @@ public class VideoUtils {
             log.debug("使用mencoder进行视频转换");
             statusTemp = processMencoder(inputFile, tempFile);
         }
-        if (statusTemp){
+        if (statusTemp) {
             log.debug("将mp4视频的元数据信息转到视频第一帧");
             statusTemp = processQtFaststart(tempFile, outputFile);
         }
@@ -144,6 +150,7 @@ public class VideoUtils {
 
     /**
      * 检查文件是否存在
+     *
      * @param inputFile
      * @return boolean
      */
@@ -158,6 +165,7 @@ public class VideoUtils {
 
     /**
      * ffmpeg 截取缩略图
+     *
      * @param inputFile
      * @return boolean
      */
@@ -190,6 +198,7 @@ public class VideoUtils {
 
     /**
      * ffmpeg能解析转换视频
+     *
      * @param inputFile （asx，asf，mpg，wmv，3gp，mp4，mov，avi，flv等）
      * @return boolean
      */
@@ -220,7 +229,7 @@ public class VideoUtils {
         command.add("29.97");
         command.add("-qscale");
         command.add("6");
-        if (StringUtils.isNotBlank(width) && StringUtils.isNotBlank(height)){
+        if (StringUtils.isNotBlank(width) && StringUtils.isNotBlank(height)) {
             command.add("-s");
             command.add((width + "x" + height));
         }
@@ -231,6 +240,7 @@ public class VideoUtils {
 
     /**
      * 直接转换不需要转成avi在转换
+     *
      * @return boolean
      */
     private boolean processMencoder(String inputFile, String outputFile) {
@@ -243,7 +253,7 @@ public class VideoUtils {
         command.add("aq=7:vbr=2:q=6");
         command.add("-srate");
         command.add("44100");
-        if (StringUtils.isNotBlank(width) && StringUtils.isNotBlank(height)){
+        if (StringUtils.isNotBlank(width) && StringUtils.isNotBlank(height)) {
             command.add("-vf");
             command.add(("scale=" + width + ":" + height + ",harddup"));
         }
@@ -260,6 +270,7 @@ public class VideoUtils {
 
     /**
      * 将mp4视频的元数据信息转到视频第一帧
+     *
      * @return boolean
      */
     private boolean processQtFaststart(String inputFile, String outputFile) {
@@ -272,6 +283,7 @@ public class VideoUtils {
 
     /**
      * 执行命令
+     *
      * @param command
      * @return boolean
      */
@@ -285,9 +297,9 @@ public class VideoUtils {
             process.waitFor();
             return true;
         } catch (Exception e) {
-            if (StringUtils.contains(e.getMessage(), "CreateProcess error=2")){
+            if (StringUtils.contains(e.getMessage(), "CreateProcess error=2")) {
                 log.error("缺少视频转换工具，请配置video.ffmpegFile相关参数。" + e.getMessage());
-            }else{
+            } else {
                 log.error(e.getMessage(), e);
             }
             return false;
@@ -295,7 +307,7 @@ public class VideoUtils {
     }
 
     public static String getFfmpegFile() {
-        if (ffmpegFile == null){
+        if (ffmpegFile == null) {
             ffmpegFile = PropertyUtils.getInstance().getProperty("video.ffmpegFile");
         }
         return ffmpegFile;
@@ -306,7 +318,7 @@ public class VideoUtils {
     }
 
     public static String getMencoderFile() {
-        if (mencoderFile == null){
+        if (mencoderFile == null) {
             mencoderFile = PropertyUtils.getInstance().getProperty("video.mencoderFile");
         }
         return mencoderFile;
@@ -317,7 +329,7 @@ public class VideoUtils {
     }
 
     public static String getQtFaststartFile() {
-        if (qtFaststartFile == null){
+        if (qtFaststartFile == null) {
             qtFaststartFile = PropertyUtils.getInstance().getProperty("video.qtFaststartFile");
         }
         return qtFaststartFile;

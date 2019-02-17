@@ -114,7 +114,7 @@ public class MacUtils {
         }
 
         // 取不到，试下Unix取发
-        if (mac == null){
+        if (mac == null) {
             return getUnixMACAddress();
         }
 
@@ -142,7 +142,7 @@ public class MacUtils {
                 /**
                  * 寻找标示字符串[physical address 或  物理地址]
                  */
-                if (line.split("-").length == 6){
+                if (line.split("-").length == 6) {
                     index = line.indexOf(":");
                     if (index != -1) {
                         /**
@@ -170,7 +170,7 @@ public class MacUtils {
         return mac;
     }
 
-    public static String getMac(){
+    public static String getMac() {
         String os = getOSName();
         String mac;
         if (os.startsWith("windows")) {

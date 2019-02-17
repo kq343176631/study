@@ -47,28 +47,30 @@ public class PropertyUtils {
      */
     private static final class PropertiesLoaderHolder {
         private static PropertyUtils INSTANCE;
+
         static {
             releadInstance();
         }
-        public static void releadInstance(){
+
+        public static void releadInstance() {
             // 获取平台及模块相关的配置文件
             Set<String> configSet = SetUtils.newLinkedHashSet();
             Resource[] resources = ResourceUtils.getResources("classpath*:/configs/sys-*.*");
-            for(Resource resource : resources){
-                configSet.add("classpath:configs/"+resource.getFilename());
+            for (Resource resource : resources) {
+                configSet.add("classpath:configs/" + resource.getFilename());
             }
             // 获取全局设置默认的配置文件（以下是支持环境配置的属性文件）
             Set<String> set = SetUtils.newLinkedHashSet();
-            for (String configFile : DEFAULT_CONFIG_FILE){
+            for (String configFile : DEFAULT_CONFIG_FILE) {
                 set.add(configFile);
             }
             // 获取 spring.config.location 外部自定义的配置文件
             String customConfigs = System.getProperty("spring.config.location");
-            if (StringUtils.isNotBlank(customConfigs)){
-                for (String customConfig : StringUtils.split(customConfigs, ",")){
-                    if (!customConfig.contains("$")){
+            if (StringUtils.isNotBlank(customConfigs)) {
+                for (String customConfig : StringUtils.split(customConfigs, ",")) {
+                    if (!customConfig.contains("$")) {
                         customConfig = org.springframework.util.StringUtils.cleanPath(customConfig);
-                        if (!ResourceUtils.isUrl(customConfig)){
+                        if (!ResourceUtils.isUrl(customConfig)) {
                             customConfig = ResourceUtils.FILE_URL_PREFIX + customConfig;
                         }
                     }
@@ -78,24 +80,24 @@ public class PropertyUtils {
             // 获取 spring.profiles.active 活动环境名称的配置文件
             String[] configFiles = set.toArray(new String[set.size()]);
             String profiles = System.getProperty("spring.profiles.active");
-            if (StringUtils.isBlank(profiles)){
+            if (StringUtils.isBlank(profiles)) {
                 PropertyUtils propsTemp = new PropertyUtils(configFiles);
                 profiles = propsTemp.getProperty("spring.profiles.active");
             }
-            for (String location : configFiles){
+            for (String location : configFiles) {
                 configSet.add(location);
-                if (StringUtils.isNotBlank(profiles)){
-                    if (location.endsWith(".properties")){
+                if (StringUtils.isNotBlank(profiles)) {
+                    if (location.endsWith(".properties")) {
                         configSet.add(StringUtils.substringBeforeLast(location, ".properties")
                                 + "-" + profiles + ".properties");
-                    }else if (location.endsWith(".yml")){
+                    } else if (location.endsWith(".yml")) {
                         configSet.add(StringUtils.substringBeforeLast(location, ".yml")
                                 + "-" + profiles + ".yml");
                     }
                 }
             }
             configFiles = configSet.toArray(new String[configSet.size()]);
-            logger.debug("Loading style config: {}", (Object)configFiles);
+            logger.debug("Loading style config: {}", (Object) configFiles);
             INSTANCE = new PropertyUtils(configFiles);
         }
     }
@@ -107,19 +109,18 @@ public class PropertyUtils {
         for (String location : configFiles) {
             try {
                 Resource resource = ResourceUtils.getResource(location);
-                if (resource.exists()){
-                    if (location.endsWith(".properties")){
-                        try (InputStreamReader is = new InputStreamReader(resource.getInputStream(), "UTF-8")){
+                if (resource.exists()) {
+                    if (location.endsWith(".properties")) {
+                        try (InputStreamReader is = new InputStreamReader(resource.getInputStream(), "UTF-8")) {
                             properties.load(is);
                             configSet.add(location);
                         } catch (IOException ex) {
                             logger.error("Load " + location + " failure. ", ex);
                         }
-                    }
-                    else if (location.endsWith(".yml")){
+                    } else if (location.endsWith(".yml")) {
                         YamlPropertiesFactoryBean bean = new YamlPropertiesFactoryBean();
                         bean.setResources(resource);
-                        for (Map.Entry<Object,Object> entry : bean.getObject().entrySet()){
+                        for (Map.Entry<Object, Object> entry : bean.getObject().entrySet()) {
                             properties.put(ObjectUtils.toString(entry.getKey()),
                                     ObjectUtils.toString(entry.getValue()));
                         }
@@ -149,14 +150,14 @@ public class PropertyUtils {
     /**
      * 当前类实例
      */
-    public static PropertyUtils getInstance(){
+    public static PropertyUtils getInstance() {
         return PropertiesLoaderHolder.INSTANCE;
     }
 
     /**
      * 重新加载实例（重新实例化，以重新加载属性文件数据）
      */
-    public static void releadInstance(){
+    public static void releadInstance() {
         PropertiesLoaderHolder.releadInstance();
     }
 
@@ -167,22 +168,22 @@ public class PropertyUtils {
      * 获取属性值，取不到从System.getProperty()获取，都取不到返回null
      */
     public String getProperty(String key) {
-        if (environment != null){
+        if (environment != null) {
             String value = environment.getProperty(key);
-            if (value != null){
+            if (value != null) {
                 return value;
             }
         }
         String value = properties.getProperty(key);
-        if (value != null){
+        if (value != null) {
             Matcher m = p1.matcher(value);
-            while(m.find()) {
+            while (m.find()) {
                 String g = m.group();
                 String childKey = g.replaceAll("\\$\\{|\\}", "");
                 value = StringUtils.replace(value, g, getProperty(childKey));
             }
             return value;
-        }else{
+        } else {
             String systemProperty = System.getProperty(key);
             if (systemProperty != null) {
                 return systemProperty;
@@ -201,6 +202,7 @@ public class PropertyUtils {
 
     /**
      * 设置环境属性
+     *
      * @param environment
      */
     public static void setEnvironment(Environment environment) {
@@ -210,7 +212,7 @@ public class PropertyUtils {
     /**
      * 初始化日志路径
      */
-    private static Logger initLogger(){
+    private static Logger initLogger() {
         String logPath = null;
         try {
             // 获取当前classes目录
@@ -221,10 +223,10 @@ public class PropertyUtils {
         }
         // 取当前日志路径下有classes目录，则使用classes目录
         String classesLogPath = FileUtils.path(logPath + "/WEB-INF/classes");
-        if (new File(classesLogPath).exists()){
+        if (new File(classesLogPath).exists()) {
             logPath = classesLogPath;
         }
-        if (StringUtils.isBlank(System.getProperty("logPath"))){
+        if (StringUtils.isBlank(System.getProperty("logPath"))) {
             System.setProperty("logPath", FileUtils.path(logPath));
         }
         return LoggerFactory.getLogger(PropertyUtils.class);

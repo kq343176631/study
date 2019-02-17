@@ -14,10 +14,10 @@ public class EmailUtils {
 
     /**
      * 发送邮件
+     *
      * @param toAddress 接收地址
-     * @param subject 标题
-     * @param content 内容
-     * @return
+     * @param subject   标题
+     * @param content   内容
      */
     public static boolean send(String toAddress, String subject, String content) {
         PropertyUtils props = PropertyUtils.getInstance();
@@ -31,10 +31,10 @@ public class EmailUtils {
 
     /**
      * 发送邮件
+     *
      * @param toAddress 接收地址
-     * @param subject 标题
-     * @param content 内容
-     * @return
+     * @param subject   标题
+     * @param content   内容
      */
     public static boolean send(String fromAddress, String fromPassword, String fromHostName,
                                String sslOnConnect, String sslSmtpPort, String toAddress, String subject, String content) {

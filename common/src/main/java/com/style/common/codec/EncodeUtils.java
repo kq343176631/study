@@ -20,6 +20,7 @@ import java.net.URLEncoder;
 public class EncodeUtils {
 
     private static final String DEFAULT_URL_ENCODING = "UTF-8";
+
     private static final char[] BASE62 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
     /**
@@ -126,7 +127,7 @@ public class EncodeUtils {
      * URL 编码, Encode默认为UTF-8.
      */
     public static String encodeUrl(String part, String encoding) {
-        if (part == null){
+        if (part == null) {
             return null;
         }
         try {
@@ -147,7 +148,7 @@ public class EncodeUtils {
      * URL 解码, Encode默认为UTF-8.
      */
     public static String decodeUrl(String part, String encoding) {
-        if (part == null){
+        if (part == null) {
             return null;
         }
         try {

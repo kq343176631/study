@@ -21,39 +21,39 @@ public class ImageUtils {
     /**
      * 缩略图生成，处理一些较大的图片，防止占用太多的网络资源
      */
-    public static void thumbnails(File imageFile, int maxWidth, int maxHeight, String outputFormat){
-        if (imageFile == null || !imageFile.exists() || (maxWidth <= 0 && maxHeight <= 0)){
+    public static void thumbnails(File imageFile, int maxWidth, int maxHeight, String outputFormat) {
+        if (imageFile == null || !imageFile.exists() || (maxWidth <= 0 && maxHeight <= 0)) {
             return;
         }
         // 只处理可以压缩的图片，如gif图片压缩后会出现黑色背景的情况
         String extension = FileUtils.getFileExtension(imageFile.getName());
-        if (!StringUtils.inString(extension, "png", "jpg", "jpeg", "bmp", "ico")){
+        if (!StringUtils.inString(extension, "png", "jpg", "jpeg", "bmp", "ico")) {
             return;
         }
-        try{
+        try {
             BufferedImage bufferedImage = ImageIO.read(imageFile);
             Builder<BufferedImage> bilder = Thumbnails.of(bufferedImage);
-            if (bufferedImage != null){
-                if (maxWidth > 0){
-                    if (bufferedImage.getWidth() <= maxWidth){
+            if (bufferedImage != null) {
+                if (maxWidth > 0) {
+                    if (bufferedImage.getWidth() <= maxWidth) {
                         bilder.width(bufferedImage.getWidth());
-                    }else{
+                    } else {
                         bilder.width(maxWidth);
                     }
                 }
-                if (maxHeight > 0){
-                    if (bufferedImage.getHeight() <= maxHeight){
+                if (maxHeight > 0) {
+                    if (bufferedImage.getHeight() <= maxHeight) {
                         bilder.height(bufferedImage.getHeight());
-                    }else{
+                    } else {
                         bilder.height(maxHeight);
                     }
                 }
-                if (StringUtils.isNotBlank(outputFormat)){
+                if (StringUtils.isNotBlank(outputFormat)) {
                     bilder.outputFormat(outputFormat);
                 }
                 bilder.toFile(imageFile);
             }
-        }catch(IOException e){
+        } catch (IOException e) {
             logger.error("图片压缩失败：" + imageFile.getAbsoluteFile(), e);
         }
     }

@@ -18,6 +18,7 @@ public class DigestUtils {
 
     /**
      * 生成随机的Byte[]作为salt密钥.
+     *
      * @param numBytes byte数组的大小
      */
     public static byte[] genSalt(int numBytes) {
@@ -29,8 +30,9 @@ public class DigestUtils {
 
     /**
      * 对字符串进行散列, 支持md5与sha1算法.
-     * @param input 需要散列的字符串
-     * @param algorithm 散列算法（"SHA-1"、"MD5"）
+     *
+     * @param input      需要散列的字符串
+     * @param algorithm  散列算法（"SHA-1"、"MD5"）
      * @param salt
      * @param iterations 迭代次数
      * @return
@@ -57,7 +59,8 @@ public class DigestUtils {
 
     /**
      * 对文件进行sha1散列.
-     * @param input 需要散列的流
+     *
+     * @param input     需要散列的流
      * @param algorithm 散列算法（"SHA-1"、"MD5"）
      */
     public static byte[] digest(InputStream input, String algorithm) throws IOException {

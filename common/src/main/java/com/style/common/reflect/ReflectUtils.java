@@ -27,7 +27,7 @@ public class ReflectUtils {
     private static final String CGLIB_CLASS_SEPARATOR = "$$";
 
     public static Class<?> getUserClass(Object instance) {
-        if (instance == null){
+        if (instance == null) {
             throw new RuntimeException("Instance must not be null");
         }
         Class clazz = instance.getClass();

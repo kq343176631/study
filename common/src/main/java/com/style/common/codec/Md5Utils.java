@@ -15,10 +15,12 @@ import java.io.UnsupportedEncodingException;
 public class Md5Utils {
 
     private static final String MD5 = "MD5";
+
     private static final String DEFAULT_ENCODING = "UTF-8";
 
     /**
      * 对输入字符串进行md5散列.
+     *
      * @param input 加密字符串
      */
     public static String md5(String input) {
@@ -27,7 +29,8 @@ public class Md5Utils {
 
     /**
      * 对输入字符串进行md5散列.
-     * @param input 加密字符串
+     *
+     * @param input      加密字符串
      * @param iterations 迭代次数
      */
     public static String md5(String input, int iterations) {
@@ -40,6 +43,7 @@ public class Md5Utils {
 
     /**
      * 对输入字符串进行md5散列.
+     *
      * @param input 加密字符串
      */
     public static byte[] md5(byte[] input) {
@@ -48,7 +52,8 @@ public class Md5Utils {
 
     /**
      * 对输入字符串进行md5散列.
-     * @param input 加密字符串
+     *
+     * @param input      加密字符串
      * @param iterations 迭代次数
      */
     public static byte[] md5(byte[] input, int iterations) {
@@ -74,12 +79,12 @@ public class Md5Utils {
      * uploader.md5File(file, 0, 10 * 1024 * 1024)
      */
     public static String md5File(File file, int size) {
-        if (file != null && file.exists()){
-            try (InputStream in = FileUtils.openInputStream(file)){
+        if (file != null && file.exists()) {
+            try (InputStream in = FileUtils.openInputStream(file)) {
                 byte[] bytes = null;
-                if (size != -1 && file.length() >= size){
+                if (size != -1 && file.length() >= size) {
                     bytes = IOUtils.toByteArray(in, size);
-                }else{
+                } else {
                     bytes = IOUtils.toByteArray(in);
                 }
                 return EncodeUtils.encodeHex(md5(bytes));

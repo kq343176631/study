@@ -18,9 +18,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     /**
      * 转换为字节数组
-     *
-     * @param str
-     * @return
      */
     public static byte[] getBytes(String str) {
         if (str != null) {
@@ -83,8 +80,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     /**
      * 去除左右空格（包含中文空格）
-     *
-     * @param str
      */
     public static String trim2(final String str) {
         return str == null ? null : str.replaceAll("^[\\s|　| ]*|[\\s|　| ]*$", "");
@@ -101,15 +96,11 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         String regEx = "<.+?>";
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher(html);
-        String s = m.replaceAll("");
-        return s;
+        return m.replaceAll("");
     }
 
     /**
      * 替换为手机识别的HTML，去掉样式及属性，保留回车。
-     *
-     * @param html
-     * @return
      */
     public static String toMobileHtml(String html) {
         if (html == null) {
@@ -120,9 +111,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     /**
      * 对txt进行HTML编码，并将\n转换为&gt;br/&lt;、\t转换为&nbsp; &nbsp;
-     *
-     * @param txt
-     * @return
      */
     public static String toHtml(String txt) {
         if (txt == null) {
@@ -136,7 +124,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      *
      * @param str    目标字符串
      * @param length 截取长度
-     * @return
      */
     public static String abbr(String str, int length) {
         if (str == null) {
@@ -169,7 +156,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      *
      * @param param  目标字符串
      * @param length 截取长度
-     * @return
      */
     public static String htmlAbbr(String param, int length) {
         if (param == null) {
@@ -342,9 +328,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     /**
      * 获取随机字符串
-     *
-     * @param count
-     * @return
      */
     public static String getRandomStr(int count) {
         char[] codeSeq = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
@@ -361,9 +344,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     /**
      * 获取随机数字
-     *
-     * @param count
-     * @return
      */
     public static String getRandomNum(int count) {
         char[] codeSeq = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
@@ -385,7 +365,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      *                   false or null：不显示编码：name
      * @param code       编码
      * @param name       名称
-     * @return
      */
     public static String getTreeNodeName(String isShowCode, String code, String name) {
         if ("true".equals(isShowCode) || "1".equals(isShowCode)) {

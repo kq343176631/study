@@ -12,10 +12,8 @@ public class ExceptionUtils extends org.apache.commons.lang3.exception.Exception
 
     /**
      * 在request中获取异常类
-     * @param request
-     * @return
      */
-    public static Throwable getThrowable(HttpServletRequest request){
+    public static Throwable getThrowable(HttpServletRequest request) {
         Throwable ex = null;
         if (request.getAttribute("exception") != null) {
             ex = (Throwable) request.getAttribute("exception");
@@ -29,7 +27,7 @@ public class ExceptionUtils extends org.apache.commons.lang3.exception.Exception
      * 将ErrorStack转化为String.
      */
     public static String getStackTraceAsString(Throwable e) {
-        if (e == null){
+        if (e == null) {
             return "";
         }
         StringWriter stringWriter = new StringWriter();

@@ -13,8 +13,6 @@ public class NetUtils {
 
     /**
      * 获取客户端IP地址
-     * @param request
-     * @return
      */
     public static String getRemoteAddr(HttpServletRequest request) {
         if (request == null) {
@@ -23,17 +21,17 @@ public class NetUtils {
         String ip = null;
         String xffName = PropertyUtils.getInstance()
                 .getProperty("shiro.remoteAddrHeaderName");
-        if (StringUtils.isNotBlank(xffName)){
+        if (StringUtils.isNotBlank(xffName)) {
             ip = request.getHeader(xffName);
         }
         if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        if (StringUtils.isNotBlank(ip)){
+        if (StringUtils.isNotBlank(ip)) {
             ip = FilterUtils.doXssFilter(ip);
             ip = StringUtils.split(ip, ",")[0];
         }
-        if (StringUtils.isBlank(ip)){
+        if (StringUtils.isBlank(ip)) {
             ip = "unknown";
         }
         return ip;
@@ -41,27 +39,22 @@ public class NetUtils {
 
     /**
      * 是否是本地地址
-     * @param ip
-     * @return
      */
-    public static boolean isLocalAddr(String ip){
+    public static boolean isLocalAddr(String ip) {
         return StringUtils.inString(ip, "127.0.0.1", "0:0:0:0:0:0:0:1");
     }
 
     /**
      * 判断IP地址为内网IP还是公网IP
-     *
+     * <p>
      * tcp/ip协议中，专门保留了三个IP地址区域作为私有地址，其地址范围如下：
      * 10.0.0.0/8：10.0.0.0～10.255.255.255
      * 172.16.0.0/12：172.16.0.0～172.31.255.255
      * 192.168.0.0/16：192.168.0.0～192.168.255.255
-     *
-     * @param ip
-     * @return
      */
     public static boolean isInternalAddr(String ip) {
 
-        if (isLocalAddr(ip)){
+        if (isLocalAddr(ip)) {
             return true;
         }
 
