@@ -1,8 +1,8 @@
 package com.style.web.config;
 
 import com.style.common.SpringUtils;
-import com.style.common.lang.ListUtils;
 import com.style.common.io.PropertyUtils;
+import com.style.common.lang.ListUtils;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration;
@@ -169,7 +169,7 @@ public class WebCoreAutoConfiguration {
         // 资源找不到错误页面
         ErrorPage notFound = new ErrorPage(HttpStatus.NOT_FOUND, "/error/status/404.html");
         // 服务器内部错误页面
-        ErrorPage internalServerError = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR,"/error/status/500.html");
+        ErrorPage internalServerError = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/status/500.html");
         // 系统异常错误页面
         ErrorPage exception = new ErrorPage(Throwable.class, "/error/exception.html");
 

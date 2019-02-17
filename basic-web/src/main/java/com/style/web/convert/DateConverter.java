@@ -1,4 +1,3 @@
-
 package com.style.web.convert;
 
 import org.slf4j.Logger;
@@ -22,6 +21,7 @@ import java.util.List;
 public class DateConverter implements Converter<String, Date> {
     private static final Logger logger = LoggerFactory.getLogger(DateConverter.class);
     private static List<String> formatList = new ArrayList<>(5);
+
     static {
         formatList.add("yyyy-MM");
         formatList.add("yyyy-MM-dd");
@@ -37,15 +37,15 @@ public class DateConverter implements Converter<String, Date> {
             return null;
         }
 
-        if(source.matches("^\\d{4}-\\d{1,2}$")){
+        if (source.matches("^\\d{4}-\\d{1,2}$")) {
             return parseDate(source, formatList.get(0));
-        }else if(source.matches("^\\d{4}-\\d{1,2}-\\d{1,2}$")){
+        } else if (source.matches("^\\d{4}-\\d{1,2}-\\d{1,2}$")) {
             return parseDate(source, formatList.get(1));
-        }else if(source.matches("^\\d{4}-\\d{1,2}-\\d{1,2} {1}\\d{1,2}:\\d{1,2}$")){
+        } else if (source.matches("^\\d{4}-\\d{1,2}-\\d{1,2} {1}\\d{1,2}:\\d{1,2}$")) {
             return parseDate(source, formatList.get(2));
-        }else if(source.matches("^\\d{4}-\\d{1,2}-\\d{1,2} {1}\\d{1,2}:\\d{1,2}:\\d{1,2}$")){
+        } else if (source.matches("^\\d{4}-\\d{1,2}-\\d{1,2} {1}\\d{1,2}:\\d{1,2}:\\d{1,2}$")) {
             return parseDate(source, formatList.get(3));
-        }else if(source.matches("^\\d{4}-\\d{1,2}-\\d{1,2}.*T.*\\d{1,2}:\\d{1,2}:\\d{1,2}.*..*$")){
+        } else if (source.matches("^\\d{4}-\\d{1,2}-\\d{1,2}.*T.*\\d{1,2}:\\d{1,2}:\\d{1,2}.*..*$")) {
             return parseDate(source, formatList.get(4));
         } else {
             throw new IllegalArgumentException("Invalid boolean value '" + source + "'");
@@ -54,8 +54,9 @@ public class DateConverter implements Converter<String, Date> {
 
     /**
      * 格式化日期
+     *
      * @param dateStr String 字符型日期
-     * @param format String 格式
+     * @param format  String 格式
      * @return Date 日期
      */
     public Date parseDate(String dateStr, String format) {

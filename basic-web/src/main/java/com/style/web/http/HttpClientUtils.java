@@ -35,6 +35,7 @@ public class HttpClientUtils {
 
     /**
      * http的get请求
+     *
      * @param url
      */
     public static String get(String url) {
@@ -43,6 +44,7 @@ public class HttpClientUtils {
 
     /**
      * http的get请求
+     *
      * @param url
      */
     public static String get(String url, String charset) {
@@ -52,6 +54,7 @@ public class HttpClientUtils {
 
     /**
      * http的get请求，增加异步请求头参数
+     *
      * @param url
      */
     public static String ajaxGet(String url) {
@@ -60,6 +63,7 @@ public class HttpClientUtils {
 
     /**
      * http的get请求，增加异步请求头参数
+     *
      * @param url
      */
     public static String ajaxGet(String url, String charset) {
@@ -81,7 +85,7 @@ public class HttpClientUtils {
     public static String post(String url, Map<String, String> dataMap, String charset) {
         HttpPost httpPost = new HttpPost(url);
         try {
-            if (dataMap != null){
+            if (dataMap != null) {
                 List<NameValuePair> nvps = new ArrayList<NameValuePair>();
                 for (Map.Entry<String, String> entry : dataMap.entrySet()) {
                     nvps.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
@@ -110,7 +114,7 @@ public class HttpClientUtils {
         HttpPost httpPost = new HttpPost(url);
         httpPost.setHeader("X-Requested-With", "XMLHttpRequest");
         try {
-            if (dataMap != null){
+            if (dataMap != null) {
                 List<NameValuePair> nvps = new ArrayList<NameValuePair>();
                 for (Map.Entry<String, String> entry : dataMap.entrySet()) {
                     nvps.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
@@ -161,9 +165,9 @@ public class HttpClientUtils {
      */
     public static String executeRequest(HttpUriRequest httpRequest, String charset) {
         CloseableHttpClient httpclient;
-        if ("https".equals(httpRequest.getURI().getScheme())){
+        if ("https".equals(httpRequest.getURI().getScheme())) {
             httpclient = createSSLInsecureClient();
-        }else{
+        } else {
             httpclient = HttpClients.createDefault();
         }
         String result = "";
@@ -181,7 +185,7 @@ public class HttpClientUtils {
             } finally {
                 httpclient.close();
             }
-        }catch(IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return result;

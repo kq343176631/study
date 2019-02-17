@@ -24,7 +24,7 @@ public class SpringRedisProvider implements CacheProvider {
     protected ConcurrentHashMap<String, Level2Cache> caches = new ConcurrentHashMap<>();
 
     public SpringRedisProvider() {
-        
+
     }
 
     @SuppressWarnings("unchecked")

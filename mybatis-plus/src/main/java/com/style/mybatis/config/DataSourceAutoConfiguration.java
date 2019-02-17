@@ -3,11 +3,11 @@ package com.style.mybatis.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.xa.DruidXADataSource;
 import com.atomikos.jdbc.AtomikosSQLException;
-import com.style.mybatis.plugin.dynamic.ConnectionPool;
-import com.style.mybatis.DatasourceException;
-import com.style.mybatis.plugin.dynamic.DynamicDataSource;
-import com.style.common.lang.MapUtils;
 import com.style.common.GlobalUtils;
+import com.style.common.lang.MapUtils;
+import com.style.mybatis.DatasourceException;
+import com.style.mybatis.plugin.dynamic.ConnectionPool;
+import com.style.mybatis.plugin.dynamic.DynamicDataSource;
 import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +28,8 @@ public class DataSourceAutoConfiguration {
     public static String DATA_SOURCE_NAME_KEY_PREFIX = "target-datasource.datasource-name";
 
     public static String XA_DATA_SOURCE_CLASS_NAME = "com.alibaba.druid.pool.xa.DruidXADataSource";
+
+    public static boolean enableDynamicDatasource = false;
 
 
     public DataSourceAutoConfiguration() {
@@ -133,5 +135,10 @@ public class DataSourceAutoConfiguration {
                 GlobalUtils.getProperty(dataSourceKey + "." + dataSourceName + "." + "username"),
                 GlobalUtils.getProperty(dataSourceKey + "." + dataSourceName + "." + "password")
         );
+    }
+
+    public boolean isEnableDynamicDatasource() {
+
+        return false;
     }
 }

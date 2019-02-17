@@ -2,7 +2,6 @@ package com.style.web.mapper;
 
 import com.style.common.lang.ExceptionUtils;
 import com.style.common.lang.StringUtils;
-import com.style.common.reflect.ClassUtils;
 import com.style.common.reflect.ReflectUtils;
 
 import javax.xml.bind.*;
@@ -129,7 +128,7 @@ public class JaxbMapper {
     }
 
     protected static JAXBContext getJaxbContext(Class clazz) {
-        if (clazz == null){
+        if (clazz == null) {
             throw new RuntimeException("'clazz' must not be null");
         }
         JAXBContext jaxbContext = jaxbContexts.get(clazz);

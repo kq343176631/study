@@ -2,14 +2,14 @@ package com.style.mybatis.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.style.mybatis.constant.PageConstants;
 import com.style.common.lang.StringUtils;
+import com.style.mybatis.constant.PageConstants;
 
 import javax.servlet.http.HttpServletRequest;
 
 public abstract class BaseController {
 
-    protected  <T> IPage getPage(HttpServletRequest request){
+    protected <T> IPage getPage(HttpServletRequest request) {
 
         //默认分页参数
         long pageNo = 1;

@@ -5,7 +5,7 @@ package com.style.common.lang;
  */
 public class RandomUtils extends org.apache.commons.lang3.RandomUtils {
 
-    public static int nextInt(int num){
-        return nextInt(0,num);
+    public static int nextInt(int num) {
+        return nextInt(0, num);
     }
 }

@@ -51,6 +51,7 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper {
 
     /**
      * 反序列化POJO或简单Collection如List<String>.
+     *
      * @see #fromJson(String, JavaType)
      */
     public <T> T fromXmlString(String xmlString, Class<T> clazz) {
@@ -75,7 +76,7 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper {
     /**
      * 对象转换为XML字符串
      */
-    public static String toXml(Object object){
+    public static String toXml(Object object) {
         return XmlMapper.getInstance().toXmlString(object);
     }
 
@@ -83,12 +84,13 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper {
      * XML字符串转换为对象
      */
     @SuppressWarnings("unchecked")
-    public static <T> T fromXml(String jsonString, Class<?> clazz){
+    public static <T> T fromXml(String jsonString, Class<?> clazz) {
         return (T) XmlMapper.getInstance().fromXmlString(jsonString, clazz);
     }
 
     /**
      * xml转map 不带属性
+     *
      * @param xmlStr
      * @param needRootKey 是否需要在返回的map里加根节点键
      * @throws DocumentException
@@ -117,6 +119,7 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper {
 
     /**
      * xml转map 带属性
+     *
      * @param xmlStr
      * @param needRootKey 是否需要在返回的map里加根节点键
      * @return
@@ -146,6 +149,7 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper {
 
     /**
      * xml转map 不带属性
+     *
      * @param element
      * @return
      */
@@ -191,6 +195,7 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper {
 
     /**
      * xml转map 带属性
+     *
      * @param element
      * @return
      */

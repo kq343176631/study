@@ -15,11 +15,11 @@ public class Update extends AbstractLogicMethod {
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
         SqlMethod sqlMethod = SqlMethod.UPDATE;
         String sql;
-        if(tableInfo.isLogicDelete()){
+        if (tableInfo.isLogicDelete()) {
             sql = String.format(sqlMethod.getSql(), tableInfo.getTableName(),
                     sqlSet(true, true, tableInfo, ENTITY_DOT),
                     sqlWhereEntityWrapper(true, tableInfo));
-        }else{
+        } else {
             sql = String.format(sqlMethod.getSql(), tableInfo.getTableName(),
                     sqlSet(false, true, tableInfo, ENTITY_DOT),
                     sqlWhereEntityWrapper(true, tableInfo));

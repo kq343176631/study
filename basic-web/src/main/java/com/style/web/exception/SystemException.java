@@ -1,7 +1,7 @@
 package com.style.web.exception;
 
-import com.style.common.constant.ErrorCode;
 import com.style.common.MessageUtils;
+import com.style.common.constant.ErrorCode;
 
 public class SystemException extends Exception {
 

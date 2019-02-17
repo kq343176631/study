@@ -1,10 +1,10 @@
 package com.style.common.media;
 
+import com.style.common.io.FileUtils;
+import com.style.common.io.PropertyUtils;
 import com.style.common.lang.ListUtils;
 import com.style.common.lang.StringUtils;
 import com.style.common.lang.TimeUtils;
-import com.style.common.io.FileUtils;
-import com.style.common.io.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

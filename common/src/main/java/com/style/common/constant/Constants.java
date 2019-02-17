@@ -3,7 +3,7 @@ package com.style.common.constant;
 /**
  * 系统常量类
  */
-public interface Constants{
+public interface Constants {
 
     String POINT = ".";
     String SPLIT = ",";

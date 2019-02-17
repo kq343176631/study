@@ -1,8 +1,8 @@
 package com.style.common.network;
 
 import com.style.common.FilterUtils;
-import com.style.common.lang.StringUtils;
 import com.style.common.io.PropertyUtils;
+import com.style.common.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 

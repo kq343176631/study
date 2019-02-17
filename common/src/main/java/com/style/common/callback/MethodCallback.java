@@ -5,6 +5,6 @@ package com.style.common.callback;
  */
 public interface MethodCallback {
 
-	Object execute(Object... params);
-	
+    Object execute(Object... params);
+
 }

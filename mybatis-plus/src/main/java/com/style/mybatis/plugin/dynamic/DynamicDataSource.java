@@ -4,9 +4,9 @@ import ch.qos.logback.classic.selector.ContextSelector;
 import ch.qos.logback.classic.util.ContextSelectorStaticBinder;
 import com.alibaba.druid.pool.xa.DruidXADataSource;
 import com.style.common.GlobalUtils;
+import com.style.common.lang.StringUtils;
 import com.style.mybatis.DatasourceException;
 import com.style.mybatis.config.DataSourceAutoConfiguration;
-import com.style.common.lang.StringUtils;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 

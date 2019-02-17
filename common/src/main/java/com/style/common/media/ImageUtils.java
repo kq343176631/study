@@ -1,18 +1,16 @@
 package com.style.common.media;
 
-import com.style.common.lang.StringUtils;
 import com.style.common.io.FileUtils;
+import com.style.common.lang.StringUtils;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.Thumbnails.Builder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.Thumbnails.Builder;
-
-import javax.imageio.ImageIO;
 
 public class ImageUtils {
 

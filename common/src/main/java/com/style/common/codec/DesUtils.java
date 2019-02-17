@@ -15,11 +15,11 @@ public class DesUtils {
      * DES加密（secretKey代表3个key，用逗号分隔）
      */
     public static String encode(String data, String secretKey) {
-        if (StringUtils.isBlank(data)){
+        if (StringUtils.isBlank(data)) {
             return "";
         }
         String[] ks = StringUtils.split(secretKey, ",");
-        if (ks.length >= 3){
+        if (ks.length >= 3) {
             return desCore.strEnc(data, ks[0], ks[1], ks[2]);
         }
         return desCore.strEnc(data, secretKey, "", "");
@@ -29,11 +29,11 @@ public class DesUtils {
      * DES解密（secretKey代表3个key，用逗号分隔）
      */
     public static String decode(String data, String secretKey) {
-        if (StringUtils.isBlank(data)){
+        if (StringUtils.isBlank(data)) {
             return "";
         }
         String[] ks = StringUtils.split(secretKey, ",");
-        if (ks.length >= 3){
+        if (ks.length >= 3) {
             return desCore.strDec(data, ks[0], ks[1], ks[2]);
         }
         return desCore.strDec(data, secretKey, "", "");

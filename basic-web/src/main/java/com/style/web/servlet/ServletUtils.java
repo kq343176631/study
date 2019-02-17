@@ -1,11 +1,11 @@
 package com.style.web.servlet;
 
-import com.style.common.lang.MapUtils;
 import com.style.common.io.PropertyUtils;
+import com.style.common.lang.MapUtils;
+import com.style.common.lang.StringUtils;
+import com.style.web.http.HttpHeaders;
 import com.style.web.mapper.JsonMapper;
 import com.style.web.mapper.XmlMapper;
-import com.style.web.http.HttpHeaders;
-import com.style.common.lang.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -22,8 +22,8 @@ import java.util.*;
 @SuppressWarnings("all")
 public class ServletUtils {
 
-    public static final String DEFAULT_PARAMS_PARAM = "params";			// 登录扩展参数（JSON字符串）优先级高于扩展参数前缀
-    public static final String DEFAULT_PARAM_PREFIX_PARAM = "param_";	// 扩展参数前缀
+    public static final String DEFAULT_PARAMS_PARAM = "params";            // 登录扩展参数（JSON字符串）优先级高于扩展参数前缀
+    public static final String DEFAULT_PARAM_PREFIX_PARAM = "param_";    // 扩展参数前缀
 
     // 定义静态文件后缀；静态文件排除URI地址
     private static String[] staticFiles;
@@ -32,18 +32,18 @@ public class ServletUtils {
     /**
      * 获取当前请求对象
      * web.xml: <listener><listener-class>
-     * 	org.springframework.web.context.request.RequestContextListener
-     * 	</listener-class></listener>
+     * org.springframework.web.context.request.RequestContextListener
+     * </listener-class></listener>
      */
-    public static HttpServletRequest getRequest(){
+    public static HttpServletRequest getRequest() {
         HttpServletRequest request = null;
-        try{
-            request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-            if (request == null){
+        try {
+            request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            if (request == null) {
                 return null;
             }
             return request;
-        }catch(Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -51,17 +51,17 @@ public class ServletUtils {
     /**
      * 获取当前相应对象
      * web.xml: <filter><filter-name>requestContextFilter</filter-name><filter-class>
-     * 	org.springframework.web.filter.RequestContextFilter</filter-class></filter><filter-mapping>
-     * 	<filter-name>requestContextFilter</filter-name><url-pattern>/*</url-pattern></filter-mapping>
+     * org.springframework.web.filter.RequestContextFilter</filter-class></filter><filter-mapping>
+     * <filter-name>requestContextFilter</filter-name><url-pattern>/*</url-pattern></filter-mapping>
      */
-    public static HttpServletResponse getResponse(){
+    public static HttpServletResponse getResponse() {
         HttpServletResponse response = null;
-        try{
-            response = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getResponse();
-            if (response == null){
+        try {
+            response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
+            if (response == null) {
                 return null;
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             return null;
         }
         return response;
@@ -70,11 +70,11 @@ public class ServletUtils {
     /**
      * 支持AJAX的页面跳转
      */
-    public static void redirectUrl(HttpServletRequest request, HttpServletResponse response, String url){
+    public static void redirectUrl(HttpServletRequest request, HttpServletResponse response, String url) {
         try {
-            if (ServletUtils.isAjaxRequest(request)){
+            if (ServletUtils.isAjaxRequest(request)) {
                 request.getRequestDispatcher(url).forward(request, response); // AJAX不支持Redirect改用Forward
-            }else{
+            } else {
                 response.sendRedirect(request.getContextPath() + url);
             }
         } catch (Exception e) {
@@ -84,27 +84,28 @@ public class ServletUtils {
 
     /**
      * 是否是Ajax异步请求
+     *
      * @param request
      */
-    public static boolean isAjaxRequest(HttpServletRequest request){
+    public static boolean isAjaxRequest(HttpServletRequest request) {
 
         String accept = request.getHeader("accept");
-        if (accept != null && accept.indexOf("application/json") != -1){
+        if (accept != null && accept.indexOf("application/json") != -1) {
             return true;
         }
 
         String xRequestedWith = request.getHeader("X-Requested-With");
-        if (xRequestedWith != null && xRequestedWith.indexOf("XMLHttpRequest") != -1){
+        if (xRequestedWith != null && xRequestedWith.indexOf("XMLHttpRequest") != -1) {
             return true;
         }
 
         String uri = request.getRequestURI();
-        if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml")){
+        if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml")) {
             return true;
         }
 
         String ajax = request.getParameter("__ajax");
-        if (StringUtils.inStringIgnoreCase(ajax, "json", "xml")){
+        if (StringUtils.inStringIgnoreCase(ajax, "json", "xml")) {
             return true;
         }
 
@@ -113,18 +114,19 @@ public class ServletUtils {
 
     /**
      * 判断访问URI是否是静态文件请求
+     *
      * @throws Exception
      */
-    public static boolean isStaticFile(String uri){
-        if (staticFiles == null){
+    public static boolean isStaticFile(String uri) {
+        if (staticFiles == null) {
             PropertyUtils pl = PropertyUtils.getInstance();
-            try{
+            try {
                 staticFiles = StringUtils.split(pl.getProperty("web.staticFile"), ",");
                 staticFileExcludeUri = StringUtils.split(pl.getProperty("web.staticFileExcludeUri"), ",");
-            }catch(NoSuchElementException nsee){
+            } catch (NoSuchElementException nsee) {
                 ; // 什么也不做
             }
-            if (staticFiles == null){
+            if (staticFiles == null) {
                 try {
                     throw new Exception("检测到“jeesite.yml”中没有配置“web.staticFile”属性。"
                             + "配置示例：\n#静态文件后缀\nweb.staticFile=.css,.js,.png,.jpg,.gif,"
@@ -134,14 +136,14 @@ public class ServletUtils {
                 }
             }
         }
-        if (staticFileExcludeUri != null){
-            for (String s : staticFileExcludeUri){
-                if (StringUtils.contains(uri, s)){
+        if (staticFileExcludeUri != null) {
+            for (String s : staticFileExcludeUri) {
+                if (StringUtils.contains(uri, s)) {
                     return false;
                 }
             }
         }
-        if (StringUtils.endsWithAny(uri, staticFiles)){
+        if (StringUtils.endsWithAny(uri, staticFiles)) {
             return true;
         }
         return false;
@@ -149,9 +151,10 @@ public class ServletUtils {
 
     /**
      * 返回结果JSON字符串（支持JsonP，请求参数加：__callback=回调函数名）
-     * @param result Global.TRUE or Globle.False
+     *
+     * @param result  Global.TRUE or Globle.False
      * @param message 执行消息
-     * @param data 消息数据
+     * @param data    消息数据
      * @return JSON字符串：{result:'true',message:''}
      */
     public static String renderResult(String result, String message) {
@@ -160,9 +163,10 @@ public class ServletUtils {
 
     /**
      * 返回结果JSON字符串（支持JsonP，请求参数加：__callback=回调函数名）
-     * @param result Global.TRUE or Globle.False
+     *
+     * @param result  Global.TRUE or Globle.False
      * @param message 执行消息
-     * @param data 消息数据
+     * @param data    消息数据
      * @return JSON字符串：{result:'true',message:'', if map then key:value,key2:value2... else data:{} }
      */
     @SuppressWarnings("unchecked")
@@ -170,23 +174,23 @@ public class ServletUtils {
         Map<String, Object> resultMap = MapUtils.newHashMap();
         resultMap.put("result", result);
         resultMap.put("message", message);
-        if (data != null){
-            if (data instanceof Map){
-                resultMap.putAll((Map<String, Object>)data);
-            }else{
+        if (data != null) {
+            if (data instanceof Map) {
+                resultMap.putAll((Map<String, Object>) data);
+            } else {
                 resultMap.put("data", data);
             }
         }
         HttpServletRequest request = getRequest();
         String uri = request.getRequestURI();
         if (StringUtils.endsWithIgnoreCase(uri, ".xml") || StringUtils
-                .equalsIgnoreCase(request.getParameter("__ajax"), "xml")){
+                .equalsIgnoreCase(request.getParameter("__ajax"), "xml")) {
             return XmlMapper.toXml(resultMap);
-        }else{
+        } else {
             String functionName = request.getParameter("__callback");
-            if (StringUtils.isNotBlank(functionName)){
+            if (StringUtils.isNotBlank(functionName)) {
                 return JsonMapper.toJsonp(functionName, resultMap);
-            }else{
+            } else {
                 return JsonMapper.toJson(resultMap);
             }
         }
@@ -195,9 +199,10 @@ public class ServletUtils {
 
     /**
      * 直接将结果JSON字符串渲染到客户端（支持JsonP，请求参数加：__callback=回调函数名）
+     *
      * @param response 渲染对象：{result:'true',message:'',data:{}}
-     * @param result Global.TRUE or Globle.False
-     * @param message 执行消息
+     * @param result   Global.TRUE or Globle.False
+     * @param message  执行消息
      * @return null
      */
     public static String renderResult(HttpServletResponse response, String result, String message) {
@@ -206,10 +211,11 @@ public class ServletUtils {
 
     /**
      * 直接将结果JSON字符串渲染到客户端（支持JsonP，请求参数加：__callback=回调函数名）
+     *
      * @param response 渲染对象：{result:'true',message:'',data:{}}
-     * @param result 结果标识：Global.TRUE or Globle.False
-     * @param message 执行消息
-     * @param data 消息数据
+     * @param result   结果标识：Global.TRUE or Globle.False
+     * @param message  执行消息
+     * @param data     消息数据
      * @return null
      */
     public static String renderResult(HttpServletResponse response, String result, String message, Object data) {
@@ -218,22 +224,23 @@ public class ServletUtils {
 
     /**
      * 将对象转换为JSON、XML、JSONP字符串渲染到客户端（JsonP，请求参数加：__callback=回调函数名）
-     * @param request 请求对象，用来得到输出格式的指令：JSON、XML、JSONP
+     *
+     * @param request  请求对象，用来得到输出格式的指令：JSON、XML、JSONP
      * @param response 渲染对象
-     * @param object 待转换JSON并渲染的对象
+     * @param object   待转换JSON并渲染的对象
      * @return null
      */
     public static String renderObject(HttpServletResponse response, Object object) {
         HttpServletRequest request = getRequest();
         String uri = request.getRequestURI();
         if (StringUtils.endsWithIgnoreCase(uri, ".xml") || StringUtils
-                .equalsIgnoreCase(request.getParameter("__ajax"), "xml")){
+                .equalsIgnoreCase(request.getParameter("__ajax"), "xml")) {
             return renderString(response, XmlMapper.toXml(object));
-        }else{
+        } else {
             String functionName = request.getParameter("__callback");
-            if (StringUtils.isNotBlank(functionName)){
+            if (StringUtils.isNotBlank(functionName)) {
                 return renderString(response, JsonMapper.toJsonp(functionName, object));
-            }else{
+            } else {
                 return renderString(response, JsonMapper.toJson(object));
             }
         }
@@ -241,8 +248,9 @@ public class ServletUtils {
 
     /**
      * 将字符串渲染到客户端
+     *
      * @param response 渲染对象
-     * @param string 待渲染的字符串
+     * @param string   待渲染的字符串
      * @return null
      */
     public static String renderString(HttpServletResponse response, String string) {
@@ -251,20 +259,21 @@ public class ServletUtils {
 
     /**
      * 将字符串渲染到客户端
+     *
      * @param response 渲染对象
-     * @param string 待渲染的字符串
+     * @param string   待渲染的字符串
      * @return null
      */
     public static String renderString(HttpServletResponse response, String string, String type) {
         try {
 //			response.reset(); // 注释掉，否则以前设置的Header会被清理掉，如ajax登录设置记住我的Cookie信息
-            if (type == null){
+            if (type == null) {
                 if ((StringUtils.startsWith(string, "{") && StringUtils.endsWith(string, "}"))
-                        || (StringUtils.startsWith(string, "[") && StringUtils.endsWith(string, "]"))){
+                        || (StringUtils.startsWith(string, "[") && StringUtils.endsWith(string, "]"))) {
                     type = "application/json";
-                }else if (StringUtils.startsWith(string, "<") && StringUtils.endsWith(string, ">")){
+                } else if (StringUtils.startsWith(string, "<") && StringUtils.endsWith(string, ">")) {
                     type = "application/xml";
-                }else{
+                } else {
                     type = "text/html";
                 }
             }
@@ -282,7 +291,7 @@ public class ServletUtils {
      */
     public static String getParameter(String name) {
         HttpServletRequest request = getRequest();
-        if (request == null){
+        if (request == null) {
             return null;
         }
         return request.getParameter(name);
@@ -299,7 +308,7 @@ public class ServletUtils {
      * 获得请求参数Map
      */
     public static Map<String, Object> getParameters(ServletRequest request) {
-        if (request == null){
+        if (request == null) {
             return MapUtils.newHashMap();
         }
         return getParametersStartingWith(request, "");
@@ -358,12 +367,13 @@ public class ServletUtils {
 
     /**
      * 从请求对象中扩展参数数据，格式：JSON 或  param_ 开头的参数
+     *
      * @param request 请求对象
      * @return 返回Map对象
      */
     public static Map<String, Object> getExtParams(ServletRequest request) {
         Map<String, Object> paramMap = null;
-        String params =  StringUtils.trim(request.getParameter(DEFAULT_PARAMS_PARAM));
+        String params = StringUtils.trim(request.getParameter(DEFAULT_PARAMS_PARAM));
         if (StringUtils.isNotBlank(params) && StringUtils.startsWith(params, "{")) {
             paramMap = JsonMapper.fromJson(params, Map.class);
         } else {
@@ -410,6 +420,7 @@ public class ServletUtils {
     /**
      * 根据浏览器If-Modified-Since Header, 计算文件是否已被修改.
      * 如果无修改, checkIfModify返回false ,设置304 not modify status.
+     *
      * @param lastModified 内容的最后修改时间.
      */
     public static boolean checkIfModifiedSince(HttpServletRequest request, HttpServletResponse response,
@@ -425,6 +436,7 @@ public class ServletUtils {
     /**
      * 根据浏览器 If-None-Match Header, 计算Etag是否已无效.
      * 如果Etag有效, checkIfNoneMatch返回false, 设置304 not modify status.
+     *
      * @param etag 内容的ETag.
      */
     public static boolean checkIfNoneMatchEtag(HttpServletRequest request, HttpServletResponse response, String etag) {

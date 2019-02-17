@@ -1,8 +1,8 @@
 package com.style.common.codec;
 
-import com.style.common.lang.StringUtils;
 import com.style.common.io.FileUtils;
 import com.style.common.io.IOUtils;
+import com.style.common.lang.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
