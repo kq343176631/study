@@ -70,6 +70,7 @@ public class PropertyUtils {
                         YamlPropertiesFactoryBean bean = new YamlPropertiesFactoryBean();
                         bean.setResources(resource);
                         for (Map.Entry<Object, Object> entry : bean.getObject().entrySet()) {
+                            System.out.println(ObjectUtils.toString(entry.getKey())+":"+ ObjectUtils.toString(entry.getValue()));
                             this.properties.put(ObjectUtils.toString(entry.getKey()), ObjectUtils.toString(entry.getValue()));
                         }
                     }

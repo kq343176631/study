@@ -8,7 +8,6 @@ import com.style.mybatis.DatasourceException;
 import com.style.mybatis.plugin.dynamic.DynamicDataSource;
 import com.style.common.lang.MapUtils;
 import com.style.common.system.GlobalUtils;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +21,6 @@ import java.sql.SQLException;
  * 数据源配置
  */
 @Configuration
-@AutoConfigureBefore({org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration.class})
 public class DataSourceAutoConfiguration {
 
     public static String DATA_SOURCE_KEY_PREFIX = "target-datasource";
@@ -38,8 +36,6 @@ public class DataSourceAutoConfiguration {
 
     /**
      * 数据源
-     *
-     * @return datasource
      */
     @Bean("dataSource")
     @Primary
@@ -59,8 +55,6 @@ public class DataSourceAutoConfiguration {
 
     /**
      * 选择数据源
-     *
-     * @return datasource
      */
     private DataSource determineDataSource() {
         if (GlobalUtils.isEnableDynamicDataSource()) {

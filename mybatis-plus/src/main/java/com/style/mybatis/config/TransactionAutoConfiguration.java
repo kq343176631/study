@@ -3,9 +3,6 @@ package com.style.mybatis.config;
 import com.atomikos.icatch.jta.UserTransactionImp;
 import com.atomikos.icatch.jta.UserTransactionManager;
 import com.style.mybatis.plugin.dynamic.DynamicDataSource;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -23,8 +20,6 @@ import javax.transaction.UserTransaction;
  * 事务相关配置
  */
 @Configuration
-@AutoConfigureAfter({DataSourceAutoConfiguration.class})
-@AutoConfigureBefore({DataSourceTransactionManagerAutoConfiguration.class})
 @EnableTransactionManagement
 public class TransactionAutoConfiguration {
 
@@ -34,8 +29,6 @@ public class TransactionAutoConfiguration {
 
     /**
      * DataSource Transaction Manager
-     *
-     * @return transactionManager
      */
     @Bean("transactionManager")
     @Primary
@@ -54,9 +47,6 @@ public class TransactionAutoConfiguration {
 
     /**
      * 分布式事务用户接口
-     *
-     * @return userTransaction
-     * @throws SystemException SystemException
      */
     private UserTransaction userTransaction() throws SystemException {
         UserTransaction userTransaction = new UserTransactionImp();
@@ -66,8 +56,6 @@ public class TransactionAutoConfiguration {
 
     /**
      * 分布式事务管理器
-     *
-     * @return UserTransactionManager
      */
     private UserTransactionManager userTransactionManager() {
         UserTransactionManager userTransactionManager = new UserTransactionManager();

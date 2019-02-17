@@ -65,14 +65,23 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
         return BooleanUtils.toBoolean(object.toString()) || "1".equals(object.toString());
     }
 
-    public static String toString(final Object object) {
-        if (object == null) {
-            return null;
-        }
-        if (object instanceof Collection) {
-            return object.toString();
-        }
-        return BeanUtils.toMap(object).toString();
+    /**
+     * 转换为字符串
+     * @param obj
+     * @return
+     */
+    public static String toString(final Object obj) {
+        return toString(obj, StringUtils.EMPTY);
+    }
+
+    /**
+     * 如果对象为空，则使用defaultVal值
+     * @param obj
+     * @param defaultVal
+     * @return
+     */
+    public static String toString(final Object obj, final String defaultVal) {
+        return obj == null ? defaultVal : obj.toString();
     }
 
     /**

@@ -1,17 +1,7 @@
+
 # PropertySource Loaders
 org.springframework.boot.env.PropertySourceLoader=\
 com.style.common.system.LoaderUtils
-
-
-
-# Application Context Initializer
-org.springframework.context.ApplicationContextInitializer=
-
-
-
-# Application Listeners
-org.springframework.context.ApplicationListener=
-
 
 
 # Auto Configure

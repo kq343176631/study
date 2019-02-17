@@ -22,7 +22,6 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
-import org.springframework.util.unit.DataSize;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.*;
@@ -62,9 +61,8 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
     @Bean("multipartConfigElement")
     @ConditionalOnMissingBean(name = {"multipartConfigElement"})
     public MultipartConfigElement multipartConfigElement() {
-        DataSize dataSize = DataSize.ofMegabytes(25 * 1024);
-        multipartProperties.setMaxFileSize(dataSize);
-        multipartProperties.setMaxRequestSize(dataSize);
+        multipartProperties.setMaxFileSize("1024");
+        multipartProperties.setMaxRequestSize("1024");
         return this.multipartProperties.createMultipartConfig();
     }
 

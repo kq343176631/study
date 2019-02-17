@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.2.RELEASE</version>
+        <version>2.0.6.RELEASE</version>
     </parent>
 
     <groupId>com.style.study</groupId>
@@ -24,7 +24,9 @@
         <lombok.version>1.18.4</lombok.version>
         <swagger.version>2.7.0</swagger.version>
         <ant.version>1.9.7</ant.version>
-        <spring-cloud.version>Greenwich.RC2</spring-cloud.version>
+
+        <!-- Spring Cloud -->
+        <spring-cloud.version>Finchley.SR2</spring-cloud.version>
 
         <!-- plugin version -->
         <docker.plugin.version>1.1.1</docker.plugin.version>

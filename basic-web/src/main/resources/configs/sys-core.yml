@@ -23,8 +23,8 @@ target-datasource:
   datasource-name: master
   master:
     default: true
-    driver: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.1.10:3306/style?useSSL=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+    driver: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.1.11:3306/style?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
     password: root
 #  slave:

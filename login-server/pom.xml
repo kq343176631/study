@@ -13,7 +13,7 @@
 
     <artifactId>login-server</artifactId>
     <version>1.0.0</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <name>Login Server Dependencies</name>
     <description>Login Server Module</description>
 
