@@ -1,5 +1,6 @@
-package com.style.common.system;
+package com.style.common;
 
+import com.style.common.io.PropertyUtils;
 import com.style.common.lang.MapUtils;
 import com.style.common.lang.StringUtils;
 import org.slf4j.Logger;

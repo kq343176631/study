@@ -1,4 +1,4 @@
-package com.style.common.stream;
+package com.style.web.utils;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;

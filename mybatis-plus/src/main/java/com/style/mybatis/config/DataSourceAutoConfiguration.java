@@ -7,7 +7,7 @@ import com.style.mybatis.plugin.dynamic.ConnectionPool;
 import com.style.mybatis.DatasourceException;
 import com.style.mybatis.plugin.dynamic.DynamicDataSource;
 import com.style.common.lang.MapUtils;
-import com.style.common.system.GlobalUtils;
+import com.style.common.GlobalUtils;
 import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

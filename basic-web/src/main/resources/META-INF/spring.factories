@@ -1,7 +1,7 @@
 
 # PropertySource Loaders
 org.springframework.boot.env.PropertySourceLoader=\
-com.style.common.system.LoaderUtils
+com.style.common.io.PropertyLoader
 
 
 # Auto Configure

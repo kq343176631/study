@@ -10,7 +10,6 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
 
     /**
      * 提供精确的减法运算。
-     *
      * @param v1 被减数
      * @param v2 减数
      * @return 两个参数的差
@@ -23,7 +22,6 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
 
     /**
      * 提供精确的加法运算。
-     *
      * @param v1 被加数
      * @param v2 加数
      * @return 两个参数的和
@@ -36,7 +34,6 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
 
     /**
      * 提供精确的乘法运算。
-     *
      * @param v1 被乘数
      * @param v2 乘数
      * @return 两个参数的积
@@ -49,7 +46,6 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
 
     /**
      * 提供（相对）精确的除法运算，当发生除不尽的情况时，精确到 小数点以后10位，以后的数字四舍五入。
-     *
      * @param v1 被除数
      * @param v2 除数
      * @return 两个参数的商
@@ -60,9 +56,8 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
 
     /**
      * 提供（相对）精确的除法运算。当发生除不尽的情况时，由scale参数指 定精度，以后的数字四舍五入。
-     *
-     * @param v1    被除数
-     * @param v2    除数
+     * @param v1 被除数
+     * @param v2 除数
      * @param scale 表示表示需要精确到小数点以后几位。
      * @return 两个参数的商
      */
@@ -77,6 +72,7 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
 
     /**
      * 格式化双精度，保留两个小数
+     * @return
      */
     public static String formatDouble(Double b) {
         BigDecimal bg = new BigDecimal(b);
@@ -85,6 +81,7 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
 
     /**
      * 百分比计算
+     * @return
      */
     public static String formatScale(double one, long total) {
         BigDecimal bg = new BigDecimal(one * 100 / total);
@@ -93,9 +90,11 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
 
     /**
      * 格式化数值类型
+     * @param data
+     * @param pattern
      */
     public static String formatNumber(Object data, String pattern) {
-        DecimalFormat df;
+        DecimalFormat df = null;
         if (pattern == null) {
             df = new DecimalFormat();
         } else {

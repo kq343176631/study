@@ -9,71 +9,33 @@ import java.util.concurrent.CopyOnWriteArraySet;
  */
 public class SetUtils extends org.apache.commons.collections.SetUtils {
 
-    /**
-     * HashSet
-     */
     public static <E> HashSet<E> newHashSet() {
-        return new HashSet<>();
+        return new HashSet<E>();
     }
 
     @SafeVarargs
     public static <E> HashSet<E> newHashSet(E... elements) {
         HashSet<E> set = newHashSet(elements.length);
-        CollectUtils.addAll(set, elements);
+        Collections.addAll(set, elements);
         return set;
     }
 
     public static <E> HashSet<E> newHashSet(int initialCapacity) {
-        return new HashSet<>(initialCapacity);
+        return new HashSet<E>(initialCapacity);
     }
 
-    public static <E> HashSet<E> newHashSet(Iterable<? extends E> iterable) {
+    public static <E> HashSet<E> newHashSet(Iterable<? extends E> elements) {
+        return (elements instanceof Collection) ? new HashSet<E>(cast(elements)) : newHashSet(elements.iterator());
+    }
+
+    public static <E> HashSet<E> newHashSet(Iterator<? extends E> elements) {
         HashSet<E> set = newHashSet();
-        addAll(set, iterable);
+        addAll(set, elements);
         return set;
     }
 
-    public static <E> HashSet<E> newHashSet(Iterator<? extends E> iterator) {
-        HashSet<E> set = newHashSet();
-        addAll(set, iterator);
-        return set;
-    }
-
-    /**
-     * LinkedHashSet
-     */
-    public static <E> LinkedHashSet<E> newLinkedHashSet() {
-        return new LinkedHashSet<>();
-    }
-
-    public static <E> LinkedHashSet<E> newLinkedHashSet(int initialCapacity) {
-        return new LinkedHashSet<>(initialCapacity);
-    }
-
-    @SafeVarargs
-    public static <E> LinkedHashSet<E> newLinkedHashSet(E... elements) {
-        LinkedHashSet<E> set = newLinkedHashSet(elements.length);
-        CollectUtils.addAll(set, elements);
-        return set;
-    }
-
-    public static <E> LinkedHashSet<E> newLinkedHashSet(Iterable<? extends E> iterable) {
-        LinkedHashSet<E> set = newLinkedHashSet();
-        addAll(set, iterable);
-        return set;
-    }
-
-    public static <E> LinkedHashSet<E> newLinkedHashSet(Iterator<? extends E> iterator) {
-        LinkedHashSet<E> set = newLinkedHashSet();
-        addAll(set, iterator);
-        return set;
-    }
-
-    /**
-     * ConcurrentHashSet
-     */
     public static <E> Set<E> newConcurrentHashSet() {
-        return Collections.newSetFromMap(new ConcurrentHashMap<>());
+        return Collections.newSetFromMap(new ConcurrentHashMap<E, Boolean>());
     }
 
     public static <E> Set<E> newConcurrentHashSet(Iterable<? extends E> elements) {
@@ -82,62 +44,70 @@ public class SetUtils extends org.apache.commons.collections.SetUtils {
         return set;
     }
 
-
-    /**
-     * TreeSet
-     */
-    public static <E extends Comparable> TreeSet<E> newTreeSet() {
-        return new TreeSet<>();
+    public static <E> LinkedHashSet<E> newLinkedHashSet() {
+        return new LinkedHashSet<E>();
     }
 
-    public static <E extends Comparable> TreeSet<E> newTreeSet(Iterable<? extends E> iterable) {
+    public static <E> LinkedHashSet<E> newLinkedHashSet(int initialCapacity) {
+        return new LinkedHashSet<E>(initialCapacity);
+    }
+
+    public static <E> LinkedHashSet<E> newLinkedHashSet(Iterable<? extends E> elements) {
+        if (elements instanceof Collection) {
+            return new LinkedHashSet<E>(cast(elements));
+        }
+        LinkedHashSet<E> set = newLinkedHashSet();
+        addAll(set, elements);
+        return set;
+    }
+
+    @SuppressWarnings("rawtypes")
+    public static <E extends Comparable> TreeSet<E> newTreeSet() {
+        return new TreeSet<E>();
+    }
+
+    @SuppressWarnings("rawtypes")
+    public static <E extends Comparable> TreeSet<E> newTreeSet(Iterable<? extends E> elements) {
         TreeSet<E> set = newTreeSet();
-        addAll(set, iterable);
+        addAll(set, elements);
         return set;
     }
 
     public static <E> TreeSet<E> newTreeSet(Comparator<? super E> comparator) {
-        return new TreeSet<>(comparator);
+        return new TreeSet<E>(comparator);
     }
 
-    /**
-     * newIdentityHashSet
-     */
     public static <E> Set<E> newIdentityHashSet() {
-        return Collections.newSetFromMap(MapUtils.newIdentityHashMap());
+        return Collections.newSetFromMap(MapUtils.<E, Boolean> newIdentityHashMap());
     }
 
-    /**
-     * newIdentityHashSet
-     */
     public static <E> CopyOnWriteArraySet<E> newCopyOnWriteArraySet() {
-        return new CopyOnWriteArraySet<>();
+        return new CopyOnWriteArraySet<E>();
     }
 
-    public static <E> CopyOnWriteArraySet<E> newCopyOnWriteArraySet(Iterable<? extends E> iterable) {
-        Collection<? extends E> elementsCollection = (iterable instanceof Collection) ? cast(iterable) : ListUtils.newArrayList(iterable);
-        return new CopyOnWriteArraySet<>(elementsCollection);
-    }
-
-    private static <T> boolean addAll(Collection<T> collection, Iterator<? extends T> iterator) {
-        boolean wasModified = false;
-        while (iterator.hasNext()) {
-            wasModified |= collection.add(iterator.next());
-        }
-        return wasModified;
-    }
-
-    @SuppressWarnings("all")
-    public static <T> boolean addAll(Collection<T> collection, Iterable<? extends T> iterable) {
-        if (iterable instanceof Collection) {
-            Collection<? extends T> c = cast(iterable);
-            return collection.addAll(c);
-        }
-        return addAll(collection, iterable.iterator());
+    public static <E> CopyOnWriteArraySet<E> newCopyOnWriteArraySet(Iterable<? extends E> elements) {
+        Collection<? extends E> elementsCollection = (elements instanceof Collection) ? cast(elements) : ListUtils.newArrayList(elements);
+        return new CopyOnWriteArraySet<E>(elementsCollection);
     }
 
     private static <T> Collection<T> cast(Iterable<T> iterable) {
         return (Collection<T>) iterable;
+    }
+
+    private static <T> boolean addAll(Collection<T> addTo, Iterator<? extends T> iterator) {
+        boolean wasModified = false;
+        while (iterator.hasNext()) {
+            wasModified |= addTo.add(iterator.next());
+        }
+        return wasModified;
+    }
+
+    public static <T> boolean addAll(Collection<T> addTo, Iterable<? extends T> elementsToAdd) {
+        if (elementsToAdd instanceof Collection) {
+            Collection<? extends T> c = cast(elementsToAdd);
+            return addTo.addAll(c);
+        }
+        return addAll(addTo, elementsToAdd.iterator());
     }
 }
 

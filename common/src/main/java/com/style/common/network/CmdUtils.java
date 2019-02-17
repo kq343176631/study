@@ -10,11 +10,11 @@ public class CmdUtils{
 	public static String execute(String command) throws IOException {
 		return execute(command, "GBK");
 	}
-	
+
 	public static String execute(String command, String charsetName) throws IOException {
 		Process process = Runtime.getRuntime().exec(command);
 		// 记录dos命令的返回信息
-		StringBuilder stringBuffer = new StringBuilder();
+		StringBuffer stringBuffer = new StringBuffer();
 		// 获取返回信息的流
 		InputStream in = process.getInputStream();
 		Reader reader = new InputStreamReader(in, charsetName);

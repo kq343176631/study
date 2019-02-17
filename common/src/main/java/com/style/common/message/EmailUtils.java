@@ -1,5 +1,6 @@
 package com.style.common.message;
 
+import com.style.common.io.PropertyUtils;
 import org.apache.commons.mail.HtmlEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,30 +14,27 @@ public class EmailUtils {
 
     /**
      * 发送邮件
-     *
      * @param toAddress 接收地址
-     * @param subject   标题
-     * @param content   内容
-     * @return boolean
+     * @param subject 标题
+     * @param content 内容
+     * @return
      */
     public static boolean send(String toAddress, String subject, String content) {
-        /*PropertyUtils props = PropertyUtils.getInstance();
+        PropertyUtils props = PropertyUtils.getInstance();
         String fromAddress = props.getProperty("msg.email.fromAddress");
         String fromPassword = props.getProperty("msg.email.fromPassword");
         String fromHostName = props.getProperty("msg.email.fromHostName");
         String sslOnConnect = props.getProperty("msg.email.sslOnConnect", "false");
-        String sslSmtpPort = props.getProperty("msg.email.sslSmtpPort");*/
-        //return send(fromAddress, fromPassword, fromHostName, sslOnConnect, sslSmtpPort, toAddress, subject, content);
-        return true;
+        String sslSmtpPort = props.getProperty("msg.email.sslSmtpPort");
+        return send(fromAddress, fromPassword, fromHostName, sslOnConnect, sslSmtpPort, toAddress, subject, content);
     }
 
     /**
      * 发送邮件
-     *
      * @param toAddress 接收地址
-     * @param subject   标题
-     * @param content   内容
-     * @return boolean
+     * @param subject 标题
+     * @param content 内容
+     * @return
      */
     public static boolean send(String fromAddress, String fromPassword, String fromHostName,
                                String sslOnConnect, String sslSmtpPort, String toAddress, String subject, String content) {

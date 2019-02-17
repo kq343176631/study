@@ -1,4 +1,4 @@
-package com.style.common.stream;
+package com.style.common.io;
 
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipFile;

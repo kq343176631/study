@@ -1,12 +1,10 @@
 package com.style.common.codec;
 
-import com.style.common.exception.ExceptionUtils;
-import com.style.common.lang.StringUtils;
+import com.style.common.lang.ExceptionUtils;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -19,13 +17,9 @@ import java.net.URLEncoder;
  * 3.Commons-Lang的xml/html escape
  * 4.JDK提供的URLEncoder
  */
-public class CodecUtils {
-
-    private static final Logger logger = LoggerFactory.getLogger(CodecUtils.class);
+public class EncodeUtils {
 
     private static final String DEFAULT_URL_ENCODING = "UTF-8";
-
-    // BASE62 字符
     private static final char[] BASE62 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
     /**
@@ -54,21 +48,21 @@ public class CodecUtils {
     }
 
     /**
+     * Base64编码.
+     */
+    public static String encodeBase64(String input) {
+        try {
+            return new String(Base64.encodeBase64(input.getBytes(DEFAULT_URL_ENCODING)));
+        } catch (UnsupportedEncodingException e) {
+            return "";
+        }
+    }
+
+    /**
      * Base64解码.
      */
     public static byte[] decodeBase64(String input) {
         return Base64.decodeBase64(input.getBytes());
-    }
-
-    /**
-     * Base64编码.
-     */
-    public static String encodeBase64String(String input) {
-        try {
-            return new String(Base64.encodeBase64(input.getBytes(DEFAULT_URL_ENCODING)));
-        } catch (UnsupportedEncodingException e) {
-            return StringUtils.EMPTY;
-        }
     }
 
     /**
@@ -78,7 +72,7 @@ public class CodecUtils {
         try {
             return new String(Base64.decodeBase64(input.getBytes()), DEFAULT_URL_ENCODING);
         } catch (UnsupportedEncodingException e) {
-            return StringUtils.EMPTY;
+            return "";
         }
     }
 
@@ -94,6 +88,34 @@ public class CodecUtils {
     }
 
     /**
+     * Html 转码.
+     */
+    public static String encodeHtml(String html) {
+        return StringEscapeUtils.escapeHtml4(html);
+    }
+
+    /**
+     * Html 解码.
+     */
+    public static String decodeHtml(String htmlEscaped) {
+        return StringEscapeUtils.unescapeHtml4(htmlEscaped);
+    }
+
+    /**
+     * Xml 转码.
+     */
+    public static String encodeXml(String xml) {
+        return StringEscapeUtils.escapeXml10(xml);
+    }
+
+    /**
+     * Xml 解码.
+     */
+    public static String decodeXml(String xmlEscaped) {
+        return StringEscapeUtils.unescapeXml(xmlEscaped);
+    }
+
+    /**
      * URL 编码, Encode默认为UTF-8.
      */
     public static String encodeUrl(String part) {
@@ -101,17 +123,10 @@ public class CodecUtils {
     }
 
     /**
-     * URL 解码, Encode默认为UTF-8.
-     */
-    public static String decodeUrl(String part) {
-        return decodeUrl(part, DEFAULT_URL_ENCODING);
-    }
-
-    /**
      * URL 编码, Encode默认为UTF-8.
      */
     public static String encodeUrl(String part, String encoding) {
-        if (part == null) {
+        if (part == null){
             return null;
         }
         try {
@@ -124,8 +139,15 @@ public class CodecUtils {
     /**
      * URL 解码, Encode默认为UTF-8.
      */
+    public static String decodeUrl(String part) {
+        return decodeUrl(part, DEFAULT_URL_ENCODING);
+    }
+
+    /**
+     * URL 解码, Encode默认为UTF-8.
+     */
     public static String decodeUrl(String part, String encoding) {
-        if (part == null) {
+        if (part == null){
             return null;
         }
         try {

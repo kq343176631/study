@@ -1,6 +1,6 @@
 package com.style.web.interceptor;
 
-import com.style.common.TimeUtils;
+import com.style.common.lang.TimeUtils;
 import com.style.common.lang.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

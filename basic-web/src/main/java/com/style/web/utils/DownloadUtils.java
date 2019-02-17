@@ -1,7 +1,8 @@
-package com.style.common.stream;
+package com.style.web.utils;
 
-import com.style.common.codec.CodecUtils;
+import com.style.common.codec.EncodeUtils;
 import com.style.common.lang.StringUtils;
+import com.style.common.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,9 +14,9 @@ import java.io.*;
  * 下载工具类
  */
 @SuppressWarnings("all")
-public class Download {
+public class DownloadUtils {
 
-    private static Logger logger = LoggerFactory.getLogger(Download.class);
+    private static Logger logger = LoggerFactory.getLogger(DownloadUtils.class);
 
     /**
      * 向浏览器发送文件下载，支持断点续传
@@ -107,7 +108,7 @@ public class Download {
              OutputStream out = new BufferedOutputStream(os);
              RandomAccessFile raf = new RandomAccessFile(file, "r");) {
 
-            response.addHeader("Content-Disposition", "attachment; filename=\"" + CodecUtils.encodeUrl(StringUtils.isBlank(fileName) ? file.getName() : fileName) + "\"");
+            response.addHeader("Content-Disposition", "attachment; filename=\"" + EncodeUtils.encodeUrl(StringUtils.isBlank(fileName) ? file.getName() : fileName) + "\"");
             response.setContentType(FileUtils.getContentType(file.getName())); // set the MIME type.
             response.addHeader("Content-Length", String.valueOf(contentLength));
             try {

@@ -11,17 +11,11 @@ public class Sha1Utils {
     private static final String SHA1 = "SHA-1";
 
     /**
-     * 对文件进行sha1散列.
+     * 生成随机的Byte[]作为salt密钥.
+     * @param numBytes byte数组的大小
      */
-    public static byte[] sha1(InputStream input) throws IOException {
-        return DigestUtils.digest(input, SHA1);
-    }
-
-    /**
-     * 对输入字符串进行sha1散列.
-     */
-    public static byte[] sha1(byte[] input, byte[] salt, int iterations) {
-        return DigestUtils.digest(input, SHA1, salt, iterations);
+    public static byte[] genSalt(int numBytes) {
+        return DigestUtils.genSalt(numBytes);
     }
 
     /**
@@ -39,11 +33,16 @@ public class Sha1Utils {
     }
 
     /**
-     * 生成随机的Byte[]作为salt密钥.
-     *
-     * @param numBytes byte数组的大小
+     * 对输入字符串进行sha1散列.
      */
-    public static byte[] genSalt(int numBytes) {
-        return DigestUtils.genSalt(numBytes);
+    public static byte[] sha1(byte[] input, byte[] salt, int iterations) {
+        return DigestUtils.digest(input, SHA1, salt, iterations);
+    }
+
+    /**
+     * 对文件进行sha1散列.
+     */
+    public static byte[] sha1(InputStream input) throws IOException {
+        return DigestUtils.digest(input, SHA1);
     }
 }

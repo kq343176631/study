@@ -24,6 +24,23 @@ public class ReflectUtils {
 
     private static String SETTER_PREFIX = "set";
 
+    private static final String CGLIB_CLASS_SEPARATOR = "$$";
+
+    public static Class<?> getUserClass(Object instance) {
+        if (instance == null){
+            throw new RuntimeException("Instance must not be null");
+        }
+        Class clazz = instance.getClass();
+        if (clazz != null && clazz.getName().contains(CGLIB_CLASS_SEPARATOR)) {
+            Class<?> superClass = clazz.getSuperclass();
+            if (superClass != null && !Object.class.equals(superClass)) {
+                return superClass;
+            }
+        }
+        return clazz;
+
+    }
+
     /**
      * 直接读取对象属性值, 无视private/protected修饰符, 不经过getter函数.
      *

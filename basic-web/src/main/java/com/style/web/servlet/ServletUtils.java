@@ -1,12 +1,12 @@
 package com.style.web.servlet;
 
+import com.style.common.lang.MapUtils;
+import com.style.common.io.PropertyUtils;
 import com.style.web.mapper.JsonMapper;
 import com.style.web.mapper.XmlMapper;
 import com.style.web.http.HttpHeaders;
 import com.style.common.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.util.Assert;
+import org.apache.commons.lang3.Validate;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -22,133 +22,227 @@ import java.util.*;
 @SuppressWarnings("all")
 public class ServletUtils {
 
-    public static Logger logger = LoggerFactory.getLogger(ServletUtils.class);
-
-    // 登录扩展参数（JSON字符串）优先级高于扩展参数前缀
-    public static final String DEFAULT_PARAMS_PARAM = "params";
-
-    // 扩展参数前缀
-    public static final String DEFAULT_PARAM_PREFIX_PARAM = "param_";
+    public static final String DEFAULT_PARAMS_PARAM = "params";			// 登录扩展参数（JSON字符串）优先级高于扩展参数前缀
+    public static final String DEFAULT_PARAM_PREFIX_PARAM = "param_";	// 扩展参数前缀
 
     // 定义静态文件后缀；静态文件排除URI地址
     private static String[] staticFiles;
-
     private static String[] staticFileExcludeUri;
 
     /**
-     * 获取当前请求对象，需要:org.springframework.web.context.request.RequestContextListener
+     * 获取当前请求对象
+     * web.xml: <listener><listener-class>
+     * 	org.springframework.web.context.request.RequestContextListener
+     * 	</listener-class></listener>
      */
-    public static HttpServletRequest getRequest() {
-        try {
-            return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        } catch (Exception e) {
+    public static HttpServletRequest getRequest(){
+        HttpServletRequest request = null;
+        try{
+            request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+            if (request == null){
+                return null;
+            }
+            return request;
+        }catch(Exception e){
             return null;
         }
     }
 
     /**
-     * 获取当前相应对象，需要:org.springframework.web.filter.RequestContextFilter
+     * 获取当前相应对象
+     * web.xml: <filter><filter-name>requestContextFilter</filter-name><filter-class>
+     * 	org.springframework.web.filter.RequestContextFilter</filter-class></filter><filter-mapping>
+     * 	<filter-name>requestContextFilter</filter-name><url-pattern>/*</url-pattern></filter-mapping>
      */
-    public static HttpServletResponse getResponse() {
-        try {
-            return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
-        } catch (Exception e) {
-            logger.warn("getResponse{}", e);
+    public static HttpServletResponse getResponse(){
+        HttpServletResponse response = null;
+        try{
+            response = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getResponse();
+            if (response == null){
+                return null;
+            }
+        }catch(Exception e){
             return null;
         }
+        return response;
     }
 
     /**
-     * 获得用户远程地址
+     * 支持AJAX的页面跳转
      */
-    public static String getRemoteAddr(HttpServletRequest request) {
-        String remoteAddr = request.getHeader("X-Real-IP");
-        if (StringUtils.isNotBlank(remoteAddr)) {
-            remoteAddr = request.getHeader("X-Forwarded-For");
-        } else if (StringUtils.isNotBlank(remoteAddr)) {
-            remoteAddr = request.getHeader("Proxy-Client-IP");
-        } else if (StringUtils.isNotBlank(remoteAddr)) {
-            remoteAddr = request.getHeader("WL-Proxy-Client-IP");
+    public static void redirectUrl(HttpServletRequest request, HttpServletResponse response, String url){
+        try {
+            if (ServletUtils.isAjaxRequest(request)){
+                request.getRequestDispatcher(url).forward(request, response); // AJAX不支持Redirect改用Forward
+            }else{
+                response.sendRedirect(request.getContextPath() + url);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return remoteAddr != null ? remoteAddr : request.getRemoteAddr();
     }
 
     /**
-     * 从请求对象中扩展参数数据，格式：JSON 或  param_ 开头的参数
-     *
-     * @param request 请求对象
-     * @return 返回Map对象
+     * 是否是Ajax异步请求
+     * @param request
      */
-    public static Map<String, Object> getExtParams(ServletRequest request) {
-        Map<String, Object> paramMap;
-        String params = StringUtils.trim(request.getParameter(DEFAULT_PARAMS_PARAM));
-        if (StringUtils.isNotBlank(params) && StringUtils.startsWith(params, "{")) {
-            paramMap = JsonMapper.fromJson(params, Map.class);
-        } else {
-            paramMap = getParametersStartingWith(ServletUtils.getRequest(), DEFAULT_PARAM_PREFIX_PARAM);
+    public static boolean isAjaxRequest(HttpServletRequest request){
+
+        String accept = request.getHeader("accept");
+        if (accept != null && accept.indexOf("application/json") != -1){
+            return true;
         }
-        return paramMap;
+
+        String xRequestedWith = request.getHeader("X-Requested-With");
+        if (xRequestedWith != null && xRequestedWith.indexOf("XMLHttpRequest") != -1){
+            return true;
+        }
+
+        String uri = request.getRequestURI();
+        if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml")){
+            return true;
+        }
+
+        String ajax = request.getParameter("__ajax");
+        if (StringUtils.inStringIgnoreCase(ajax, "json", "xml")){
+            return true;
+        }
+
+        return false;
     }
 
     /**
-     * 取得带相同前缀的Request Parameters, copy from spring WebUtils.
-     * 返回的结果的Parameter名已去除前缀.
+     * 判断访问URI是否是静态文件请求
+     * @throws Exception
      */
-    public static Map<String, Object> getParametersStartingWith(ServletRequest request, String prefix) {
-        Assert.notNull(request, "Request must not be null");
-        Enumeration<String> paramNames = request.getParameterNames();
-        Map<String, Object> params = new TreeMap<>();
-        if (prefix == null) {
-            prefix = "";
-        }
-        while (paramNames != null && paramNames.hasMoreElements()) {
-            String paramName = paramNames.nextElement();
-            if ("".equals(prefix) || paramName.startsWith(prefix)) {
-                String unPrefixed = paramName.substring(prefix.length());
-                String[] values = request.getParameterValues(paramName);
-                if (values == null || values.length == 0) {
-                    // Do nothing, no values found at all.
-                } else if (values.length > 1) {
-                    params.put(unPrefixed, values);
-                } else {
-                    params.put(unPrefixed, values[0]);
+    public static boolean isStaticFile(String uri){
+        if (staticFiles == null){
+            PropertyUtils pl = PropertyUtils.getInstance();
+            try{
+                staticFiles = StringUtils.split(pl.getProperty("web.staticFile"), ",");
+                staticFileExcludeUri = StringUtils.split(pl.getProperty("web.staticFileExcludeUri"), ",");
+            }catch(NoSuchElementException nsee){
+                ; // 什么也不做
+            }
+            if (staticFiles == null){
+                try {
+                    throw new Exception("检测到“jeesite.yml”中没有配置“web.staticFile”属性。"
+                            + "配置示例：\n#静态文件后缀\nweb.staticFile=.css,.js,.png,.jpg,.gif,"
+                            + ".jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk");
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
-        return params;
+        if (staticFileExcludeUri != null){
+            for (String s : staticFileExcludeUri){
+                if (StringUtils.contains(uri, s)){
+                    return false;
+                }
+            }
+        }
+        if (StringUtils.endsWithAny(uri, staticFiles)){
+            return true;
+        }
+        return false;
     }
 
     /**
-     * 将对象转换为JSON字符串渲染到客户端（支持JsonP，请求参数加：__callback=回调函数名）
-     *
+     * 返回结果JSON字符串（支持JsonP，请求参数加：__callback=回调函数名）
+     * @param result Global.TRUE or Globle.False
+     * @param message 执行消息
+     * @param data 消息数据
+     * @return JSON字符串：{result:'true',message:''}
+     */
+    public static String renderResult(String result, String message) {
+        return renderResult(result, message, null);
+    }
+
+    /**
+     * 返回结果JSON字符串（支持JsonP，请求参数加：__callback=回调函数名）
+     * @param result Global.TRUE or Globle.False
+     * @param message 执行消息
+     * @param data 消息数据
+     * @return JSON字符串：{result:'true',message:'', if map then key:value,key2:value2... else data:{} }
+     */
+    @SuppressWarnings("unchecked")
+    public static String renderResult(String result, String message, Object data) {
+        Map<String, Object> resultMap = MapUtils.newHashMap();
+        resultMap.put("result", result);
+        resultMap.put("message", message);
+        if (data != null){
+            if (data instanceof Map){
+                resultMap.putAll((Map<String, Object>)data);
+            }else{
+                resultMap.put("data", data);
+            }
+        }
+        HttpServletRequest request = getRequest();
+        String uri = request.getRequestURI();
+        if (StringUtils.endsWithIgnoreCase(uri, ".xml") || StringUtils
+                .equalsIgnoreCase(request.getParameter("__ajax"), "xml")){
+            return XmlMapper.toXml(resultMap);
+        }else{
+            String functionName = request.getParameter("__callback");
+            if (StringUtils.isNotBlank(functionName)){
+                return JsonMapper.toJsonp(functionName, resultMap);
+            }else{
+                return JsonMapper.toJson(resultMap);
+            }
+        }
+
+    }
+
+    /**
+     * 直接将结果JSON字符串渲染到客户端（支持JsonP，请求参数加：__callback=回调函数名）
+     * @param response 渲染对象：{result:'true',message:'',data:{}}
+     * @param result Global.TRUE or Globle.False
+     * @param message 执行消息
+     * @return null
+     */
+    public static String renderResult(HttpServletResponse response, String result, String message) {
+        return renderString(response, renderResult(result, message), null);
+    }
+
+    /**
+     * 直接将结果JSON字符串渲染到客户端（支持JsonP，请求参数加：__callback=回调函数名）
+     * @param response 渲染对象：{result:'true',message:'',data:{}}
+     * @param result 结果标识：Global.TRUE or Globle.False
+     * @param message 执行消息
+     * @param data 消息数据
+     * @return null
+     */
+    public static String renderResult(HttpServletResponse response, String result, String message, Object data) {
+        return renderString(response, renderResult(result, message, data), null);
+    }
+
+    /**
+     * 将对象转换为JSON、XML、JSONP字符串渲染到客户端（JsonP，请求参数加：__callback=回调函数名）
+     * @param request 请求对象，用来得到输出格式的指令：JSON、XML、JSONP
      * @param response 渲染对象
-     * @param object   待转换JSON并渲染的对象
+     * @param object 待转换JSON并渲染的对象
      * @return null
      */
     public static String renderObject(HttpServletResponse response, Object object) {
-        HttpServletRequest request = ServletUtils.getRequest();
-        String uri;
-        if (request != null && (uri = request.getRequestURI()) != null) {
-            if (StringUtils.endsWithIgnoreCase(uri, ".xml")) {
-                return XmlMapper.toXml(object);
-            } else {
-                String functionName = request.getParameter("__callback");
-                if (StringUtils.isNotBlank(functionName)) {
-                    return renderString(response, JsonMapper.toJsonp(functionName, object));
-                } else {
-                    return renderString(response, JsonMapper.toJson(object));
-                }
+        HttpServletRequest request = getRequest();
+        String uri = request.getRequestURI();
+        if (StringUtils.endsWithIgnoreCase(uri, ".xml") || StringUtils
+                .equalsIgnoreCase(request.getParameter("__ajax"), "xml")){
+            return renderString(response, XmlMapper.toXml(object));
+        }else{
+            String functionName = request.getParameter("__callback");
+            if (StringUtils.isNotBlank(functionName)){
+                return renderString(response, JsonMapper.toJsonp(functionName, object));
+            }else{
+                return renderString(response, JsonMapper.toJson(object));
             }
-        } else {
-            return null;
         }
     }
 
     /**
      * 将字符串渲染到客户端
-     *
      * @param response 渲染对象
-     * @param string   待渲染的字符串
+     * @param string 待渲染的字符串
      * @return null
      */
     public static String renderString(HttpServletResponse response, String string) {
@@ -157,16 +251,24 @@ public class ServletUtils {
 
     /**
      * 将字符串渲染到客户端
-     *
      * @param response 渲染对象
-     * @param string   待渲染的字符串
+     * @param string 待渲染的字符串
      * @return null
      */
     public static String renderString(HttpServletResponse response, String string, String type) {
         try {
-            // 先注释掉，否则以前设置的Header会被清理掉，如ajax登录设置记住我Cookie
-            //response.reset();
-            response.setContentType(type == null ? "application/json" : type);
+//			response.reset(); // 注释掉，否则以前设置的Header会被清理掉，如ajax登录设置记住我的Cookie信息
+            if (type == null){
+                if ((StringUtils.startsWith(string, "{") && StringUtils.endsWith(string, "}"))
+                        || (StringUtils.startsWith(string, "[") && StringUtils.endsWith(string, "]"))){
+                    type = "application/json";
+                }else if (StringUtils.startsWith(string, "<") && StringUtils.endsWith(string, ">")){
+                    type = "application/xml";
+                }else{
+                    type = "text/html";
+                }
+            }
+            response.setContentType(type);
             response.setCharacterEncoding("utf-8");
             response.getWriter().print(string);
         } catch (IOException e) {
@@ -176,59 +278,100 @@ public class ServletUtils {
     }
 
     /**
-     * 是否是Ajax异步请求
+     * 获得请求参数值
      */
-    public static boolean isAjaxRequest(HttpServletRequest request) {
-        String accept = request.getHeader("accept");
-        if (accept != null && accept.contains("application/json")) {
-            return true;
+    public static String getParameter(String name) {
+        HttpServletRequest request = getRequest();
+        if (request == null){
+            return null;
         }
-        String xRequestedWith = request.getHeader("X-Requested-With");
-        if (xRequestedWith != null && xRequestedWith.contains("XMLHttpRequest")) {
-            return true;
-        }
-        String uri = request.getRequestURI();
-        if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml")) {
-            return true;
-        }
-        String ajax = request.getParameter("__ajax");
-        return StringUtils.inStringIgnoreCase(ajax, "json", "xml");
+        return request.getParameter(name);
     }
 
     /**
-     * 判断访问URI是否是静态文件请求
-     *
-     * @param uri uri
-     * @return boolean
+     * 获得请求参数Map
      */
-   /* public static boolean isStaticFile(String uri) {
-        if (staticFiles == null) {
-            PropertyUtils pl = PropertyUtils.getInstance();
-            try {
-                staticFiles = StringUtils.split(pl.getProperty("web.staticFile"), ",");
-                staticFileExcludeUri = StringUtils.split(pl.getProperty("web.staticFileExcludeUri"), ",");
-            } catch (NoSuchElementException ex) {
-                // 什么也不做
-            }
-            if (staticFiles == null) {
-                try {
-                    throw new Exception("检测到“web.yml”中没有配置“web.staticFile”属性。"
-                            + "配置示例：\n#静态文件后缀\nweb.staticFile=.css,.js,.png,.jpg,.gif,"
-                            + ".jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk");
-                } catch (Exception e) {
-                    e.printStackTrace();
+    public static Map<String, Object> getParameters() {
+        return getParameters(getRequest());
+    }
+
+    /**
+     * 获得请求参数Map
+     */
+    public static Map<String, Object> getParameters(ServletRequest request) {
+        if (request == null){
+            return MapUtils.newHashMap();
+        }
+        return getParametersStartingWith(request, "");
+    }
+
+    /**
+     * 取得带相同前缀的Request Parameters, copy from spring WebUtils.
+     * 返回的结果的Parameter名已去除前缀.
+     */
+    @SuppressWarnings("rawtypes")
+    public static Map<String, Object> getParametersStartingWith(ServletRequest request, String prefix) {
+        Validate.notNull(request, "Request must not be null");
+        Enumeration paramNames = request.getParameterNames();
+        Map<String, Object> params = new TreeMap<String, Object>();
+        String pre = prefix;
+        if (pre == null) {
+            pre = "";
+        }
+        while (paramNames != null && paramNames.hasMoreElements()) {
+            String paramName = (String) paramNames.nextElement();
+            if ("".equals(pre) || paramName.startsWith(pre)) {
+                String unprefixed = paramName.substring(pre.length());
+                String[] values = request.getParameterValues(paramName);
+                if (values == null || values.length == 0) {
+                    values = new String[]{};
+                    // Do nothing, no values found at all.
+                } else if (values.length > 1) {
+                    params.put(unprefixed, values);
+                } else {
+                    params.put(unprefixed, values[0]);
                 }
             }
         }
-        if (staticFileExcludeUri != null) {
-            for (String s : staticFileExcludeUri) {
-                if (StringUtils.contains(uri, s)) {
-                    return false;
-                }
+        return params;
+    }
+
+    /**
+     * 组合Parameters生成Query String的Parameter部分,并在paramter name上加上prefix.
+     */
+    public static String encodeParameterStringWithPrefix(Map<String, Object> params, String prefix) {
+        StringBuilder queryStringBuilder = new StringBuilder();
+        String pre = prefix;
+        if (pre == null) {
+            pre = "";
+        }
+        Iterator<Map.Entry<String, Object>> it = params.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Object> entry = it.next();
+            queryStringBuilder.append(pre).append(entry.getKey()).append("=").append(entry.getValue());
+            if (it.hasNext()) {
+                queryStringBuilder.append("&");
             }
         }
-        return StringUtils.endsWithAny(uri, staticFiles);
-    }*/
+        return queryStringBuilder.toString();
+    }
+
+    /**
+     * 从请求对象中扩展参数数据，格式：JSON 或  param_ 开头的参数
+     * @param request 请求对象
+     * @return 返回Map对象
+     */
+    public static Map<String, Object> getExtParams(ServletRequest request) {
+        Map<String, Object> paramMap = null;
+        String params =  StringUtils.trim(request.getParameter(DEFAULT_PARAMS_PARAM));
+        if (StringUtils.isNotBlank(params) && StringUtils.startsWith(params, "{")) {
+            paramMap = JsonMapper.fromJson(params, Map.class);
+        } else {
+            paramMap = getParametersStartingWith(ServletUtils.getRequest(), DEFAULT_PARAM_PREFIX_PARAM);
+        }
+        return paramMap;
+    }
+
     /**
      * 设置客户端缓存过期时间 的Header.
      */
@@ -267,7 +410,6 @@ public class ServletUtils {
     /**
      * 根据浏览器If-Modified-Since Header, 计算文件是否已被修改.
      * 如果无修改, checkIfModify返回false ,设置304 not modify status.
-     *
      * @param lastModified 内容的最后修改时间.
      */
     public static boolean checkIfModifiedSince(HttpServletRequest request, HttpServletResponse response,
@@ -283,7 +425,6 @@ public class ServletUtils {
     /**
      * 根据浏览器 If-None-Match Header, 计算Etag是否已无效.
      * 如果Etag有效, checkIfNoneMatch返回false, 设置304 not modify status.
-     *
      * @param etag 内容的ETag.
      */
     public static boolean checkIfNoneMatchEtag(HttpServletRequest request, HttpServletResponse response, String etag) {

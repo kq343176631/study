@@ -2,6 +2,7 @@ package com.style.common.network;
 
 import com.style.common.FilterUtils;
 import com.style.common.lang.StringUtils;
+import com.style.common.io.PropertyUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,28 +13,86 @@ public class NetUtils {
 
     /**
      * 获取客户端IP地址
+     * @param request
+     * @return
      */
-    public static String getRemoteAddress(HttpServletRequest request) {
+    public static String getRemoteAddr(HttpServletRequest request) {
         if (request == null) {
             return "unknown";
         }
         String ip = null;
-        //String xffName = PropertyUtils.getInstance().getProperty("shiro.remoteAddrHeaderName");
-        String xffName ="";
-        if (StringUtils.isNotBlank(xffName)) {
+        String xffName = PropertyUtils.getInstance()
+                .getProperty("shiro.remoteAddrHeaderName");
+        if (StringUtils.isNotBlank(xffName)){
             ip = request.getHeader(xffName);
         }
         if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        if (StringUtils.isNotBlank(ip)) {
+        if (StringUtils.isNotBlank(ip)){
             ip = FilterUtils.doXssFilter(ip);
             ip = StringUtils.split(ip, ",")[0];
         }
-        if (StringUtils.isBlank(ip)) {
+        if (StringUtils.isBlank(ip)){
             ip = "unknown";
         }
         return ip;
+    }
+
+    /**
+     * 是否是本地地址
+     * @param ip
+     * @return
+     */
+    public static boolean isLocalAddr(String ip){
+        return StringUtils.inString(ip, "127.0.0.1", "0:0:0:0:0:0:0:1");
+    }
+
+    /**
+     * 判断IP地址为内网IP还是公网IP
+     *
+     * tcp/ip协议中，专门保留了三个IP地址区域作为私有地址，其地址范围如下：
+     * 10.0.0.0/8：10.0.0.0～10.255.255.255
+     * 172.16.0.0/12：172.16.0.0～172.31.255.255
+     * 192.168.0.0/16：192.168.0.0～192.168.255.255
+     *
+     * @param ip
+     * @return
+     */
+    public static boolean isInternalAddr(String ip) {
+
+        if (isLocalAddr(ip)){
+            return true;
+        }
+
+        byte[] addr = textToNumericFormatV4(ip);
+
+        final byte b0 = addr[0];
+        final byte b1 = addr[1];
+        //10.x.x.x/8
+        final byte SECTION_1 = 0x0A;
+        //172.16.x.x/12
+        final byte SECTION_2 = (byte) 0xAC;
+        final byte SECTION_3 = (byte) 0x10;
+        final byte SECTION_4 = (byte) 0x1F;
+        //192.168.x.x/16
+        final byte SECTION_5 = (byte) 0xC0;
+        final byte SECTION_6 = (byte) 0xA8;
+        switch (b0) {
+            case SECTION_1:
+                return true;
+            case SECTION_2:
+                if (b1 >= SECTION_3 && b1 <= SECTION_4) {
+                    return true;
+                }
+            case SECTION_5:
+                switch (b1) {
+                    case SECTION_6:
+                        return true;
+                }
+            default:
+                return false;
+        }
     }
 
     public static byte[] textToNumericFormatV4(String paramString) {
@@ -230,15 +289,11 @@ public class NetUtils {
         if (paramArrayOfByte.length < 16) {
             return false;
         }
-        return (paramArrayOfByte[0] == 0) && (paramArrayOfByte[1] == 0) && (paramArrayOfByte[2] == 0) && (paramArrayOfByte[3] == 0)
+        if ((paramArrayOfByte[0] == 0) && (paramArrayOfByte[1] == 0) && (paramArrayOfByte[2] == 0) && (paramArrayOfByte[3] == 0)
                 && (paramArrayOfByte[4] == 0) && (paramArrayOfByte[5] == 0) && (paramArrayOfByte[6] == 0) && (paramArrayOfByte[7] == 0)
-                && (paramArrayOfByte[8] == 0) && (paramArrayOfByte[9] == 0) && (paramArrayOfByte[10] == -1) && (paramArrayOfByte[11] == -1);
-    }
-
-    /**
-     * 是否是本地地址
-     */
-    public static boolean isLocalAddress(String ip) {
-        return StringUtils.inString(ip, "127.0.0.1", "0:0:0:0:0:0:0:1");
+                && (paramArrayOfByte[8] == 0) && (paramArrayOfByte[9] == 0) && (paramArrayOfByte[10] == -1) && (paramArrayOfByte[11] == -1)) {
+            return true;
+        }
+        return false;
     }
 }

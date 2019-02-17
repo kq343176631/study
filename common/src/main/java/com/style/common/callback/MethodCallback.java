@@ -1,4 +1,4 @@
-package com.style.common.call;
+package com.style.common.callback;
 
 /**
  * 方法回调接口

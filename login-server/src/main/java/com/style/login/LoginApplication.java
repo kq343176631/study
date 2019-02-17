@@ -1,6 +1,6 @@
 package com.style.login;
 
-import com.style.common.system.PropertyUtils;
+import com.style.common.io.PropertyUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -14,7 +14,7 @@ public class LoginApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(LoginApplication.class);
         // 自定义属性文件
-        application.setDefaultProperties(PropertyUtils.getInstance().getProperties());
+        //application.setDefaultProperties(PropertyUtils.getInstance().getProperties());
         application.run(args);
     }
 

@@ -39,7 +39,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
      */
     public static String formatDate(Date date, String pattern) {
         String formatDate = null;
-        if (date != null) {
+        if (date != null){
             if (StringUtils.isBlank(pattern)) {
                 pattern = "yyyy-MM-dd";
             }
@@ -53,23 +53,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
      */
     public static String formatDateTime(Date date) {
         return formatDate(date, "yyyy-MM-dd HH:mm:ss");
-    }
-
-    /**
-     * 格式化为日期范围字符串
-     *
-     * @param beginDate 2018-01-01
-     * @param endDate   2018-01-31
-     * @return 2018-01-01 ~ 2018-01-31
-     * @author ThinkGem
-     */
-    public static String formatDateBetweenString(Date beginDate, Date endDate) {
-        String begin = DateUtils.formatDate(beginDate);
-        String end = DateUtils.formatDate(endDate);
-        if (StringUtils.isNoneBlank(begin, end)) {
-            return begin + " ~ " + end;
-        }
-        return null;
     }
 
     /**
@@ -88,15 +71,15 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
     /**
      * 得到当前日期前后多少天，月，年的日期字符串
-     *
      * @param pattern 格式（yyyy-MM-dd） pattern可以为："yyyy-MM-dd" "HH:mm:ss" "E"
-     * @param amount  数量，前为负数，后为正数
-     * @param type    类型，可参考Calendar的常量(如：Calendar.HOUR、Calendar.MINUTE、Calendar.SECOND)
+     * @param amont 数量，前为负数，后为正数
+     * @param type 类型，可参考Calendar的常量(如：Calendar.HOUR、Calendar.MINUTE、Calendar.SECOND)
+     * @return
      */
-    public static String getDate(String pattern, int amount, int type) {
+    public static String getDate(String pattern, int amont, int type) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.add(type, amount);
+        calendar.add(type, amont);
         return FastDateFormat.getInstance(pattern).format(calendar.getTime());
     }
 
@@ -112,14 +95,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
      */
     public static String getDateTime() {
         return formatDate(new Date(), "yyyy-MM-dd HH:mm:ss");
-    }
-
-    /**
-     * 获取服务器启动时间
-     */
-    public static Date getServerStartDate() {
-        long time = ManagementFactory.getRuntimeMXBean().getStartTime();
-        return new Date(time);
     }
 
     /**
@@ -151,10 +126,55 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     /**
+     * 日期型字符串转化为日期 格式   see to DateUtils#parsePatterns
+     */
+    public static Date parseDate(Object str) {
+        if (str == null){
+            return null;
+        }
+        try {
+            return parseDate(str.toString(), parsePatterns);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    /**
+     * 获取过去的天数
+     * @param date
+     * @return
+     */
+    public static long pastDays(Date date) {
+        long t = System.currentTimeMillis()-date.getTime();
+        return t/(24*60*60*1000);
+    }
+
+    /**
+     * 获取过去的小时
+     * @param date
+     * @return
+     */
+    public static long pastHour(Date date) {
+        long t = System.currentTimeMillis()-date.getTime();
+        return t/(60*60*1000);
+    }
+
+    /**
+     * 获取过去的分钟
+     * @param date
+     * @return
+     */
+    public static long pastMinutes(Date date) {
+        long t = System.currentTimeMillis()-date.getTime();
+        return t/(60*1000);
+    }
+
+    /**
      * 获取两个日期之间的天数
      *
-     * @param before before
-     * @param after  after
+     * @param before
+     * @param after
+     * @return
      */
     public static double getDistanceOfTwoDate(Date before, Date after) {
         long beforeTime = before.getTime();
@@ -164,18 +184,17 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
     /**
      * 获取某月有几天
-     *
      * @param date 日期
      * @return 天数
      */
-    public static int getMonthHasDays(Date date) {
-        //String yyyyMM = new SimpleDateFormat("yyyyMM").format(date);
+    public static int getMonthHasDays(Date date){
+//		String yyyyMM = new SimpleDateFormat("yyyyMM").format(date);
         String yyyyMM = FastDateFormat.getInstance("yyyyMM").format(date);
         String year = yyyyMM.substring(0, 4);
         String month = yyyyMM.substring(4, 6);
         String day31 = ",01,03,05,07,08,10,12,";
         String day30 = "04,06,09,11";
-        int day;
+        int day = 0;
         if (day31.contains(month)) {
             day = 31;
         } else if (day30.contains(month)) {
@@ -193,10 +212,10 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
     /**
      * 获取日期是当年的第几周
-     *
-     * @param date date
+     * @param date
+     * @return
      */
-    public static int getWeekOfYear(Date date) {
+    public static int getWeekOfYear(Date date){
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         return cal.get(Calendar.WEEK_OF_YEAR);
@@ -204,11 +223,11 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
     /**
      * 获取一天的开始时间（如：2015-11-3 00:00:00.000）
-     *
      * @param date 日期
+     * @return
      */
     public static Date getOfDayFirst(Date date) {
-        if (date == null) {
+        if (date == null){
             return null;
         }
         Calendar calendar = Calendar.getInstance();
@@ -222,11 +241,11 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
     /**
      * 获取一天的最后时间（如：2015-11-3 23:59:59.999）
-     *
      * @param date 日期
+     * @return
      */
     public static Date getOfDayLast(Date date) {
-        if (date == null) {
+        if (date == null){
             return null;
         }
         Calendar calendar = Calendar.getInstance();
@@ -239,64 +258,49 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     /**
+     * 获取服务器启动时间
+     * @return
+     */
+    public static Date getServerStartDate(){
+        long time = ManagementFactory.getRuntimeMXBean().getStartTime();
+        return new Date(time);
+    }
+
+    /**
+     * 格式化为日期范围字符串
+     * @param beginDate 2018-01-01
+     * @param endDate 2018-01-31
+     * @return 2018-01-01 ~ 2018-01-31
+     * @author ThinkGem
+     */
+    public static String formatDateBetweenString(Date beginDate, Date endDate){
+        String begin = DateUtils.formatDate(beginDate);
+        String end = DateUtils.formatDate(endDate);
+        if (StringUtils.isNoneBlank(begin, end)){
+            return begin + " ~ " + end;
+        }
+        return null;
+    }
+
+    /**
      * 解析日期范围字符串为日期对象
-     *
      * @param dateString 2018-01-01 ~ 2018-01-31
      * @return new Date[]{2018-01-01, 2018-01-31}
      * @author ThinkGem
      */
-    public static Date[] parseDateBetweenString(String dateString) {
-        Date beginDate = null;
-        Date endDate = null;
-        if (StringUtils.isNotBlank(dateString)) {
+    public static Date[] parseDateBetweenString(String dateString){
+        Date beginDate = null; Date endDate = null;
+        if (StringUtils.isNotBlank(dateString)){
             String[] ss = StringUtils.split(dateString, "~");
-            if (ss != null && ss.length == 2) {
+            if (ss != null && ss.length == 2){
                 String begin = StringUtils.trim(ss[0]);
                 String end = StringUtils.trim(ss[1]);
-                if (StringUtils.isNoneBlank(begin, end)) {
+                if (StringUtils.isNoneBlank(begin, end)){
                     beginDate = DateUtils.parseDate(begin);
                     endDate = DateUtils.parseDate(end);
                 }
             }
         }
         return new Date[]{beginDate, endDate};
-    }
-
-    /**
-     * 日期型字符串转化为日期 格式
-     */
-    public static Date parseDate(String str) {
-        if (str == null) {
-            return null;
-        }
-        try {
-            return parseDate(str, parsePatterns);
-        } catch (ParseException e) {
-            return null;
-        }
-    }
-
-    /**
-     * 获取过去的天数
-     */
-    public static long pastDays(Date date) {
-        long t = System.currentTimeMillis() - date.getTime();
-        return t / (24 * 60 * 60 * 1000);
-    }
-
-    /**
-     * 获取过去的小时
-     */
-    public static long pastHour(Date date) {
-        long t = System.currentTimeMillis() - date.getTime();
-        return t / (60 * 60 * 1000);
-    }
-
-    /**
-     * 获取过去的分钟
-     */
-    public static long pastMinutes(Date date) {
-        long t = System.currentTimeMillis() - date.getTime();
-        return t / (60 * 1000);
     }
 }

@@ -1,7 +1,6 @@
-package com.style.common.system;
+package com.style.common.io;
 
-import com.style.common.exception.ExceptionUtils;
-import com.style.common.stream.IOUtils;
+import com.style.common.lang.ExceptionUtils;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -17,16 +16,15 @@ import java.io.InputStream;
 public class ResourceUtils extends org.springframework.util.ResourceUtils {
 
     private static ResourceLoader resourceLoader;
-
     private static ResourcePatternResolver resourceResolver;
-
-    static {
+    static{
         resourceLoader = new DefaultResourceLoader();
         resourceResolver = new PathMatchingResourcePatternResolver(resourceLoader);
     }
 
     /**
      * 获取资源加载器（可读取jar内的文件）
+     * @author ThinkGem
      */
     public static ResourceLoader getResourceLoader() {
         return resourceLoader;
@@ -48,38 +46,37 @@ public class ResourceUtils extends org.springframework.util.ResourceUtils {
 
     /**
      * 获取资源文件流（用后记得关闭）
-     *
-     * @param location location
-     * @throws IOException IOException
+     * @param location
+     * @author ThinkGem
+     * @throws IOException
      */
-    public static InputStream getResourceFileStream(String location) throws IOException {
+    public static InputStream getResourceFileStream(String location) throws IOException{
         Resource resource = resourceLoader.getResource(location);
         return resource.getInputStream();
     }
 
     /**
      * 获取资源文件内容
-     *
-     * @param location location
+     * @param location
      * @author ThinkGem
      */
-    public static String getResourceFileContent(String location) {
-        try (InputStream is = ResourceUtils.getResourceFileStream(location)) {
+    public static String getResourceFileContent(String location){
+        try(InputStream is = ResourceUtils.getResourceFileStream(location)){
             return IOUtils.toString(is, "UTF-8");
-        } catch (IOException e) {
+        }catch (IOException e) {
             throw ExceptionUtils.unchecked(e);
         }
     }
 
     /**
      * Spring 搜索资源文件
-     *
-     * @param locationPattern locationPattern
+     * @param locationPattern
      * @author ThinkGem
      */
-    public static Resource[] getResources(String locationPattern) {
+    public static Resource[] getResources(String locationPattern){
         try {
-            return resourceResolver.getResources(locationPattern);
+            Resource[] resources = resourceResolver.getResources(locationPattern);
+            return resources;
         } catch (IOException e) {
             throw ExceptionUtils.unchecked(e);
         }

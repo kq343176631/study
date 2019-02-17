@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 import com.style.common.lang.ListUtils;
+import com.style.common.io.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,46 +26,36 @@ import java.util.TimeZone;
 @SuppressWarnings("all")
 public class JsonMapper extends ObjectMapper {
 
-    private static Logger logger = LoggerFactory.getLogger(JsonMapper.class);
-
     private static final long serialVersionUID = 1L;
+
+    private static Logger logger = LoggerFactory.getLogger(JsonMapper.class);
 
     /**
      * 当前类的实例持有者（静态内部类，延迟加载，懒汉式，线程安全的单例模式）
      */
     private static final class JsonMapperHolder {
-
         private static final JsonMapper INSTANCE = new JsonMapper();
-
     }
 
     public JsonMapper() {
-
-        // 初始化JsonMapper
+        // Spring ObjectMapper 初始化配置，支持 @JsonView
         new Jackson2ObjectMapperBuilder().configure(this);
-
         // 为Null时不序列化
         this.setSerializationInclusion(Include.NON_NULL);
-
         // 允许单引号
         this.configure(Feature.ALLOW_SINGLE_QUOTES, true);
-
         // 允许不带引号的字段名称
         this.configure(Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-
-        // 设置时区
-        this.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-
+        // 设置默认时区
+        this.setTimeZone(TimeZone.getTimeZone(PropertyUtils.getInstance().getProperty("lang.defaultTimeZone", "GMT+08:00")));
         // 设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
         this.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-
         // 遇到空值处理为空串
         this.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>() {
-
             @Override
-            public void serialize(Object value, JsonGenerator jsonGenerator, SerializerProvider provider) throws IOException, JsonProcessingException {
-
-                jsonGenerator.writeString(StringUtils.EMPTY);
+            public void serialize(Object value, JsonGenerator jgen,
+                                  SerializerProvider provider) throws IOException, JsonProcessingException {
+                jgen.writeString(StringUtils.EMPTY);
             }
         });
     }
@@ -95,6 +86,8 @@ public class JsonMapper extends ObjectMapper {
      * 如果JSON字符串为Null或"null"字符串, 返回Null.
      * 如果JSON字符串为"[]", 返回空集合.
      * 如需反序列化复杂Collection如List<MyBean>, 请使用fromJson(String,JavaType)
+     *
+     * @see #fromJson(String, JavaType)
      */
     public <T> T fromJsonString(String jsonString, Class<T> clazz) {
         if (StringUtils.isEmpty(jsonString) || "<CLOB>".equals(jsonString)) {
@@ -110,7 +103,10 @@ public class JsonMapper extends ObjectMapper {
 
     /**
      * 反序列化复杂Collection如List<Bean>, 先使用函数createCollectionType构造类型,然后调用本函数.
+     *
+     * @see #createCollectionType(Class, Class...)
      */
+    @SuppressWarnings("unchecked")
     public <T> T fromJsonString(String jsonString, JavaType javaType) {
         if (StringUtils.isEmpty(jsonString) || "<CLOB>".equals(jsonString)) {
             return null;
@@ -135,10 +131,13 @@ public class JsonMapper extends ObjectMapper {
     /**
      * 当JSON里只含有Bean的部分属性時，更新一个已存在Bean，只覆盖该部分的属性.
      */
+    @SuppressWarnings("unchecked")
     public <T> T update(String jsonString, T object) {
         try {
             return (T) this.readerForUpdating(object).readValue(jsonString);
-        } catch (Exception e) {
+        } catch (JsonProcessingException e) {
+            logger.warn("update json string:" + jsonString + " to object:" + object + " error.", e);
+        } catch (IOException e) {
             logger.warn("update json string:" + jsonString + " to object:" + object + " error.", e);
         }
         return null;
@@ -183,21 +182,22 @@ public class JsonMapper extends ObjectMapper {
      * 对象转换为JSON字符串
      */
     public static String toJson(Object object) {
-        return getInstance().toJsonString(object);
+        return JsonMapper.getInstance().toJsonString(object);
     }
 
     /**
      * 对象转换为JSONP字符串
      */
     public static String toJsonp(String functionName, Object object) {
-        return getInstance().toJsonpString(functionName, object);
+        return JsonMapper.getInstance().toJsonpString(functionName, object);
     }
 
     /**
      * JSON字符串转换为对象
      */
+    @SuppressWarnings("unchecked")
     public static <T> T fromJson(String jsonString, Class<?> clazz) {
-        return (T) getInstance().fromJsonString(jsonString, clazz);
+        return (T) JsonMapper.getInstance().fromJsonString(jsonString, clazz);
     }
 
     /**
