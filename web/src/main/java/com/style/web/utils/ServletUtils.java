@@ -1,4 +1,4 @@
-package com.style.web.servlet;
+package com.style.web.utils;
 
 import com.style.common.io.PropertyUtils;
 import com.style.common.lang.MapUtils;

@@ -1,4 +1,4 @@
-package com.style.web.http;
+package com.style.web.utils;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;

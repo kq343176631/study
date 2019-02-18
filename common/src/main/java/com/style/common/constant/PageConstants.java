@@ -1,4 +1,4 @@
-package com.style.web.constant;
+package com.style.common.constant;
 
 public interface PageConstants {
 

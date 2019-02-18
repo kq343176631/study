@@ -1,6 +1,10 @@
 package com.style.web.config;
 
+import com.style.common.GlobalUtils;
+import com.style.common.constant.Constants;
 import com.style.common.lang.ListUtils;
+import com.style.common.lang.StringUtils;
+import com.style.web.interceptor.LogInterceptor;
 import com.style.web.mapper.JsonMapper;
 import com.style.web.mapper.XmlMapper;
 import org.hibernate.validator.HibernateValidator;
@@ -56,32 +60,10 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
     @Bean("multipartConfigElement")
     @ConditionalOnMissingBean(name = {"multipartConfigElement"})
     public MultipartConfigElement multipartConfigElement() {
-        multipartProperties.setMaxFileSize("1024");
-        multipartProperties.setMaxRequestSize("1024");
+        multipartProperties.setMaxFileSize(GlobalUtils.getProperty("spring.servlet.multipart.max-file-size"));
+        multipartProperties.setMaxRequestSize(GlobalUtils.getProperty("spring.servlet.multipart.max-request-size"));
         return this.multipartProperties.createMultipartConfig();
     }
-
-    /**
-     * 通用的组模版
-     */
-    /*@Bean(name = "beetlConfig", initMethod = "init")
-    public BeetlGroupUtilConfiguration beetlGroupUtilConfiguration() {
-        BeetlGroupUtilConfiguration configuration = new BeetlGroupUtilConfiguration();
-        //获取类加载器
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        if (loader == null) {
-            loader = ResourceUtils.getClassLoader();
-        }
-        ClasspathResourceLoader cprLoader = new ClasspathResourceLoader(loader,
-                GlobalUtils.getProperty("web.view.root"));
-        configuration.setResourceLoader(cprLoader);
-        configuration.setConfigFileResource(ResourceUtils.getResource("classpath:configs/view/beetl.properties"));
-        // 加载额外配置文件
-        configuration.init();
-        //如果使用了优化编译器，涉及到字节码操作，需要添加类加载器。
-        configuration.getGroupTemplate().setClassLoader(loader);
-        return configuration;
-    }*/
 
     /**
      * 自定义拦截器
@@ -89,10 +71,13 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
-        /*// 日子拦截器
+        if (!Constants.TRUE.equals(GlobalUtils.getProperty("web.interceptor.log.enabled"))) {
+            return;
+        }
+        // 日子拦截器
         InterceptorRegistration logRegistration = registry.addInterceptor(new LogInterceptor());
-        String logPathPatterns = GlobalUtils.getProperty("web.interceptor.log.addPathPatterns");
-        String logExcludePathPatterns = GlobalUtils.getProperty("web.interceptor.log.excludePathPatterns");
+        String logPathPatterns = GlobalUtils.getProperty("web.interceptor.log.add-path-patterns");
+        String logExcludePathPatterns = GlobalUtils.getProperty("web.interceptor.log.exclude-path-patterns");
         // 设置需要拦截的路径：URL
         for (String uri : StringUtils.split(logPathPatterns, Constants.SPLIT)) {
             if (StringUtils.isNotBlank(uri)) {
@@ -106,37 +91,7 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
             }
         }
 
-        // 手机视图拦截器
-        InterceptorRegistration mobileRegistration = registry.addInterceptor(new MobileInterceptor());
-        String mobilePathPatterns = GlobalUtils.getProperty("web.interceptor.mobile.addPathPatterns");
-        String mobileExcludePathPatterns = GlobalUtils.getProperty("web.interceptor.mobile.excludePathPatterns");
-        // 设置需要拦截的路径：URL
-        for (String uri : StringUtils.split(mobilePathPatterns, Constants.SPLIT)) {
-            if (StringUtils.isNotBlank(uri)) {
-                mobileRegistration.addPathPatterns(StringUtils.trim(uri));
-            }
-        }
-        // 设置不需要拦截的路径：URL
-        for (String uri : StringUtils.split(mobileExcludePathPatterns, Constants.SPLIT)) {
-            if (StringUtils.isNotBlank(uri)) {
-                mobileRegistration.excludePathPatterns(StringUtils.trim(uri));
-            }
-        }*/
     }
-
-    /**
-     * 视图解析器
-     */
-    /*@Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-        BeetlViewResolver viewResolver = new BeetlViewResolver();
-        viewResolver.setContentType("text/html;charset=UTF-8");
-        viewResolver.setOrder(1000);
-        viewResolver.setSuffix(".html");
-        viewResolver.setConfig(this.beetlGroupUtilConfiguration());
-        registry.viewResolver(viewResolver);
-        registry.enableContentNegotiation();
-    }*/
 
     /**
      * 开启跨域支持
@@ -155,13 +110,8 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // 当请求localhost/resource/1.png时，返回/static/1.png。
         registry.addResourceHandler("/error/**")
-                .addResourceLocations("classpath:views/error/");
-        /*registry.addResourceHandler("/admin/**")
-                .addResourceLocations("classpath:admin/")
-                //.setCachePeriod(31536000);
-                .setCachePeriod(0);// 开发模式禁用缓存*/
+                .addResourceLocations("classpath:view/error/");
     }
 
     /**
@@ -227,4 +177,5 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
     public Validator getValidator() {
         return this.beanValidator();
     }
+
 }

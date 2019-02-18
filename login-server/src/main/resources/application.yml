@@ -67,6 +67,37 @@ spring:
 
 
 #=========================================================#
+#=================== Web MVC settings ====================#
+#=========================================================#
+
+web:
+  view:  # MVC 视图相关
+    root: /views
+    themeName: default  # 页面主题名称
+  interceptor:  # MVC 拦截器
+    log:  # 后台管理日志记录拦截器
+      enabled: true
+      add-path-patterns: >
+        ${adminPath}/**
+      exclude-path-patterns: >
+        ${adminPath}/index,
+        ${adminPath}/login,
+        ${adminPath}/desktop,
+        ${adminPath}/sys/online/count,
+        ${adminPath}/state/server/rtInfo,
+        ${adminPath}/**/treeData,
+        ${adminPath}/file/**,
+        ${adminPath}/tags/*,
+        ${adminPath}/msg/**
+    mobile:  # 手机视图拦截器
+      enabled: false
+      add-path-patterns: >
+        ${frontPath}/**
+      exclude-path-patterns: ~
+  staticFile: .html,.css,.js,.map,.png,.jpg,.gif,.jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk,.otf,.eot,.svg,.ttf,.woff,.woff2
+  staticFileExcludeUri: /druid/
+
+#=========================================================#
 #================= Mybatis Plus settings =================#
 #=========================================================#
 
@@ -95,7 +126,7 @@ mybatis-plus:
 #=================== Logging settings ====================#
 #=========================================================#
 logging:
-  config: classpath:configs/log/logback-spring.xml
+  config: classpath:config/log/logback-spring.xml
 
 #eureka:
 #  client:

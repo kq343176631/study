@@ -1,4 +1,4 @@
-package com.style.web.cookie;
+package com.style.web.utils;
 
 import org.springframework.util.StringUtils;
 

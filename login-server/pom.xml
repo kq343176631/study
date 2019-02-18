@@ -21,7 +21,7 @@
 
         <dependency>
             <groupId>com.style.study</groupId>
-            <artifactId>basic-web</artifactId>
+            <artifactId>web</artifactId>
             <version>1.0.0</version>
         </dependency>
 

@@ -1,4 +1,4 @@
-package com.style.web;
+package com.style.web.controller;
 
 import com.style.common.model.Result;
 

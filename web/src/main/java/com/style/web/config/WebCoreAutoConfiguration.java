@@ -3,6 +3,7 @@ package com.style.web.config;
 import com.style.common.SpringUtils;
 import com.style.common.io.PropertyUtils;
 import com.style.common.lang.ListUtils;
+import com.style.web.filter.ErrorPageFilter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration;
@@ -42,7 +43,7 @@ public class WebCoreAutoConfiguration {
     /**
      * Error Page Filter
      */
-    /*@Bean("errorPageFilter")
+    @Bean("errorPageFilter")
     @Order(-2147483647)
     public FilterRegistrationBean<ErrorPageFilter> errorPageFilter() {
         FilterRegistrationBean<ErrorPageFilter> bean = new FilterRegistrationBean<>();
@@ -51,7 +52,7 @@ public class WebCoreAutoConfiguration {
         bean.setFilter(errorPageFilter);
         bean.addUrlPatterns("/*");
         return bean;
-    }*/
+    }
 
     /**
      * Encoding Filter
@@ -69,54 +70,6 @@ public class WebCoreAutoConfiguration {
     }
 
     /**
-     * Apache Security Filter
-     */
-    /*@Bean("shiroFilterProxy")
-    @Order(2000)
-    @ConditionalOnMissingBean(name = {"shiroFilterProxy"})
-    @DependsOn({"shiroFilter"})
-    public FilterRegistrationBean<Filter> shiroFilterProxy(ShiroFilterFactoryBean shiroFilter) throws Exception {
-        FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>();
-        bean.setFilter(shiroFilter.getInstance());
-        bean.addUrlPatterns("/*");
-        return bean;
-    }*/
-
-    /*
-    @Bean("druidFilter")
-    @Order(3000)
-    @ConditionalOnProperty(
-            name = "druid.stat.enabled",
-            havingValue = "true", matchIfMissing = true
-    )
-    public FilterRegistrationBean<WebStatFilter> druidFilter() {
-        FilterRegistrationBean<WebStatFilter> bean = new FilterRegistrationBean<>();
-        bean.setFilter(new WebStatFilter());
-        bean.addInitParameter("exclusions", "*.css,*.js,*.png,"
-                + "*.jpg,*.gif,*.jpeg,*.bmp,*.ico,*.swf,*.psd,*.htc,*.htm,*.html,"
-                + "*.crx,*.xpi,*.exe,*.ipa,*.apk,*.otf,*.eot,*.svg,*.ttf,*.woff,"
-                + "/druid/*");
-        bean.addUrlPatterns("/*");
-        return bean;
-    }*/
-
-     /*
-    @Bean
-    @Order(2000)
-    @ConditionalOnProperty(name = "ehcache.pageCaching.enabled", havingValue = "true")
-    public FilterRegistrationBean pageCachingFilter(EhCacheManagerFactoryBean ehCacheManagerFactoryBean) {
-        FilterRegistrationBean bean = new FilterRegistrationBean();
-        PageCachingFilter pageCachingFilter = new PageCachingFilter();
-        pageCachingFilter.setCacheManager(ehCacheManagerFactoryBean.getObject());
-        bean.setFilter(pageCachingFilter);
-        bean.addInitParameter("cacheName", "pageCachingFilter");
-        bean.addUrlPatterns(StringUtils.split(GlobalUtils.getProperty(
-                "ehcache.pageCaching.urlPatterns"), ","));
-        return bean;
-    }*/
-
-
-    /**
      * Request Context Listener
      */
     @Bean("requestContextListener")
@@ -127,19 +80,6 @@ public class WebCoreAutoConfiguration {
         bean.setListener(new RequestContextListener());
         return bean;
     }
-
-    /*
-    @Bean("druidServlet")
-    @ConditionalOnProperty(
-            name = "druid.stat.enabled",
-            havingValue = "true", matchIfMissing = true
-    )
-    public ServletRegistrationBean<StatViewServlet> druidServlet() {
-        ServletRegistrationBean<StatViewServlet> bean = new ServletRegistrationBean<>();
-        bean.setServlet(new StatViewServlet());
-        bean.addUrlMappings("/druid/*");
-        return bean;
-    }*/
 
     /**
      * Property Sources Placeholder
