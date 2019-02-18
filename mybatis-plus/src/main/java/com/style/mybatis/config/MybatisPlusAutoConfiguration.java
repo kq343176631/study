@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.core.incrementer.IKeyGenerator;
-import com.baomidou.mybatisplus.core.injector.ISqlInjector;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.style.mybatis.DynamicTransactionFactory;
 import com.style.mybatis.annotation.MyBatisPlus;
@@ -42,9 +41,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.type.AnnotationMetadata;
-import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -88,6 +88,15 @@ public class MybatisPlusAutoConfiguration {
         this.applicationContext = applicationContext;
     }
 
+    @PostConstruct
+    public void checkConfigFileExists() {
+        if (this.properties.isCheckConfigLocation() && StringUtils.hasText(this.properties.getConfigLocation())) {
+            Resource resource = this.resourceLoader.getResource(this.properties.getConfigLocation());
+            Assert.state(resource.exists(), "Cannot find config location: " + resource
+                    + " (please add config file or check your Mybatis configuration)");
+        }
+    }
+
     @Bean
     @ConditionalOnMissingBean
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
@@ -101,12 +110,14 @@ public class MybatisPlusAutoConfiguration {
         // 添加动态数据源事务工厂
         factory.setTransactionFactory(new DynamicTransactionFactory());
 
-        initMybatisConfiguration(factory);
+        if (StringUtils.hasText(this.properties.getConfigLocation())) {
+            factory.setConfigLocation(this.resourceLoader.getResource(this.properties.getConfigLocation()));
+        }
+        applyConfiguration(factory);
 
         if (this.properties.getConfigurationProperties() != null) {
             factory.setConfigurationProperties(this.properties.getConfigurationProperties());
         }
-
         // 添加动态数据源拦截器
         if (!ObjectUtils.isEmpty(this.interceptors)) {
             if (dataSource instanceof DynamicDataSource) {
@@ -124,7 +135,6 @@ public class MybatisPlusAutoConfiguration {
             }
 
         }
-
         if (this.databaseIdProvider != null) {
             factory.setDatabaseIdProvider(this.databaseIdProvider);
         }
@@ -149,13 +159,10 @@ public class MybatisPlusAutoConfiguration {
         return factory.getObject();
     }
 
-    private void initMybatisConfiguration(MybatisSqlSessionFactoryBean factory) {
-
-        if (StringUtils.hasText(this.properties.getConfigLocation())) {
-            factory.setConfigLocation(this.resourceLoader.getResource(this.properties.getConfigLocation()));
-        }
+    private void applyConfiguration(MybatisSqlSessionFactoryBean factory) {
 
         MybatisConfiguration configuration = this.properties.getConfiguration();
+
         if (configuration == null && !StringUtils.hasText(this.properties.getConfigLocation())) {
             configuration = new MybatisConfiguration();
         }
@@ -173,34 +180,30 @@ public class MybatisPlusAutoConfiguration {
         GlobalConfig globalConfig = this.properties.getGlobalConfig();
 
         //注入填充器
-        if (this.hasBeanAsApplicationContext(MetaObjectHandler.class)) {
+        if (this.applicationContext.getBeanNamesForType(MetaObjectHandler.class,
+                false, false).length > 0) {
             MetaObjectHandler metaObjectHandler = this.applicationContext.getBean(MetaObjectHandler.class);
             globalConfig.setMetaObjectHandler(metaObjectHandler);
         }
 
         //注入主键生成器
-        if (this.hasBeanAsApplicationContext(IKeyGenerator.class)) {
+        if (this.applicationContext.getBeanNamesForType(IKeyGenerator.class, false,
+                false).length > 0) {
             IKeyGenerator keyGenerator = this.applicationContext.getBean(IKeyGenerator.class);
             globalConfig.getDbConfig().setKeyGenerator(keyGenerator);
         }
-
         //注入sql注入器
-        /*if (this.hasBeanAsApplicationContext(ISqlInjector.class)) {
-            globalConfig.setSqlInjector(this.applicationContext.getBean(ISqlInjector.class));
-        } else {
-            globalConfig.setSqlInjector(new CrudSqlInjector());
+        /*if (this.applicationContext.getBeanNamesForType(ISqlInjector.class, false,
+                false).length > 0) {
+            ISqlInjector iSqlInjector = this.applicationContext.getBean(ISqlInjector.class);
+            globalConfig.setSqlInjector(iSqlInjector);
         }*/
         globalConfig.setSqlInjector(new CrudSqlInjector());
+
+        // 设置Mapper的父类
         globalConfig.setSuperMapperClass(BaseMapper.class);
+
         factory.setGlobalConfig(globalConfig);
-    }
-
-
-    private boolean hasBeanAsApplicationContext(@Nullable Class<?> type) {
-        if (this.applicationContext == null) {
-            return false;
-        }
-        return this.applicationContext.getBeanNamesForType(ISqlInjector.class, false, false).length > 0;
     }
 
     @Bean
@@ -231,7 +234,7 @@ public class MybatisPlusAutoConfiguration {
         @Override
         public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
 
-            logger.debug("Searching for mappers annotated with @Mapper");
+            logger.debug("Searching for mappers annotated with @MyBatisPlus");
 
             ClassPathMapperScanner scanner = new ClassPathMapperScanner(registry);
 
@@ -245,6 +248,7 @@ public class MybatisPlusAutoConfiguration {
                     packages.forEach(pkg -> logger.debug("Using auto-configuration base package '{}'", pkg));
                 }
 
+                // 设置Mapper注解
                 scanner.setAnnotationClass(MyBatisPlus.class);
                 scanner.registerFilters();
                 scanner.doScan(StringUtils.toStringArray(packages));
