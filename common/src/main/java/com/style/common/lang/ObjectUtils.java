@@ -14,7 +14,6 @@ import java.io.ObjectOutputStream;
 /**
  * 对象操作工具类, 继承org.apache.commons.lang3.ObjectUtils类
  */
-@SuppressWarnings("all")
 public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
     /**
@@ -65,6 +64,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
     /**
      * 转换为字符串
      */
+    @SuppressWarnings("all")
     public static String toString(final Object obj) {
         return toString(obj, StringUtils.EMPTY);
     }
@@ -72,6 +72,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
     /**
      * 如果对象为空，则使用defaultVal值
      */
+    @SuppressWarnings("all")
     public static String toString(final Object obj, final String defaultVal) {
         return obj == null ? defaultVal : obj.toString();
     }

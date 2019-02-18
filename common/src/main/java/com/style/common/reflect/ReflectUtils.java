@@ -13,7 +13,6 @@ import java.lang.reflect.Modifier;
 /**
  * 反射工具类.
  */
-@SuppressWarnings("all")
 public class ReflectUtils {
 
     private static Logger logger = LoggerFactory.getLogger(ReflectUtils.class);
@@ -46,8 +45,8 @@ public class ReflectUtils {
      *
      * @param object    object
      * @param fieldName fieldName
-     * @return
      */
+    @SuppressWarnings("unchecked")
     public static <E> E getFieldValue(final Object object, final String fieldName) {
         Field field = getAccessibleField(object, fieldName);
         if (field == null) {
@@ -105,6 +104,7 @@ public class ReflectUtils {
      * @param propertyName 属性名
      * @return result
      */
+    @SuppressWarnings("unchecked")
     public static <E> E invokeGetter(Object object, String propertyName) {
         Object result = object;
         for (String methodName : StringUtils.split(propertyName, POINT)) {
@@ -121,6 +121,7 @@ public class ReflectUtils {
      * @param args       参数
      * @return result
      */
+    @SuppressWarnings("unchecked")
     public static <E> E invokeMethod(final Object object, final String methodName, final Object... args) {
         Method method = getAccessibleMethod(object, methodName, getParamTypes(args));
         if (method == null) {
@@ -137,10 +138,6 @@ public class ReflectUtils {
     /**
      * 循环向上转型, 获取对象的DeclaredField, 并强制设置为可访问.
      * 如向上转型到Object仍无法找到, 返回null.
-     *
-     * @param obj
-     * @param fieldName
-     * @return
      */
     public static Field getAccessibleField(final Object object, final String fieldName) {
         if (object == null) {
@@ -162,11 +159,6 @@ public class ReflectUtils {
     /**
      * 循环向上转型, 获取对象的DeclaredMethod,并强制设置为可访问.
      * 如向上转型到Object仍无法找到, 返回null.
-     *
-     * @param obj
-     * @param methodName
-     * @param parameterTypes
-     * @return
      */
     public static Method getAccessibleMethod(final Object object, final String methodName, final Class<?>... parameterTypes) {
         if (object == null) {
@@ -188,8 +180,6 @@ public class ReflectUtils {
     /**
      * 改变private/protected的方法为public.
      * 尽量不调用实际改动的语句，避免JDK的SecurityManager抱怨。
-     *
-     * @param method methoda
      */
     public static void makeAccessible(Method method) {
         if ((!Modifier.isPublic(method.getModifiers()) || !Modifier.isPublic(method.getDeclaringClass().getModifiers())) && !method.isAccessible()) {
@@ -200,8 +190,6 @@ public class ReflectUtils {
     /**
      * 改变private/protected的成员变量为public.
      * 尽量不调用实际改动的语句，避免JDK的SecurityManager抱怨。
-     *
-     * @param field field
      */
     public static void makeAccessible(Field field) {
         if ((!Modifier.isPublic(field.getModifiers()) || !Modifier.isPublic(field.getDeclaringClass().getModifiers()) || Modifier.isFinal(field.getModifiers())) && !field.isAccessible()) {
@@ -211,10 +199,6 @@ public class ReflectUtils {
 
     /**
      * 将反射时的checked exception转换为unchecked exception.
-     *
-     * @param msg
-     * @param e
-     * @return
      */
     public static RuntimeException reflectionExceptionToUnchecked(String msg, Exception e) {
         if (e instanceof IllegalAccessException || e instanceof IllegalArgumentException || e instanceof NoSuchMethodException) {
