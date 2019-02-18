@@ -15,9 +15,8 @@ public class DeleteByIds extends AbstractLogicMethod {
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
         String sql;
-        SqlMethod sqlMethod;
+        SqlMethod sqlMethod = SqlMethod.LOGIC_DELETE_BY_IDS;
         if (tableInfo.isLogicDelete()) {
-            sqlMethod = SqlMethod.LOGIC_DELETE_BY_IDS;
             sql = String.format(sqlMethod.getSql(), tableInfo.getTableName(), sqlLogicSet(tableInfo),
                     tableInfo.getKeyColumn(),
                     SqlScriptUtils.convertForeach("#{item}", COLLECTION, null, "item", COMMA),

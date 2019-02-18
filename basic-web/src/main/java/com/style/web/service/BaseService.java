@@ -1,4 +1,4 @@
-package com.style.mybatis.service;
+package com.style.web.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;

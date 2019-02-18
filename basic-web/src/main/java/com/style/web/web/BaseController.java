@@ -1,9 +1,9 @@
-package com.style.mybatis.web;
+package com.style.web.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.style.common.lang.StringUtils;
-import com.style.mybatis.constant.PageConstants;
+import com.style.web.constant.PageConstants;
 
 import javax.servlet.http.HttpServletRequest;
 

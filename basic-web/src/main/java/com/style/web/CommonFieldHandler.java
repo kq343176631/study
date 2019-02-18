@@ -1,4 +1,4 @@
-package com.style.mybatis.injector;
+package com.style.web;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;

@@ -14,8 +14,6 @@ import com.style.common.lang.ObjectUtils;
 import com.style.common.lang.StringUtils;
 import com.style.mybatis.DynamicTransactionFactory;
 import com.style.mybatis.annotation.MyBatisPlus;
-import com.style.mybatis.dao.BaseDao;
-import com.style.mybatis.injector.CommonFieldHandler;
 import com.style.mybatis.injector.CrudSqlInjector;
 import com.style.mybatis.plugin.dynamic.DataSourceInterceptor;
 import com.style.mybatis.plugin.dynamic.DynamicDataSource;
@@ -104,10 +102,10 @@ public class MybatisPlusAutoConfiguration {
         globalConfig.setSqlParserCache(ObjectUtils.toBoolean(
                 GlobalUtils.getProperty("mybatis-plus.global-config.sql-parser-cache")
         ));
-        globalConfig.setSuperMapperClass(BaseDao.class);
+        //globalConfig.setSuperMapperClass(BaseDao.class);
 
         //注入填充器
-        globalConfig.setMetaObjectHandler(new CommonFieldHandler());
+        //globalConfig.setMetaObjectHandler(new CommonFieldHandler());
         //注入sql注入器
         globalConfig.setSqlInjector(new CrudSqlInjector());
         //注入主键生成器

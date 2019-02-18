@@ -1,4 +1,4 @@
-package com.style.mybatis.constant;
+package com.style.web.constant;
 
 public interface PageConstants {
 

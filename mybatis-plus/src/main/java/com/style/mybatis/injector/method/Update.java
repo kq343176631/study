@@ -14,16 +14,9 @@ public class Update extends AbstractLogicMethod {
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
         SqlMethod sqlMethod = SqlMethod.UPDATE;
-        String sql;
-        if (tableInfo.isLogicDelete()) {
-            sql = String.format(sqlMethod.getSql(), tableInfo.getTableName(),
-                    sqlSet(true, true, tableInfo, ENTITY_DOT),
-                    sqlWhereEntityWrapper(true, tableInfo));
-        } else {
-            sql = String.format(sqlMethod.getSql(), tableInfo.getTableName(),
-                    sqlSet(false, true, tableInfo, ENTITY_DOT),
-                    sqlWhereEntityWrapper(true, tableInfo));
-        }
+        String sql = String.format(sqlMethod.getSql(), tableInfo.getTableName(),
+                sqlSet(true, true, tableInfo, ENTITY, ENTITY_DOT),
+                sqlWhereEntityWrapper(true, tableInfo));
         SqlSource sqlSource = languageDriver.createSqlSource(configuration, sql, modelClass);
         return addUpdateMappedStatement(mapperClass, modelClass, sqlMethod.getMethod(), sqlSource);
     }

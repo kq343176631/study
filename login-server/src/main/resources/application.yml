@@ -123,7 +123,7 @@ mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   mapper-scan-path: com.style.modules.*.dao
   typeAliasesPackage: com.style.modules.*.entity  #实体扫描，多个package用逗号或者分号分隔
-  type-aliases-super-type: com.style.mybatis.entity.BaseEntity
+  type-aliases-super-type: com.style.web.entity.BaseEntity
   global-config:
     sql-parser-cache: false
   configuration:

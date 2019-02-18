@@ -1,18 +1,14 @@
-package com.style.mybatis.dao;
+package com.style.mybatis.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
-import com.style.mybatis.entity.BaseEntity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Collection;
 import java.util.List;
 
-/**
- * BaseDao
- */
-public interface BaseDao<T extends BaseEntity<T>> {
+public interface BaseMapper<T> {
 
     /**
      * 插入一条记录

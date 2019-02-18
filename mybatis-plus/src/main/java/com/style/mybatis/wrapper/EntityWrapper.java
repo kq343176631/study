@@ -137,7 +137,7 @@ public class EntityWrapper<T> extends AbstractWrapper<T, String, EntityWrapper<T
     }
 
     @Override
-    protected EntityWrapper<T> instance(AtomicInteger paramNameSeq, Map<String, Object> paramNameValuePairs) {
+    protected EntityWrapper<T> instance() {
         return new EntityWrapper<>(entity, entityClass, sqlSet, paramNameSeq, paramNameValuePairs, new MergeSegments());
     }
 }
