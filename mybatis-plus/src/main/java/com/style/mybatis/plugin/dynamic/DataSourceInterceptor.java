@@ -1,8 +1,8 @@
 package com.style.mybatis.plugin.dynamic;
 
-import com.style.common.lang.StringUtils;
-import com.style.mybatis.exception.DatasourceException;
 import com.style.mybatis.annotation.DataSource;
+import com.style.mybatis.exception.DatasourceException;
+import com.style.mybatis.utils.StringUtils;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;

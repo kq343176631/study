@@ -5,7 +5,6 @@ import java.util.Map;
 
 /**
  * 多数据源属性
- *
  */
 public class DynamicDataSourceProperties {
 

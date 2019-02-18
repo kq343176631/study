@@ -149,7 +149,7 @@ public class MapUtils extends org.apache.commons.collections.MapUtils {
      * 转换为Collection<Map<K, V>>
      *
      * @param collection 待转换对象集合
-     * @return 转换后的Collection<Map               <               K               ,                               V>>
+     * @return 转换后的Collection<Map                               <                               K                               ,                                                               V>>
      */
     public static <T> Collection<Map<String, String>> toMapList(Collection<T> collection) throws IllegalAccessException, InvocationTargetException,
             NoSuchMethodException {
@@ -167,7 +167,7 @@ public class MapUtils extends org.apache.commons.collections.MapUtils {
      * 转换为Collection,同时为字段做驼峰转换<Map<K, V>>
      *
      * @param collection 待转换对象集合
-     * @return 转换后的Collection<Map               <               K               ,                               V>>
+     * @return 转换后的Collection<Map                               <                               K                               ,                                                               V>>
      */
     public static <T> Collection<Map<String, String>> toMapListForFlat(Collection<T> collection) throws IllegalAccessException,
             InvocationTargetException, NoSuchMethodException {

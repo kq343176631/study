@@ -29,12 +29,6 @@
 
     <dependencies>
 
-        <dependency>
-            <groupId>com.style.study</groupId>
-            <artifactId>common</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
         <!-- JDBC device begin -->
         <!-- mysql驱动 -->
         <dependency>

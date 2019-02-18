@@ -3,7 +3,6 @@ package com.style.mybatis;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.xa.DruidXADataSource;
 import com.atomikos.jdbc.AtomikosSQLException;
-import com.style.common.lang.MapUtils;
 import com.style.mybatis.plugin.dynamic.DataSourceHolder;
 import com.style.mybatis.plugin.dynamic.DynamicDataSource;
 import com.style.mybatis.properties.DataSourceProperties;
@@ -14,6 +13,7 @@ import javax.sql.DataSource;
 import javax.sql.XADataSource;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class DataSourceFactory {
 
@@ -42,7 +42,7 @@ public class DataSourceFactory {
         DynamicDataSource dynamicDataSource = new DynamicDataSource();
 
         Map<String, DataSourceProperties> dataSourcePropertiesMap = dynamicDataSourceProperties.getDatasource();
-        Map<Object, Object> otherDataSources = MapUtils.newConcurrentMap();
+        Map<Object, Object> otherDataSources = new ConcurrentHashMap<>();
         dataSourcePropertiesMap.forEach((datasourceName, dataSourceProperties) -> {
 
             DruidXADataSource druidXADataSource = new DruidXADataSource();

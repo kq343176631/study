@@ -2,7 +2,7 @@ package com.style.mybatis.plugin.dynamic;
 
 import ch.qos.logback.classic.selector.ContextSelector;
 import ch.qos.logback.classic.util.ContextSelectorStaticBinder;
-import com.style.common.lang.StringUtils;
+import com.style.mybatis.utils.StringUtils;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 

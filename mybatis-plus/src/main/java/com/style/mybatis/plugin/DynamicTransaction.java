@@ -1,9 +1,8 @@
 package com.style.mybatis.plugin;
 
-import com.style.common.lang.MapUtils;
-import com.style.common.lang.StringUtils;
 import com.style.mybatis.plugin.dynamic.DataSourceHolder;
 import com.style.mybatis.plugin.dynamic.DynamicDataSource;
+import com.style.mybatis.utils.StringUtils;
 import org.apache.ibatis.transaction.Transaction;
 import org.mybatis.spring.transaction.SpringManagedTransaction;
 
@@ -12,6 +11,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 分布式事务
@@ -22,7 +22,7 @@ public class DynamicTransaction implements Transaction {
 
     public DynamicTransaction(DataSource dataSource) {
         this.dynamicDataSource = (DynamicDataSource) dataSource;
-        this.transactions = MapUtils.newConcurrentMap();
+        this.transactions = new ConcurrentHashMap<>();
     }
 
     @Override

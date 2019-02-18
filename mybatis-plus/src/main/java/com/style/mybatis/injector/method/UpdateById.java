@@ -1,7 +1,6 @@
 package com.style.mybatis.injector.method;
 
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
-import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.injector.AbstractLogicMethod;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
