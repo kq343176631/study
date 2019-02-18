@@ -32,7 +32,6 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
@@ -54,20 +53,6 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.util.List;
 
-/**
- * {@link EnableAutoConfiguration Auto-Configuration} for Mybatis. Contributes a
- * {@link SqlSessionFactory} and a {@link SqlSessionTemplate}.
- * <p>
- * If {@link org.mybatis.spring.annotation.MapperScan} is used, or a
- * configuration file is specified as a property, those will be considered,
- * otherwise this auto-configuration will attempt to register mappers based on
- * the interface definitions in or under the root auto-configuration package.
- *
- * @author Eddú Meléndez
- * @author Josh Long
- * @author Kazuki Shimizu
- * @author Eduardo Macarrón
- */
 @Configuration
 @ConditionalOnClass({SqlSessionFactory.class, SqlSessionFactoryBean.class})
 @ConditionalOnSingleCandidate(DataSource.class)
@@ -113,6 +98,7 @@ public class MybatisPlusAutoConfiguration {
 
         factory.setVfs(SpringBootVFS.class);
 
+        // 添加动态数据源事务工厂
         factory.setTransactionFactory(new DynamicTransactionFactory());
 
         initMybatisConfiguration(factory);
@@ -121,6 +107,7 @@ public class MybatisPlusAutoConfiguration {
             factory.setConfigurationProperties(this.properties.getConfigurationProperties());
         }
 
+        // 添加动态数据源拦截器
         if (!ObjectUtils.isEmpty(this.interceptors)) {
             if (dataSource instanceof DynamicDataSource) {
                 Interceptor[] interceptors = new Interceptor[this.interceptors.length + 1];
@@ -198,13 +185,13 @@ public class MybatisPlusAutoConfiguration {
         }
 
         //注入sql注入器
-        globalConfig.setSqlInjector(new CrudSqlInjector());
-        if (this.hasBeanAsApplicationContext(ISqlInjector.class)) {
+        /*if (this.hasBeanAsApplicationContext(ISqlInjector.class)) {
             globalConfig.setSqlInjector(this.applicationContext.getBean(ISqlInjector.class));
         } else {
-            globalConfig.setSuperMapperClass(BaseMapper.class);
-        }
-
+            globalConfig.setSqlInjector(new CrudSqlInjector());
+        }*/
+        globalConfig.setSqlInjector(new CrudSqlInjector());
+        globalConfig.setSuperMapperClass(BaseMapper.class);
         factory.setGlobalConfig(globalConfig);
     }
 
