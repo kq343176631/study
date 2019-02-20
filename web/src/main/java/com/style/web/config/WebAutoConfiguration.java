@@ -2,8 +2,6 @@ package com.style.web.config;
 
 import com.style.common.SpringUtils;
 import com.style.common.io.PropertyUtils;
-import com.style.common.lang.ListUtils;
-import com.style.web.filter.ErrorPageFilter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration;
@@ -11,6 +9,7 @@ import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfig
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
+import org.springframework.boot.web.servlet.support.ErrorPageFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -20,13 +19,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import java.util.List;
-
 @Configuration
 @AutoConfigureBefore({HttpEncodingAutoConfiguration.class, PropertyPlaceholderAutoConfiguration.class})
-public class WebCoreAutoConfiguration {
+public class WebAutoConfiguration {
 
-    public WebCoreAutoConfiguration() {
+    public WebAutoConfiguration() {
 
     }
 
@@ -97,9 +94,10 @@ public class WebCoreAutoConfiguration {
     /**
      * 注册系统错误页面
      */
-    private List<ErrorPage> registryErrorPages() {
+    private ErrorPage[] registryErrorPages() {
 
-        List<ErrorPage> errorPages = ListUtils.newArrayList();
+        ErrorPage[] errorPages = new ErrorPage[6];
+
         // 坏的请求错误页面
         ErrorPage badRequest = new ErrorPage(HttpStatus.BAD_REQUEST, "/error/status/400.html");
         // 未经认证的错误页面
@@ -113,12 +111,12 @@ public class WebCoreAutoConfiguration {
         // 系统异常错误页面
         ErrorPage exception = new ErrorPage(Throwable.class, "/error/exception.html");
 
-        errorPages.add(badRequest);
-        errorPages.add(unAuthorized);
-        errorPages.add(forbidden);
-        errorPages.add(notFound);
-        errorPages.add(internalServerError);
-        errorPages.add(exception);
+        errorPages[0] = badRequest;
+        errorPages[1] = unAuthorized;
+        errorPages[2] = forbidden;
+        errorPages[3] = notFound;
+        errorPages[4] = internalServerError;
+        errorPages[5] = exception;
 
         return errorPages;
     }

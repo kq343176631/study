@@ -11,29 +11,47 @@
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>eureka-server</artifactId>
+    <artifactId>eureka</artifactId>
     <version>1.0.0</version>
     <packaging>war</packaging>
-    <name>Eureka Server Dependencies</name>
-    <description>Eureka Server Module</description>
+    <name>Eureka Dependencies</name>
+    <description>Eureka Module</description>
 
     <dependencies>
 
+        <!-- Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Spring Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- 监控接口 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- Spring Cloud -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter</artifactId>
         </dependency>
 
+        <!-- 服务注册 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
-
     </dependencies>
 
+
+
+    
 </project>

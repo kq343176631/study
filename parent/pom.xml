@@ -116,6 +116,9 @@
     </dependencies>
 
     <build>
+
+        <finalName>${project.artifactId}</finalName>
+
         <!-- 资源文件配置 -->
         <resources>
             <resource>
@@ -129,40 +132,64 @@
             </resource>
         </resources>
 
-        <finalName>${project.artifactId}</finalName>
-        <pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
 
-            <plugins>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <configuration>
-                        <skipTests>true</skipTests>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>com.spotify</groupId>
-                    <artifactId>docker-maven-plugin</artifactId>
-                    <version>${docker.plugin.version}</version>
-                    <configuration>
-                        <imageName>renren/${project.artifactId}</imageName>
-                        <dockerDirectory>${project.basedir}/</dockerDirectory>
-                        <resources>
-                            <resource>
-                                <targetPath>/</targetPath>
-                                <directory>${project.build.directory}</directory>
-                                <include>${project.build.finalName}.jar</include>
-                            </resource>
-                        </resources>
-                    </configuration>
-                </plugin>
-            </plugins>
+            <!-- 打包插件, war包名称不带版本号 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <packagingExcludes></packagingExcludes>
+                    <warSourceExcludes></warSourceExcludes>
+                    <webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
+                    <warName>${project.artifactId}</warName>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                    </archive>
+                </configuration>
+            </plugin>
 
-        </pluginManagement>
+            <!-- Eclipse插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <configuration>
+                    <downloadSources>${eclipse-plugin-download-sources}</downloadSources>
+                    <downloadJavadocs>${eclipse-plugin-download-javadocs}</downloadJavadocs>
+                    <wtpContextName>${project.artifactId}</wtpContextName>
+                    <wtpversion>2.0</wtpversion>
+                    <jeeversion>6.0</jeeversion>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker.plugin.version}</version>
+                <configuration>
+                    <imageName>renren/${project.artifactId}</imageName>
+                    <dockerDirectory>${project.basedir}/</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+        </plugins>
 
     </build>
 

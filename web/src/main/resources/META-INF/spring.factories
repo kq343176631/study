@@ -3,5 +3,4 @@ org.springframework.boot.env.PropertySourceLoader=\
 com.style.common.io.PropertyLoader
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.style.web.config.WebCoreAutoConfiguration,\
-com.style.web.config.WebMvcAutoConfiguration
+com.style.web.config.WebAutoConfiguration
