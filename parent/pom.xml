@@ -118,7 +118,7 @@
     <build>
 
         <finalName>${project.artifactId}</finalName>
-
+        
         <!-- 资源文件配置 -->
         <resources>
             <resource>
@@ -144,35 +144,6 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-
-            <!-- 打包插件, war包名称不带版本号 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <packagingExcludes></packagingExcludes>
-                    <warSourceExcludes></warSourceExcludes>
-                    <webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
-                    <warName>${project.artifactId}</warName>
-                    <archive>
-                        <addMavenDescriptor>false</addMavenDescriptor>
-                    </archive>
-                </configuration>
-            </plugin>
-
-            <!-- Eclipse插件 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <configuration>
-                    <downloadSources>${eclipse-plugin-download-sources}</downloadSources>
-                    <downloadJavadocs>${eclipse-plugin-download-javadocs}</downloadJavadocs>
-                    <wtpContextName>${project.artifactId}</wtpContextName>
-                    <wtpversion>2.0</wtpversion>
-                    <jeeversion>6.0</jeeversion>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
