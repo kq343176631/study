@@ -60,8 +60,8 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
     @Bean("multipartConfigElement")
     @ConditionalOnMissingBean(name = {"multipartConfigElement"})
     public MultipartConfigElement multipartConfigElement() {
-        multipartProperties.setMaxFileSize(GlobalUtils.getProperty("spring.servlet.multipart.max-file-size"));
-        multipartProperties.setMaxRequestSize(GlobalUtils.getProperty("spring.servlet.multipart.max-request-size"));
+        //multipartProperties.setMaxFileSize(GlobalUtils.getProperty("spring.servlet.multipart.max-file-size"));
+        //multipartProperties.setMaxRequestSize(GlobalUtils.getProperty("spring.servlet.multipart.max-request-size"));
         return this.multipartProperties.createMultipartConfig();
     }
 
