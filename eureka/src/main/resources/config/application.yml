@@ -4,7 +4,7 @@
 #======================================#
 
 server:
-  port: 9000
+  port: 8970
   servlet:
     context-path: ~
   tomcat:
