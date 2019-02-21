@@ -35,35 +35,35 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
       enabled: true
-  autoconfigure:
-    exclude:
-      org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration,
-      org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration,
-      org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration,
-
-      org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration,
-      org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration,
-      org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration,
-      org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration,
-
-      org.springframework.boot.autoconfigure.quartz.QuartzAutoConfiguration,
-      org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration,
-      org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration,
-
-      org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration,
-      org.springframework.boot.autoconfigure.data.redis.RedisReactiveAutoConfiguration,
-      org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration,
-
-      org.springframework.boot.autoconfigure.reactor.core.ReactorCoreAutoConfiguration,
-      org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration,
-
-      org.springframework.boot.autoconfigure.transaction.jta.JtaAutoConfiguration,
-      org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration,
-      org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,
-      org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration,
-      org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration,
-
-      com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration,
+#  autoconfigure:
+#    exclude:
+#      org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration,
+#      org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration,
+#      org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration,
+#
+#      org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration,
+#      org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration,
+#      org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration,
+#      org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration,
+#
+#      org.springframework.boot.autoconfigure.quartz.QuartzAutoConfiguration,
+#      org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration,
+#      org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration,
+#
+#      org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration,
+#      org.springframework.boot.autoconfigure.data.redis.RedisReactiveAutoConfiguration,
+#      org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration,
+#
+#      org.springframework.boot.autoconfigure.reactor.core.ReactorCoreAutoConfiguration,
+#      org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration,
+#
+#      org.springframework.boot.autoconfigure.transaction.jta.JtaAutoConfiguration,
+#      org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration,
+#      org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,
+#      org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration,
+#      org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration,
+#
+#      com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration,
 
 
 #=========================================================#
