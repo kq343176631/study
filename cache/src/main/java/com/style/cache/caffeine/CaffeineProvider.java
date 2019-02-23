@@ -2,7 +2,7 @@ package com.style.cache.caffeine;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.RemovalCause;
-import com.style.common.lang.StringUtils;
+import com.style.utils.lang.StringUtils;
 import net.oschina.j2cache.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

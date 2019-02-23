@@ -3,8 +3,8 @@
  */
 package com.style.web.interceptor;
 
-import com.style.common.lang.StringUtils;
-import com.style.common.network.UserAgentUtils;
+import com.style.utils.lang.StringUtils;
+import com.style.utils.network.UserAgentUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 

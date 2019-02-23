@@ -1,9 +1,9 @@
 package com.style.web.config;
 
-import com.style.common.GlobalUtils;
-import com.style.common.constant.Constants;
-import com.style.common.lang.ListUtils;
-import com.style.common.lang.StringUtils;
+import com.style.utils.GlobalUtils;
+import com.style.utils.constant.Constants;
+import com.style.utils.lang.ListUtils;
+import com.style.utils.lang.StringUtils;
 import com.style.web.interceptor.LogInterceptor;
 import com.style.web.mapper.JsonMapper;
 import com.style.web.mapper.XmlMapper;

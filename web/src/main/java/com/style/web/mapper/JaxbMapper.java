@@ -1,8 +1,8 @@
 package com.style.web.mapper;
 
-import com.style.common.lang.ExceptionUtils;
-import com.style.common.lang.StringUtils;
-import com.style.common.reflect.ReflectUtils;
+import com.style.utils.lang.ExceptionUtils;
+import com.style.utils.lang.StringUtils;
+import com.style.utils.reflect.ReflectUtils;
 
 import javax.xml.bind.*;
 import javax.xml.bind.annotation.XmlAnyElement;

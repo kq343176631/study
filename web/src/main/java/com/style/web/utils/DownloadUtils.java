@@ -1,8 +1,8 @@
 package com.style.web.utils;
 
-import com.style.common.codec.EncodeUtils;
-import com.style.common.io.FileUtils;
-import com.style.common.lang.StringUtils;
+import com.style.utils.codec.EncodeUtils;
+import com.style.utils.io.FileUtils;
+import com.style.utils.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

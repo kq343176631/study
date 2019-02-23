@@ -28,7 +28,7 @@
         <!--  common -->
         <dependency>
             <groupId>com.style.study</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>utils</artifactId>
             <version>1.0.0</version>
         </dependency>
 

@@ -1,7 +1,7 @@
 package com.style.web.config;
 
-import com.style.common.SpringUtils;
-import com.style.common.io.PropertyUtils;
+import com.style.utils.SpringUtils;
+import com.style.utils.io.PropertyUtils;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration;

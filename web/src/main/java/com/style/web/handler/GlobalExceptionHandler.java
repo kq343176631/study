@@ -1,8 +1,8 @@
 package com.style.web.handler;
 
-import com.style.common.constant.ErrorCode;
-import com.style.common.exception.ValidateException;
-import com.style.common.model.Result;
+import com.style.utils.constant.ErrorCode;
+import com.style.utils.exception.ValidateException;
+import com.style.utils.model.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;

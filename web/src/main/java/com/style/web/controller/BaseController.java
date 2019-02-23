@@ -2,8 +2,8 @@ package com.style.web.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.style.common.constant.PageConstants;
-import com.style.common.lang.StringUtils;
+import com.style.utils.constant.Constants;
+import com.style.utils.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,12 +16,12 @@ public abstract class BaseController {
         long pageSize = 10;
 
         if (request == null) {
-            return new Page(pageNo, pageSize).setAsc(PageConstants.DEFAULT_ORDER_BY);
+            return new Page(pageNo, pageSize).setAsc(Constants.DEFAULT_ORDER_BY);
         }
 
         //解析分页参数
-        String strPageNo = request.getParameter(PageConstants.PAGE_NO);
-        String strPageSize = request.getParameter(PageConstants.PAGE_SIZE);
+        String strPageNo = request.getParameter(Constants.PAGE_NO);
+        String strPageSize = request.getParameter(Constants.PAGE_SIZE);
         if (StringUtils.isNumeric(strPageNo)) {
             pageNo = Long.parseLong(strPageNo);
         }
@@ -33,18 +33,18 @@ public abstract class BaseController {
         Page<T> page = new Page<>(pageNo, pageSize);
 
         //排序字段
-        String orderBy = request.getParameter(PageConstants.ORDER_BY);
-        String order = request.getParameter(PageConstants.ORDER);
+        String orderBy = request.getParameter(Constants.ORDER_BY);
+        String order = request.getParameter(Constants.ORDER);
         //前端排序
         if (StringUtils.isNotEmpty(orderBy) && StringUtils.isNotEmpty(order)) {
-            if (PageConstants.ASC.equalsIgnoreCase(order)) {
+            if (Constants.ASC.equalsIgnoreCase(order)) {
                 return page.setAsc(orderBy);
             } else {
                 return page.setDesc(orderBy);
             }
         } else {
             //默认排序
-            page.setAsc(PageConstants.DEFAULT_ORDER_BY);
+            page.setAsc(Constants.DEFAULT_ORDER_BY);
         }
         return page;
     }

@@ -1,8 +1,8 @@
 package com.style.web.utils;
 
-import com.style.common.io.PropertyUtils;
-import com.style.common.lang.MapUtils;
-import com.style.common.lang.StringUtils;
+import com.style.utils.io.PropertyUtils;
+import com.style.utils.lang.MapUtils;
+import com.style.utils.lang.StringUtils;
 import com.style.web.http.HttpHeaders;
 import com.style.web.mapper.JsonMapper;
 import com.style.web.mapper.XmlMapper;

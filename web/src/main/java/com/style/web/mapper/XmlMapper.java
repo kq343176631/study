@@ -1,6 +1,6 @@
 package com.style.web.mapper;
 
-import com.style.common.io.PropertyUtils;
+import com.style.utils.io.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.*;
 import org.slf4j.Logger;

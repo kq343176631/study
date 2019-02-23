@@ -11,11 +11,11 @@
 
     <logger name="com.style" level="DEBUG"/>
 
-    <logger name="com.style.common.cache" level="INFO"/>
-    <logger name="com.style.common.core" level="INFO"/>
+    <logger name="com.style.utils.cache" level="INFO"/>
+    <logger name="com.style.utils.core" level="INFO"/>
 
-    <logger name="com.style.common.interceptor" level="DEBUG"/>
-    <logger name="com.style.common.mybatis" level="DEBUG"/>
+    <logger name="com.style.utils.interceptor" level="DEBUG"/>
+    <logger name="com.style.utils.mybatis" level="DEBUG"/>
     <logger name="com.style.modules.security" level="DEBUG"/>
     <logger name="com.style.modules.system" level="DEBUG"/>
 

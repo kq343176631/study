@@ -1,6 +1,6 @@
 package com.style.web.controller;
 
-import com.style.common.model.Result;
+import com.style.utils.model.Result;
 
 /**
  * 适用于移动端（REST）
