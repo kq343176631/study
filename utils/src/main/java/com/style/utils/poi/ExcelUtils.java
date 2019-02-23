@@ -2,7 +2,7 @@ package com.style.utils.poi;
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
-import com.style.utils.lang.BeanUtils;
+import com.style.utils.BeanUtils;
 import com.style.utils.lang.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Workbook;

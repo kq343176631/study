@@ -1,0 +1,11 @@
+
+# PropertySource Loaders
+
+org.springframework.boot.env.PropertySourceLoader=\
+com.style.utils.io.PropertyLoader
+
+# Auto Configure
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.style.common.config.MsgAutoConfiguration,\
+com.style.common.config.WebAutoConfiguration

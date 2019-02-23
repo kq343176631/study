@@ -1,10 +1,10 @@
 package com.style.login.modules.demo.web;
 
-import com.style.utils.constant.Constants;
-import com.style.utils.model.Result;
+import com.style.common.constant.Constants;
+import com.style.common.crud.controller.WebController;
+import com.style.common.model.Result;
 import com.style.login.modules.demo.entity.News;
 import com.style.login.modules.demo.service.NewsService;
-import com.style.web.controller.WebController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

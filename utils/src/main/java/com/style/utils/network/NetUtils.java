@@ -1,8 +1,8 @@
 package com.style.utils.network;
 
-import com.style.utils.FilterUtils;
 import com.style.utils.io.PropertyUtils;
 import com.style.utils.lang.StringUtils;
+import com.style.utils.text.StringFilterUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,7 +28,7 @@ public class NetUtils {
             ip = request.getRemoteAddr();
         }
         if (StringUtils.isNotBlank(ip)) {
-            ip = FilterUtils.doXssFilter(ip);
+            ip = StringFilterUtils.doXssFilter(ip);
             ip = StringUtils.split(ip, ",")[0];
         }
         if (StringUtils.isBlank(ip)) {

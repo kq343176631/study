@@ -1,7 +1,7 @@
 package com.style.login.modules.demo.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.style.web.entity.BaseEntity;
+import com.style.common.crud.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

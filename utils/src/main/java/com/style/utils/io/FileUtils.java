@@ -1,7 +1,7 @@
 package com.style.utils.io;
 
 import com.style.utils.codec.EncodeUtils;
-import com.style.utils.lang.ListUtils;
+import com.style.utils.collect.ListUtils;
 import com.style.utils.lang.StringUtils;
 import net.sf.jmimemagic.Magic;
 import net.sf.jmimemagic.MagicMatch;

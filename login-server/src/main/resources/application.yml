@@ -105,7 +105,7 @@ mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   #实体扫描，多个package用逗号或者分号分隔
   type-aliases-package: com.style.modules.*.entity
-  type-aliases-super-type: com.style.web.entity.BaseEntity
+  type-aliases-super-type: com.style.common.crud.entity.BaseEntity
   executor-type: reuse
   global-config:
     db-config:

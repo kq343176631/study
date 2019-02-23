@@ -1,6 +1,6 @@
 package com.style.cache.redis;
 
-import com.style.utils.constant.Constants;
+import com.style.common.constant.Constants;
 import net.oschina.j2cache.cluster.ClusterPolicy;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;

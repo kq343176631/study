@@ -1,6 +1,6 @@
 package com.style.cache;
 
-import com.style.utils.SpringUtils;
+import com.style.utils.core.SpringUtils;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 

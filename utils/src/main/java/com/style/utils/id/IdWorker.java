@@ -1,6 +1,6 @@
 package com.style.utils.id;
 
-import com.style.utils.SystemUtils;
+import com.style.utils.core.SystemUtils;
 
 import java.util.Random;
 
