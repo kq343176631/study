@@ -52,7 +52,7 @@ public abstract class BaseEntity<T> implements Serializable {
      */
     @TableLogic
     @TableField(fill = FieldFill.INSERT)
-    protected String delFlag;
+    protected Integer del;
 
     public BaseEntity() {
 

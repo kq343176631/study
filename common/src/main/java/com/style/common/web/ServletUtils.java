@@ -19,7 +19,6 @@ public class ServletUtils {
         if(requestAttributes == null){
             return null;
         }
-
         return ((ServletRequestAttributes) requestAttributes).getRequest();
     }
 
