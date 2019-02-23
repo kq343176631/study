@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.core.incrementer.IKeyGenerator;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
-import com.style.mybatis.DynamicTransactionFactory;
+import com.style.mybatis.fatory.DynamicTransactionFactory;
 import com.style.mybatis.annotation.MyBatisPlus;
 import com.style.mybatis.injector.CrudSqlInjector;
 import com.style.mybatis.mapper.BaseMapper;

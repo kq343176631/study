@@ -17,7 +17,7 @@ public class MsgAutoConfiguration {
     public MessageSource messageSource(){
         ResourceBundleMessageSource bundleMessageSource = new ResourceBundleMessageSource();
         bundleMessageSource.setDefaultEncoding("UTF-8");
-        bundleMessageSource.setBasenames("i18n/messages");
+        bundleMessageSource.setBasenames("config/i18n/messages");
         return bundleMessageSource;
     }
 
@@ -33,7 +33,7 @@ public class MsgAutoConfiguration {
     private static ResourceBundleMessageSource getMessageSource() {
         ResourceBundleMessageSource bundleMessageSource = new ResourceBundleMessageSource();
         bundleMessageSource.setDefaultEncoding("UTF-8");
-        bundleMessageSource.setBasenames("i18n/validation");
+        bundleMessageSource.setBasenames("config/i18n/validation");
         return bundleMessageSource;
     }
 

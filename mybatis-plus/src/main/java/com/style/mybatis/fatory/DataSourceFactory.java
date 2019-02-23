@@ -1,4 +1,4 @@
-package com.style.mybatis;
+package com.style.mybatis.fatory;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.xa.DruidXADataSource;

@@ -1,6 +1,6 @@
 package com.style.mybatis.config;
 
-import com.style.mybatis.DataSourceFactory;
+import com.style.mybatis.fatory.DataSourceFactory;
 import com.style.mybatis.plugin.dynamic.DataSourceHolder;
 import com.style.mybatis.properties.DataSourceProperties;
 import com.style.mybatis.properties.DynamicDataSourceProperties;

@@ -1,4 +1,4 @@
-package com.style.mybatis;
+package com.style.mybatis.fatory;
 
 import com.style.mybatis.plugin.DynamicTransaction;
 import com.style.mybatis.plugin.dynamic.DynamicDataSource;
