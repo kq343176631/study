@@ -1,6 +1,5 @@
 package com.style.cache.redis;
 
-import com.style.common.constant.Constants;
 import net.oschina.j2cache.cluster.ClusterPolicy;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
@@ -25,9 +24,9 @@ public class SpringRedisActiveMessageListener implements MessageListener {
         if (key == null) {
             return;
         }
-        String _namespace = namespace + Constants.COLON;
+        String _namespace = namespace + ":";
         if (key.startsWith(_namespace)) {
-            String[] k = key.replaceFirst(_namespace, Constants.EMPTY).split(Constants.COLON, 2);
+            String[] k = key.replaceFirst(_namespace, "").split(":", 2);
             if (k.length != 2) {
                 return;
             }
