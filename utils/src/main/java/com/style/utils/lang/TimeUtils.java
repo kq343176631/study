@@ -1,4 +1,4 @@
-package com.style.utils;
+package com.style.utils.lang;
 
 import com.style.utils.lang.DateUtils;
 

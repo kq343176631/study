@@ -1,6 +1,6 @@
 package com.style.common.exception;
 
-import com.style.utils.msg.MessageUtils;
+import com.style.utils.MessageUtils;
 import com.style.common.constant.ErrorCode;
 
 public class SystemException extends Exception {

@@ -1,7 +1,7 @@
 package com.style.common.interceptor;
 
 import com.style.utils.lang.DateUtils;
-import com.style.utils.TimeUtils;
+import com.style.utils.lang.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.NamedThreadLocal;

@@ -1,4 +1,4 @@
-package com.style.utils.msg;
+package com.style.utils;
 
 import com.style.utils.core.SpringUtils;
 import org.springframework.context.MessageSource;

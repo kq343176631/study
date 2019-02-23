@@ -4,7 +4,7 @@ import com.style.utils.io.FileUtils;
 import com.style.utils.io.PropertyUtils;
 import com.style.utils.collect.ListUtils;
 import com.style.utils.lang.StringUtils;
-import com.style.utils.TimeUtils;
+import com.style.utils.lang.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

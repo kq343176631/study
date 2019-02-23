@@ -1,4 +1,4 @@
-package com.style.utils;
+package com.style.utils.lang;
 
 /**
  * 字节转换工具
