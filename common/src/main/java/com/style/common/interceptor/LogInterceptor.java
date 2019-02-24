@@ -14,15 +14,12 @@ import java.text.SimpleDateFormat;
 
 /**
  * 日志拦截器
- *
- * @author ThinkGem
- * @version 2014-8-19
  */
 public class LogInterceptor implements HandlerInterceptor {
 
     private static final Logger logger = LoggerFactory.getLogger(LogInterceptor.class);
 
-    private static final ThreadLocal<Long> startTimeThreadLocal = new NamedThreadLocal<Long>("ThreadLocal StartTime");
+    private static final ThreadLocal<Long> startTimeThreadLocal = new NamedThreadLocal<>("ThreadLocal StartTime");
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
