@@ -22,12 +22,10 @@ public class LogInterceptor implements HandlerInterceptor {
 
     private static final Logger logger = LoggerFactory.getLogger(LogInterceptor.class);
 
-    private static final ThreadLocal<Long> startTimeThreadLocal =
-            new NamedThreadLocal<Long>("ThreadLocal StartTime");
+    private static final ThreadLocal<Long> startTimeThreadLocal = new NamedThreadLocal<Long>("ThreadLocal StartTime");
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
-                             Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         long beginTime = System.currentTimeMillis();// 1、开始时间
         startTimeThreadLocal.set(beginTime);        // 线程绑定变量（该数据只有当前请求的线程可见）
         if (logger.isDebugEnabled()) {
@@ -38,16 +36,14 @@ public class LogInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-                           ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
         if (modelAndView != null) {
             logger.info("ViewName: " + modelAndView.getViewName() + " <<<<<<<<< " + request.getRequestURI() + " >>>>>>>>> " + handler);
         }
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
-                                Object handler, Exception ex) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         long beginTime = startTimeThreadLocal.get();// 得到线程绑定的局部变量（开始时间）
         long endTime = System.currentTimeMillis();    // 2、结束时间
         long executeTime = endTime - beginTime;    // 3、获取执行时间

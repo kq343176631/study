@@ -10,12 +10,21 @@ import com.style.utils.lang.StringUtils;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 断言工具类
+ */
 public class AssertUtils {
 
+    /**
+     * 断言是否为空白
+     */
     public static void isBlank(String str, String... params) {
         isBlank(str, ErrorCode.NOT_NULL, params);
     }
 
+    /**
+     * 断言是否为空白
+     */
     public static void isBlank(String str, Integer code, String... params) {
         if(code == null){
             throw new ValidateException(ErrorCode.NOT_NULL, "code");
@@ -26,11 +35,18 @@ public class AssertUtils {
         }
     }
 
+    /**
+     * 断言是否为NULL
+     */
     public static void isNull(Object object, String... params) {
         isNull(object, ErrorCode.NOT_NULL, params);
     }
 
+    /**
+     * 断言是否为NULL
+     */
     public static void isNull(Object object, Integer code, String... params) {
+
         if(code == null){
             throw new ValidateException(ErrorCode.NOT_NULL, "code");
         }
@@ -40,10 +56,16 @@ public class AssertUtils {
         }
     }
 
+    /**
+     * 断言数组是否为空
+     */
     public static void isArrayEmpty(Object[] array, String... params) {
         isArrayEmpty(array, ErrorCode.NOT_NULL, params);
     }
 
+    /**
+     * 断言数组是否为空
+     */
     public static void isArrayEmpty(Object[] array, Integer code, String... params) {
         if(code == null){
             throw new ValidateException(ErrorCode.NOT_NULL, "code");
@@ -54,10 +76,16 @@ public class AssertUtils {
         }
     }
 
+    /**
+     * 断言LIST是否为空
+     */
     public static void isListEmpty(List<?> list, String... params) {
         isListEmpty(list, ErrorCode.NOT_NULL, params);
     }
 
+    /**
+     * 断言LIST是否为空
+     */
     public static void isListEmpty(List<?> list, Integer code, String... params) {
         if(code == null){
             throw new ValidateException(ErrorCode.NOT_NULL, "code");
@@ -68,10 +96,16 @@ public class AssertUtils {
         }
     }
 
+    /**
+     * 断言MAP是否为空
+     */
     public static void isMapEmpty(Map map, String... params) {
         isMapEmpty(map, ErrorCode.NOT_NULL, params);
     }
 
+    /**
+     * 断言MAP是否为空
+     */
     public static void isMapEmpty(Map map, Integer code, String... params) {
         if(code == null){
             throw new ValidateException(ErrorCode.NOT_NULL, "code");
@@ -81,5 +115,4 @@ public class AssertUtils {
             throw new ValidateException(code, params);
         }
     }
-
 }
