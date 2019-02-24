@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * HTTP客户端工具类（支持HTTPS）
  */
-public class HttpContextUtils {
+public class HttpClientUtils {
 
     /**
      * http的get请求

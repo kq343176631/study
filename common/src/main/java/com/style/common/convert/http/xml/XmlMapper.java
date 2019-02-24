@@ -1,4 +1,4 @@
-package com.style.common.convert.mapper;
+package com.style.common.convert.http.xml;
 
 import com.style.utils.io.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;

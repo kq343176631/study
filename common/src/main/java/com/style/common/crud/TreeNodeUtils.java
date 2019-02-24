@@ -14,7 +14,7 @@ import java.util.Map;
  * @author Mark sunlightcs@gmail.com
  * @since 1.0.0
  */
-public class TreeUtils {
+public class TreeNodeUtils {
 
     /**
      * 构建树节点

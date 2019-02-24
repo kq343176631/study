@@ -1,8 +1,7 @@
 package com.style.common.crud.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.style.common.constant.Constants;
+import com.style.common.model.Page;
 import com.style.common.web.ServletUtils;
 import com.style.utils.lang.StringUtils;
 
@@ -10,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public abstract class BaseController {
 
-    protected <T> IPage getPage() {
+    protected <T> Page getPage() {
 
         HttpServletRequest request = ServletUtils.getHttpServletRequest();
 
@@ -19,7 +18,7 @@ public abstract class BaseController {
         long pageSize = 10;
 
         if (request == null) {
-            return new Page(pageNo, pageSize).setAsc(Constants.DEFAULT_ORDER_BY);
+            return new Page(pageNo, pageSize).setAsc(Constants.DEFAULT_ORDER_FIELD);
         }
 
         //解析分页参数
@@ -36,8 +35,8 @@ public abstract class BaseController {
         Page<T> page = new Page<>(pageNo, pageSize);
 
         //排序字段
-        String orderBy = request.getParameter(Constants.ORDER_BY);
-        String order = request.getParameter(Constants.ORDER);
+        String orderBy = request.getParameter(Constants.ORDER_FIELD);
+        String order = request.getParameter(Constants.ORDER_METHOD);
         //前端排序
         if (StringUtils.isNotEmpty(orderBy) && StringUtils.isNotEmpty(order)) {
             if (Constants.ASC.equalsIgnoreCase(order)) {
@@ -47,7 +46,7 @@ public abstract class BaseController {
             }
         } else {
             //默认排序
-            page.setAsc(Constants.DEFAULT_ORDER_BY);
+            page.setAsc(Constants.DEFAULT_ORDER_FIELD);
         }
         return page;
     }

@@ -1,4 +1,4 @@
-package com.style.common.convert.mapper;
+package com.style.common.convert.http.json;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonGenerator;

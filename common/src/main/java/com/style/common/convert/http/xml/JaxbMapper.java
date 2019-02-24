@@ -1,4 +1,4 @@
-package com.style.common.convert.mapper;
+package com.style.common.convert.http.xml;
 
 import com.style.utils.lang.ExceptionUtils;
 import com.style.utils.lang.StringUtils;

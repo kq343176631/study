@@ -26,10 +26,10 @@ public class NewsController extends WebController {
     @GetMapping("page")
     @ApiOperation("分页")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = Constants.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType="int") ,
-            @ApiImplicitParam(name = Constants.LIMIT, value = "每页显示记录数", paramType = "query",required = true, dataType="int") ,
+            @ApiImplicitParam(name = Constants.PAGE_NO, value = "当前页码，从1开始", paramType = "query", required = true, dataType="int") ,
+            @ApiImplicitParam(name = Constants.PAGE_SIZE, value = "每页显示记录数", paramType = "query",required = true, dataType="int") ,
             @ApiImplicitParam(name = Constants.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
-            @ApiImplicitParam(name = Constants.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String") ,
+            @ApiImplicitParam(name = Constants.ORDER_METHOD, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String") ,
             @ApiImplicitParam(name = "title", value = "标题", paramType = "query", dataType="String"),
             @ApiImplicitParam(name = "startDate", value = "开始时间", paramType = "query", dataType="String"),
             @ApiImplicitParam(name = "endDate", value = "结束时间", paramType = "query", dataType="String")
