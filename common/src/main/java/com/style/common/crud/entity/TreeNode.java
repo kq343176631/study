@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class TreeNode<T> extends BaseEntity<T> implements Serializable {
+public class TreeNode extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,6 +24,6 @@ public class TreeNode<T> extends BaseEntity<T> implements Serializable {
     /**
      * 子节点列表
      */
-    private List<T> children = new ArrayList<>();
+    private List<TreeNode> children = new ArrayList<>();
 
 }

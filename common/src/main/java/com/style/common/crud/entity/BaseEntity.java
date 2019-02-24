@@ -13,7 +13,7 @@ import java.util.Date;
  * Entity
  */
 @Data
-public abstract class BaseEntity<T> implements Serializable {
+public abstract class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,6 @@ public abstract class BaseEntity<T> implements Serializable {
     /**
      * 创建者
      */
-    @TableField(fill = FieldFill.INSERT)
     protected String createBy;
 
     /**
@@ -38,7 +37,6 @@ public abstract class BaseEntity<T> implements Serializable {
     /**
      * 更新者
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     protected String updateBy;
 
     /**

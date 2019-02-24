@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=false)
 @TableName("tb_news")
-public class News extends BaseEntity<News> {
+public class News extends BaseEntity {
 
     /**
      * 标题

@@ -23,6 +23,7 @@ public class ServletUtils {
     }
 
     public static Map<String, String> getParameterMap(HttpServletRequest request) {
+
         Enumeration<String> parameters = request.getParameterNames();
 
         Map<String, String> params = new HashMap<>();

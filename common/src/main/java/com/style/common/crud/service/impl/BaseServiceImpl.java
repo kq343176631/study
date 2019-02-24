@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * BaseService
  */
-public abstract class BaseServiceImpl<D extends BaseDao<T>, T extends BaseEntity<T>> implements BaseService<T> {
+public abstract class BaseServiceImpl<D extends BaseDao<T>, T extends BaseEntity> implements BaseService<T> {
 
     @Autowired
     protected D baseDao;
