@@ -1,4 +1,4 @@
-package com.style.common.log.entity;
+package com.style.admin.modules.log.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.style.common.crud.entity.BaseEntity;

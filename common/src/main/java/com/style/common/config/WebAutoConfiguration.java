@@ -21,24 +21,13 @@ public class WebAutoConfiguration {
     }
 
     /**
-     * springUtils
+     * SpringUtils
      */
     @Bean("springUtils")
     @Lazy(false)
     @Order(-2147481648)
     public SpringUtils springUtils() {
         return new SpringUtils();
-    }
-
-    @Bean
-    public FilterRegistrationBean<XssFilter> xssFilterRegistration() {
-        FilterRegistrationBean<XssFilter> registration = new FilterRegistrationBean<>();
-        registration.setDispatcherTypes(DispatcherType.REQUEST);
-        registration.setFilter(new XssFilter());
-        registration.addUrlPatterns("/*");
-        registration.setName("xssFilter");
-        registration.setOrder(Integer.MAX_VALUE);
-        return registration;
     }
 
     /**
@@ -53,4 +42,14 @@ public class WebAutoConfiguration {
         return bean;
     }
 
+    @Bean
+    public FilterRegistrationBean<XssFilter> xssFilterRegistration() {
+        FilterRegistrationBean<XssFilter> registration = new FilterRegistrationBean<>();
+        registration.setDispatcherTypes(DispatcherType.REQUEST);
+        registration.setFilter(new XssFilter());
+        registration.addUrlPatterns("/*");
+        registration.setName("xssFilter");
+        registration.setOrder(Integer.MAX_VALUE);
+        return registration;
+    }
 }

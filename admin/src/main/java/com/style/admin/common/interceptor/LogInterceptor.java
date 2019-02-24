@@ -1,4 +1,4 @@
-package com.style.common.interceptor;
+package com.style.admin.common.interceptor;
 
 import com.style.utils.lang.DateUtils;
 import com.style.utils.lang.TimeUtils;
