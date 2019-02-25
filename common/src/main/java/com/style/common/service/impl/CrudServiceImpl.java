@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.style.common.dao.BaseDao;
 import com.style.common.model.Page;
 import com.style.common.service.CrudService;
+import com.style.common.utils.PageUtils;
 import com.style.mybatis.injector.SqlMethod;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.session.SqlSession;
@@ -116,13 +117,13 @@ public abstract class CrudServiceImpl<D extends BaseDao<T>, T> extends BaseServi
     }
 
     @Override
-    public List<T> list(Map<String,Object> params) {
+    public List<T> list(Map<String, Object> params) {
         return baseDao.list(getWrapper(params));
     }
 
     @Override
     public Page<T> page(Map<String, Object> params) {
-        return (Page<T>) baseDao.page(getPage(params, "update_date", true), getWrapper(params));
+        return (Page<T>) baseDao.page(PageUtils.getPage(params), getWrapper(params));
     }
 
 }

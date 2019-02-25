@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 处理异常
+     * 全局异常处理
      */
     @ExceptionHandler(Exception.class)
     public Result handleException(Exception ex) {

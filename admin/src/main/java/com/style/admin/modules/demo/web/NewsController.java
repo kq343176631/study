@@ -25,7 +25,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("demo/news")
-@Api(tags="新闻管理")
+@Api(tags = "新闻管理")
 public class NewsController extends WebController {
 
     @Autowired
@@ -33,7 +33,7 @@ public class NewsController extends WebController {
 
     @ApiOperation("信息")
     @GetMapping("{id}")
-    @RequiresPermissions("demo:news:all")
+    @RequiresPermissions("demo:news:list")
     public Result<News> get(@PathVariable("id") Long id) {
 
         return new Result<>(newsService.get(id));
@@ -42,15 +42,15 @@ public class NewsController extends WebController {
     @GetMapping("page")
     @ApiOperation("分页")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = Constants.PAGE_NO, value = "当前页码，从1开始", paramType = "query", required = true, dataType = "int"),
-            @ApiImplicitParam(name = Constants.PAGE_SIZE, value = "每页显示记录数", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constants.PAGE_NO, value = "当前页码，从1开始", paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = Constants.PAGE_SIZE, value = "每页显示记录数", paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = Constants.ORDER_FIELD, value = "排序字段", paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = Constants.ORDER_METHOD, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "title", value = "标题", paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "startDate", value = "开始时间", paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "endDate", value = "结束时间", paramType = "query", dataType = "String")
     })
-    @RequiresPermissions("demo:news:all")
+    @RequiresPermissions("demo:news:list")
     public Result<Page> page(@ApiIgnore @RequestParam Map<String, Object> params) {
 
         return new Result<>(newsService.page(paramsToLike(params, "title")));
@@ -58,7 +58,7 @@ public class NewsController extends WebController {
 
     @PostMapping
     @ApiOperation("保存")
-    //@RequiresPermissions("demo:news:all")
+    @RequiresPermissions("demo:news:edit")
     public Result save(News news) {
 
         //效验数据
@@ -69,7 +69,7 @@ public class NewsController extends WebController {
 
     @PutMapping
     @ApiOperation("修改")
-    @RequiresPermissions("demo:news:all")
+    @RequiresPermissions("demo:news:edit")
     public Result update(News news) {
 
         //效验数据
@@ -80,7 +80,7 @@ public class NewsController extends WebController {
 
     @DeleteMapping
     @ApiOperation("删除")
-    @RequiresPermissions("demo:news:all")
+    @RequiresPermissions("demo:news:edit")
     public Result delete(@RequestBody Long[] ids) {
 
         //效验数据
