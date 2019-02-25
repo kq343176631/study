@@ -29,14 +29,14 @@ public interface BaseMapper<T> {
      *
      * @param id 主键ID
      */
-    Integer deleteById(String id);
+    Integer deleteById(Long id);
 
     /**
      * 删除（根据ID 批量删除）
      *
      * @param idList 主键ID列表(不能为 null 以及 empty)
      */
-    Integer deleteByIds(@Param(Constants.COLLECTION) Collection<? extends String> idList);
+    Integer deleteByIds(@Param(Constants.COLLECTION) Collection<? extends Long> idList);
 
     /**
      * 根据 whereEntity 条件，更新记录
@@ -58,7 +58,7 @@ public interface BaseMapper<T> {
      *
      * @param id 主键ID
      */
-    T get(String id);
+    T get(Long id);
 
     /**
      * 根据 entity 条件，查询全部记录

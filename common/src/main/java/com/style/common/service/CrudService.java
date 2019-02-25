@@ -36,14 +36,14 @@ public interface CrudService<T> extends BaseService<T> {
      *
      * @param id 主键ID
      */
-    boolean deleteById(String id);
+    boolean deleteById(Long id);
 
     /**
      * 删除（根据ID 批量删除）
      *
      * @param idList 主键ID列表
      */
-    boolean deleteByIds(Collection<? extends String> idList);
+    boolean deleteByIds(Collection<? extends Long> idList);
 
     /**
      * 根据 wrapper 删除
@@ -82,7 +82,7 @@ public interface CrudService<T> extends BaseService<T> {
      *
      * @param id 主键ID
      */
-    T get(String id);
+    T get(Long id);
 
     /**
      * 根据 wrapper 查询

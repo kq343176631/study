@@ -24,7 +24,7 @@ public class TreeNodeUtils {
         List<T> result = new ArrayList<>();
 
         //list转map
-        Map<String, T> nodeMap = new LinkedHashMap<>(treeNodes.size());
+        Map<Long, T> nodeMap = new LinkedHashMap<>(treeNodes.size());
         for (T treeNode : treeNodes) {
             nodeMap.put(treeNode.getId(), treeNode);
         }

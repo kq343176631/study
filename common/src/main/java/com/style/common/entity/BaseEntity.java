@@ -21,7 +21,7 @@ public abstract class BaseEntity implements Serializable {
      * 主键
      */
     @TableId
-    protected String id;
+    protected Long id;
 
     /**
      * 创建者

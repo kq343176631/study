@@ -1,7 +1,9 @@
 package com.style.admin.common.config;
 
+import com.style.common.convert.date.DateConverter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.ResourceHttpMessageConverter;
@@ -42,5 +44,10 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
         converters.add(new AllEncompassingFormHttpMessageConverter());
         converters.add(new StringHttpMessageConverter());
         converters.add(jackson2HttpMessageConverter);
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new DateConverter());
     }
 }

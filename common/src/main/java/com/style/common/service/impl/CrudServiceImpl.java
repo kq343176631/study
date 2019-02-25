@@ -54,12 +54,12 @@ public abstract class CrudServiceImpl<D extends BaseDao<T>, T> extends BaseServi
     }
 
     @Override
-    public boolean deleteById(String id) {
+    public boolean deleteById(Long id) {
         return SqlHelper.delBool(baseDao.deleteById(id));
     }
 
     @Override
-    public boolean deleteByIds(Collection<? extends String> idList) {
+    public boolean deleteByIds(Collection<? extends Long> idList) {
         return SqlHelper.delBool(baseDao.deleteByIds(idList));
     }
 
@@ -111,7 +111,7 @@ public abstract class CrudServiceImpl<D extends BaseDao<T>, T> extends BaseServi
     }
 
     @Override
-    public T get(String id) {
+    public T get(Long id) {
         return baseDao.get(id);
     }
 

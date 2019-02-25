@@ -19,7 +19,7 @@ public class TreeNode extends BaseEntity implements Serializable {
     /**
      * 上级ID
      */
-    protected String pid;
+    protected Long pid;
 
     /**
      * 子节点列表

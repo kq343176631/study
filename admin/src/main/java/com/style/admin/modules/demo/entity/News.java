@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-@TableName("sys_news")
+@TableName("tb_news")
 public class News extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
