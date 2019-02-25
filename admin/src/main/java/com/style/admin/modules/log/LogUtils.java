@@ -47,7 +47,7 @@ public class LogUtils {
             //异常信息
             log.setErrorInfo(ExceptionUtils.getStackTraceAsString(ex));
             //保存
-            sysLogService.insert(log);
+            sysLogService.save(log);
         }
 
     }

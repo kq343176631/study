@@ -5,7 +5,7 @@ import com.style.common.model.Result;
 /**
  * 适用于移动端（REST）
  */
-public abstract class WebController {
+public abstract class WebController extends BaseController {
 
     protected Result success() {
         return new Result<>();
