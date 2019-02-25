@@ -1,10 +1,9 @@
 package com.style.common.validator;
 
-import com.style.utils.core.SpringUtils;
 import com.style.common.exception.ValidateException;
+import com.style.utils.core.SpringUtils;
 
 import javax.validation.ConstraintViolation;
-
 import javax.validation.Validator;
 import java.util.Set;
 
@@ -13,7 +12,7 @@ import java.util.Set;
  */
 public class ValidatorUtils {
 
-    private static Validator validator = (Validator)SpringUtils.getBean("validator");
+    private static Validator validator = (Validator) SpringUtils.getBean("validator");
 
     /**
      * 校验对象

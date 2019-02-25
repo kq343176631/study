@@ -12,20 +12,21 @@ import reactor.core.publisher.Mono;
 
 /**
  * Gateway
+ *
  * @author ThinkGem
  * @version 2018年10月20日
  */
 @Configuration
 public class GatewayConfig {
-	
-	@Bean
-	public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
-		return new HiddenHttpMethodFilter() {
-			@Override
-			public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-				return chain.filter(exchange);
-			}
-		};
-	}
-	
+
+    @Bean
+    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+        return new HiddenHttpMethodFilter() {
+            @Override
+            public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+                return chain.filter(exchange);
+            }
+        };
+    }
+
 }

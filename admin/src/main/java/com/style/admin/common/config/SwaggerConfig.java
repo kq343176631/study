@@ -26,30 +26,30 @@ public class SwaggerConfig {
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-            .apiInfo(apiInfo())
-            .select()
-            //加了ApiOperation注解的类，生成接口文档
-            .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
-            //包下的类，生成接口文档
-            .apis(RequestHandlerSelectors.basePackage("com.style.login.modules.demo.web"))
-            .paths(PathSelectors.any())
-            .build()
-            .directModelSubstitute(java.util.Date.class, String.class)
-            .securitySchemes(security());
+                .apiInfo(apiInfo())
+                .select()
+                //加了ApiOperation注解的类，生成接口文档
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                //包下的类，生成接口文档
+                .apis(RequestHandlerSelectors.basePackage("com.style.login.modules.demo.web"))
+                .paths(PathSelectors.any())
+                .build()
+                .directModelSubstitute(java.util.Date.class, String.class)
+                .securitySchemes(security());
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("Style Platform")
-            .description("Login Server Document")
-            .termsOfServiceUrl("https://www.renren.io")
-            .version("2.0.0")
-            .build();
+                .title("Style Platform")
+                .description("Login Server Document")
+                .termsOfServiceUrl("https://www.renren.io")
+                .version("2.0.0")
+                .build();
     }
 
     private List<ApiKey> security() {
         return newArrayList(
-            new ApiKey("token", "token", "header")
+                new ApiKey("token", "token", "header")
         );
     }
 }

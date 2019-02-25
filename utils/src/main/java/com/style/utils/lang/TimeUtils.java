@@ -1,7 +1,5 @@
 package com.style.utils.lang;
 
-import com.style.utils.lang.DateUtils;
-
 import java.util.Date;
 
 /**

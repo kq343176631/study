@@ -2,9 +2,9 @@ package com.style.common.validator;
 
 import com.style.common.constant.ErrorCode;
 import com.style.common.exception.ValidateException;
-import com.style.utils.lang.ArrayUtils;
 import com.style.utils.collect.CollectUtils;
 import com.style.utils.collect.MapUtils;
+import com.style.utils.lang.ArrayUtils;
 import com.style.utils.lang.StringUtils;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public class AssertUtils {
      * 断言是否为空白
      */
     public static void isBlank(String str, Integer code, String... params) {
-        if(code == null){
+        if (code == null) {
             throw new ValidateException(ErrorCode.NOT_NULL, "code");
         }
 
@@ -47,7 +47,7 @@ public class AssertUtils {
      */
     public static void isNull(Object object, Integer code, String... params) {
 
-        if(code == null){
+        if (code == null) {
             throw new ValidateException(ErrorCode.NOT_NULL, "code");
         }
 
@@ -67,11 +67,11 @@ public class AssertUtils {
      * 断言数组是否为空
      */
     public static void isArrayEmpty(Object[] array, Integer code, String... params) {
-        if(code == null){
+        if (code == null) {
             throw new ValidateException(ErrorCode.NOT_NULL, "code");
         }
 
-        if(ArrayUtils.isEmpty(array)){
+        if (ArrayUtils.isEmpty(array)) {
             throw new ValidateException(code, params);
         }
     }
@@ -87,11 +87,11 @@ public class AssertUtils {
      * 断言LIST是否为空
      */
     public static void isListEmpty(List<?> list, Integer code, String... params) {
-        if(code == null){
+        if (code == null) {
             throw new ValidateException(ErrorCode.NOT_NULL, "code");
         }
 
-        if(CollectUtils.isEmpty(list)){
+        if (CollectUtils.isEmpty(list)) {
             throw new ValidateException(code, params);
         }
     }
@@ -107,11 +107,11 @@ public class AssertUtils {
      * 断言MAP是否为空
      */
     public static void isMapEmpty(Map map, Integer code, String... params) {
-        if(code == null){
+        if (code == null) {
             throw new ValidateException(ErrorCode.NOT_NULL, "code");
         }
 
-        if(MapUtils.isEmpty(map)){
+        if (MapUtils.isEmpty(map)) {
             throw new ValidateException(code, params);
         }
     }

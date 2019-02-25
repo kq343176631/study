@@ -1,7 +1,7 @@
 package com.style.utils.core;
 
-import com.style.utils.io.PropertyUtils;
 import com.style.utils.collect.MapUtils;
+import com.style.utils.io.PropertyUtils;
 import com.style.utils.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

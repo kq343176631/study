@@ -7,6 +7,6 @@ import com.style.common.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SysLogServiceImpl extends BaseServiceImpl<SysLogDao,SysLog> implements SysLogService {
+public class SysLogServiceImpl extends BaseServiceImpl<SysLogDao, SysLog> implements SysLogService {
 
 }

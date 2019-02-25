@@ -1,7 +1,7 @@
 package com.style.cache.redis;
 
-import com.style.utils.core.SpringUtils;
 import com.style.utils.collect.ListUtils;
+import com.style.utils.core.SpringUtils;
 import com.style.utils.lang.StringUtils;
 import net.oschina.j2cache.Command;
 import net.oschina.j2cache.J2CacheConfig;

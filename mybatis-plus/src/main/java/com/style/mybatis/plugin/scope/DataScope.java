@@ -26,5 +26,5 @@ public class DataScope {
     public void setSqlFilter(String sqlFilter) {
         this.sqlFilter = sqlFilter;
     }
-    
+
 }

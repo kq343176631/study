@@ -11,7 +11,7 @@ import java.util.List;
  * 树节点，所有需要实现树节点的，都需要继承该类
  */
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 public class TreeNode extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

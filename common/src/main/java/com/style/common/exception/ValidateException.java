@@ -1,7 +1,7 @@
 package com.style.common.exception;
 
-import com.style.utils.MessageUtils;
 import com.style.common.constant.ErrorCode;
+import com.style.utils.MessageUtils;
 
 /**
  * 验证异常

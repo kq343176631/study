@@ -14,7 +14,7 @@ import javax.validation.Validator;
 public class MsgAutoConfiguration {
 
     @Bean("messageSource")
-    public MessageSource messageSource(){
+    public MessageSource messageSource() {
         ResourceBundleMessageSource bundleMessageSource = new ResourceBundleMessageSource();
         bundleMessageSource.setDefaultEncoding("UTF-8");
         bundleMessageSource.setBasenames("config/i18n/messages");
@@ -22,7 +22,7 @@ public class MsgAutoConfiguration {
     }
 
     @Bean("validator")
-    public Validator validator(){
+    public Validator validator() {
 
         return Validation.byDefaultProvider().configure().messageInterpolator(
                 new ResourceBundleMessageInterpolator(new MessageSourceResourceBundleLocator(getMessageSource()))
