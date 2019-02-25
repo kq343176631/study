@@ -1,4 +1,4 @@
-package com.style.admin.common.config;
+package com.style.login.common.config;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +21,7 @@ import static com.google.common.collect.Lists.newArrayList;
  */
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig {
+public class SwaggerAutoConfiguration {
 
     @Bean
     public Docket createRestApi() {

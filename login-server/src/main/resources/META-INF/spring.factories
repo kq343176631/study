@@ -1,0 +1,6 @@
+
+# AutoConfiguration
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.style.login.common.config.MvcAutoConfiguration,\
+com.style.login.common.config.SwaggerAutoConfiguration

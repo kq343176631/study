@@ -1,4 +1,4 @@
-package com.style.login.common.config;
+package com.style.admin.common.config;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +21,7 @@ import static com.google.common.collect.Lists.newArrayList;
  */
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig {
+public class SwaggerAutoConfiguration {
 
     @Bean
     public Docket createRestApi() {
@@ -40,8 +40,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Style Platform")
-                .description("Login Server Document")
+                .title("Admin Platform")
+                .description("Admin Document")
                 .termsOfServiceUrl("https://www.renren.io")
                 .version("2.0.0")
                 .build();
