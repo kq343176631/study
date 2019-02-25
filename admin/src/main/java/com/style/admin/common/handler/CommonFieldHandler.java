@@ -1,4 +1,4 @@
-package com.style.common.handler;
+package com.style.admin.common.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;

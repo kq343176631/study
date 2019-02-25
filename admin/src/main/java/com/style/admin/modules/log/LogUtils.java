@@ -1,8 +1,8 @@
-package com.style.common.web.log;
+package com.style.admin.modules.log;
 
+import com.style.admin.modules.log.entity.SysLog;
+import com.style.admin.modules.log.service.SysLogService;
 import com.style.common.convert.http.json.JsonMapper;
-import com.style.common.entity.SysLog;
-import com.style.common.service.SysLogService;
 import com.style.common.web.servlet.ServletUtils;
 import com.style.utils.collect.MapUtils;
 import com.style.utils.core.SpringUtils;
