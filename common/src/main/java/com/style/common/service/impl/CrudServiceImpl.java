@@ -122,7 +122,7 @@ public abstract class CrudServiceImpl<D extends BaseDao<T>, T> extends BaseServi
 
     @Override
     public Page<T> page(Map<String, Object> params) {
-        return (Page<T>) baseDao.page(getPage(params, "updateDate", true), getWrapper(params));
+        return (Page<T>) baseDao.page(getPage(params, "update_date", true), getWrapper(params));
     }
 
 }

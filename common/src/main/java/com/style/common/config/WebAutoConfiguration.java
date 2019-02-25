@@ -1,5 +1,6 @@
 package com.style.common.config;
 
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -78,5 +79,14 @@ public class WebAutoConfiguration {
 
         converter.setObjectMapper(mapper);
         return converter;
+    }
+
+    /**
+     * 配置分页
+     */
+    @Bean
+    @Order(0)
+    public PaginationInterceptor paginationInterceptor() {
+        return new PaginationInterceptor();
     }
 }
