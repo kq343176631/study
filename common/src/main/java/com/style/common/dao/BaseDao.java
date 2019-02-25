@@ -1,4 +1,4 @@
-package com.style.common.crud.dao;
+package com.style.common.dao;
 
 import com.style.mybatis.mapper.BaseMapper;
 

@@ -1,4 +1,4 @@
-package com.style.common.crud.controller;
+package com.style.common.web;
 
 import com.style.common.model.Result;
 

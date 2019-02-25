@@ -1,8 +1,8 @@
-package com.style.common.crud.controller;
+package com.style.common.web;
 
 import com.style.common.constant.Constants;
 import com.style.common.model.Page;
-import com.style.common.web.ServletUtils;
+import com.style.common.web.servlet.ServletUtils;
 import com.style.utils.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;

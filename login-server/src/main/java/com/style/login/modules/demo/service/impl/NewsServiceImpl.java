@@ -1,6 +1,6 @@
 package com.style.login.modules.demo.service.impl;
 
-import com.style.common.crud.service.impl.BaseServiceImpl;
+import com.style.common.service.impl.BaseServiceImpl;
 import com.style.login.modules.demo.dao.NewsDao;
 import com.style.login.modules.demo.entity.News;
 import com.style.login.modules.demo.service.NewsService;

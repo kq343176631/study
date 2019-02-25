@@ -1,4 +1,4 @@
-package com.style.common.crud.entity;
+package com.style.common.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

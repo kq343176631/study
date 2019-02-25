@@ -1,4 +1,4 @@
-package com.style.common.crud.service.impl;
+package com.style.common.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -6,9 +6,9 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.GlobalConfigUtils;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
-import com.style.common.crud.dao.BaseDao;
-import com.style.common.crud.entity.BaseEntity;
-import com.style.common.crud.service.BaseService;
+import com.style.common.dao.BaseDao;
+import com.style.common.entity.BaseEntity;
+import com.style.common.service.BaseService;
 import com.style.mybatis.injector.SqlMethod;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.session.SqlSession;

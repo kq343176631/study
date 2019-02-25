@@ -1,6 +1,6 @@
-package com.style.admin.common.handler;
+package com.style.common.handler;
 
-import com.style.admin.modules.log.LogUtils;
+import com.style.common.web.log.LogUtils;
 import com.style.common.constant.ErrorCode;
 import com.style.common.exception.ValidateException;
 import com.style.common.model.Result;

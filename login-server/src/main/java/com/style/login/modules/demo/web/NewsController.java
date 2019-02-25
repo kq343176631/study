@@ -1,7 +1,7 @@
 package com.style.login.modules.demo.web;
 
 import com.style.common.constant.Constants;
-import com.style.common.crud.controller.WebController;
+import com.style.common.web.WebController;
 import com.style.common.model.Result;
 import com.style.login.modules.demo.entity.News;
 import com.style.login.modules.demo.service.NewsService;

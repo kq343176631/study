@@ -1,4 +1,4 @@
-package com.style.common.web;
+package com.style.common.web.servlet;
 
 import com.style.utils.lang.StringUtils;
 import org.springframework.http.HttpHeaders;

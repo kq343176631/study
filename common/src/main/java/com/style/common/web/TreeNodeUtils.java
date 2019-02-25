@@ -1,6 +1,6 @@
-package com.style.common.crud;
+package com.style.common.web;
 
-import com.style.common.crud.entity.TreeNode;
+import com.style.common.entity.TreeNode;
 import com.style.common.validator.AssertUtils;
 
 import java.util.ArrayList;

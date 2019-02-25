@@ -1,7 +1,7 @@
-package com.style.admin.modules.log.entity;
+package com.style.common.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.style.common.crud.entity.BaseEntity;
+import com.style.common.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
