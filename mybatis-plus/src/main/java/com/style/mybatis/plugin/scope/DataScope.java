@@ -8,23 +8,25 @@ public class DataScope {
     /**
      * 需要过滤的SQL
      */
-    private String sqlFilter;
+    private String sql;
 
-    public DataScope(String sqlFilter) {
-        this.sqlFilter = sqlFilter;
+    private String filterSql;
+
+    public DataScope(String sql) {
+        this.sql = sql;
     }
 
     @Override
     public String toString() {
-        return this.sqlFilter;
+        return this.sql;
     }
 
-    public String getSqlFilter() {
-        return sqlFilter;
+    public String getSql() {
+        return sql;
     }
 
-    public void setSqlFilter(String sqlFilter) {
-        this.sqlFilter = sqlFilter;
+    public void setSql(String sql) {
+        this.sql = sql;
     }
 
 }

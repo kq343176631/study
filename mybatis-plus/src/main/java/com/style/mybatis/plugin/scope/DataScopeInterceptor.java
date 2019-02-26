@@ -64,7 +64,7 @@ public class DataScopeInterceptor extends AbstractSqlParserHandler implements In
         }
 
         // 拼接新SQL
-        originalSql = originalSql + scope.getSqlFilter();
+        originalSql = originalSql + scope.getSql();
 
         // 重写SQL
         metaObject.setValue("delegate.boundSql.sql", originalSql);
