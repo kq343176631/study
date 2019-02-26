@@ -26,7 +26,7 @@ public abstract class BaseEntity implements Serializable {
     /**
      * 创建者
      */
-    protected String createBy;
+    protected Long createBy;
 
     /**
      * 创建日期
@@ -37,7 +37,7 @@ public abstract class BaseEntity implements Serializable {
     /**
      * 更新者
      */
-    protected String updateBy;
+    protected Long updateBy;
 
     /**
      * 更新日期
@@ -46,7 +46,7 @@ public abstract class BaseEntity implements Serializable {
     protected Date updateDate;
 
     /**
-     * 删除标记（0：正常；1：删除；2：审核）
+     * 删除标记（0：正常；1：删除）
      */
     @TableLogic
     @TableField(fill = FieldFill.INSERT)
