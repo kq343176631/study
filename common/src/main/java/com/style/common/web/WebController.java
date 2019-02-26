@@ -16,7 +16,7 @@ public abstract class WebController extends BaseController {
     }
 
     protected Result error(int code) {
-        return new Result<>(code, null);
+        return new Result<>(code);
     }
 
     protected <T> Result<T> error(int code, T data) {

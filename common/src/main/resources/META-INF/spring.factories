@@ -8,4 +8,6 @@ com.style.utils.io.PropertyLoader
 
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.style.common.config.MsgAutoConfiguration,\
-com.style.common.config.WebAutoConfiguration
+com.style.common.config.PluginAutoConfiguration,\
+com.style.common.config.WebAutoConfiguration,\
+com.style.common.config.WebMvcAutoConfiguration

@@ -19,7 +19,7 @@ public class AssertUtils {
      * 断言是否为空白
      */
     public static void isBlank(String str, String... params) {
-        isBlank(str, ErrorCode.NOT_NULL, params);
+        isBlank(str, ErrorCode.PARAM_NOT_NULL, params);
     }
 
     /**
@@ -27,7 +27,7 @@ public class AssertUtils {
      */
     public static void isBlank(String str, Integer code, String... params) {
         if (code == null) {
-            throw new ValidateException(ErrorCode.NOT_NULL, "code");
+            throw new ValidateException(ErrorCode.PARAM_NOT_NULL, "code");
         }
 
         if (StringUtils.isBlank(str)) {
@@ -39,7 +39,7 @@ public class AssertUtils {
      * 断言是否为NULL
      */
     public static void isNull(Object object, String... params) {
-        isNull(object, ErrorCode.NOT_NULL, params);
+        isNull(object, ErrorCode.PARAM_NOT_NULL, params);
     }
 
     /**
@@ -48,7 +48,7 @@ public class AssertUtils {
     public static void isNull(Object object, Integer code, String... params) {
 
         if (code == null) {
-            throw new ValidateException(ErrorCode.NOT_NULL, "code");
+            throw new ValidateException(ErrorCode.PARAM_NOT_NULL, "code");
         }
 
         if (object == null) {
@@ -60,7 +60,7 @@ public class AssertUtils {
      * 断言数组是否为空
      */
     public static void isArrayEmpty(Object[] array, String... params) {
-        isArrayEmpty(array, ErrorCode.NOT_NULL, params);
+        isArrayEmpty(array, ErrorCode.PARAM_NOT_NULL, params);
     }
 
     /**
@@ -68,7 +68,7 @@ public class AssertUtils {
      */
     public static void isArrayEmpty(Object[] array, Integer code, String... params) {
         if (code == null) {
-            throw new ValidateException(ErrorCode.NOT_NULL, "code");
+            throw new ValidateException(ErrorCode.PARAM_NOT_NULL, "code");
         }
 
         if (ArrayUtils.isEmpty(array)) {
@@ -80,7 +80,7 @@ public class AssertUtils {
      * 断言LIST是否为空
      */
     public static void isListEmpty(List<?> list, String... params) {
-        isListEmpty(list, ErrorCode.NOT_NULL, params);
+        isListEmpty(list, ErrorCode.PARAM_NOT_NULL, params);
     }
 
     /**
@@ -88,7 +88,7 @@ public class AssertUtils {
      */
     public static void isListEmpty(List<?> list, Integer code, String... params) {
         if (code == null) {
-            throw new ValidateException(ErrorCode.NOT_NULL, "code");
+            throw new ValidateException(ErrorCode.PARAM_NOT_NULL, "code");
         }
 
         if (CollectUtils.isEmpty(list)) {
@@ -100,7 +100,7 @@ public class AssertUtils {
      * 断言MAP是否为空
      */
     public static void isMapEmpty(Map map, String... params) {
-        isMapEmpty(map, ErrorCode.NOT_NULL, params);
+        isMapEmpty(map, ErrorCode.PARAM_NOT_NULL, params);
     }
 
     /**
@@ -108,7 +108,7 @@ public class AssertUtils {
      */
     public static void isMapEmpty(Map map, Integer code, String... params) {
         if (code == null) {
-            throw new ValidateException(ErrorCode.NOT_NULL, "code");
+            throw new ValidateException(ErrorCode.PARAM_NOT_NULL, "code");
         }
 
         if (MapUtils.isEmpty(map)) {

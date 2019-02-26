@@ -3,12 +3,11 @@ package com.style.admin.modules.demo.web;
 import com.style.admin.modules.demo.entity.News;
 import com.style.admin.modules.demo.service.NewsService;
 import com.style.common.constant.Constants;
-import com.style.common.model.Page;
+import com.style.common.constant.ErrorCode;
 import com.style.common.model.Result;
 import com.style.common.validator.AssertUtils;
 import com.style.common.validator.ValidatorUtils;
 import com.style.common.validator.group.AddGroup;
-import com.style.common.validator.group.DefaultGroup;
 import com.style.common.validator.group.UpdateGroup;
 import com.style.common.web.WebController;
 import io.swagger.annotations.Api;
@@ -31,12 +30,12 @@ public class NewsController extends WebController {
     @Autowired
     private NewsService newsService;
 
-    @ApiOperation("信息")
     @GetMapping("{id}")
+    @ApiOperation("信息")
     @RequiresPermissions("demo:news:list")
-    public Result<News> get(@PathVariable("id") Long id) {
+    public Result get(@PathVariable("id") Long id) {
 
-        return new Result<>(newsService.get(id));
+        return success(newsService.get(id));
     }
 
     @GetMapping("page")
@@ -51,9 +50,9 @@ public class NewsController extends WebController {
             @ApiImplicitParam(name = "endDate", value = "结束时间", paramType = "query", dataType = "String")
     })
     @RequiresPermissions("demo:news:list")
-    public Result<Page> page(@ApiIgnore @RequestParam Map<String, Object> params) {
+    public Result page(@ApiIgnore @RequestParam Map<String, Object> params) {
 
-        return new Result<>(newsService.page(paramsToLike(params, "title")));
+        return success(newsService.page(paramsToLike(params, "title")));
     }
 
     @PostMapping
@@ -62,9 +61,12 @@ public class NewsController extends WebController {
     public Result save(News news) {
 
         //效验数据
-        ValidatorUtils.validateEntity(news, AddGroup.class, DefaultGroup.class);
+        ValidatorUtils.validateEntity(news, AddGroup.class);
 
-        return new Result<>(newsService.save(news));
+        if (newsService.save(news)) {
+            return success();
+        }
+        return error(ErrorCode.INSERT_RECORD_ERROR);
     }
 
     @PutMapping
@@ -73,9 +75,12 @@ public class NewsController extends WebController {
     public Result update(News news) {
 
         //效验数据
-        ValidatorUtils.validateEntity(news, UpdateGroup.class, DefaultGroup.class);
+        ValidatorUtils.validateEntity(news, UpdateGroup.class);
 
-        return new Result<>(newsService.updateById(news));
+        if (newsService.updateById(news)) {
+            return success();
+        }
+        return error(ErrorCode.UPDATE_RECORD_ERROR);
     }
 
     @DeleteMapping
@@ -86,7 +91,10 @@ public class NewsController extends WebController {
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 
-        return new Result<>(newsService.deleteByIds(Arrays.asList(ids)));
+        if (newsService.deleteByIds(Arrays.asList(ids))) {
+            return success();
+        }
+        return error(ErrorCode.DELETE_RECORD_ERROR);
 
     }
 

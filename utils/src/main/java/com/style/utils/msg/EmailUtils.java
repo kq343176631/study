@@ -1,4 +1,5 @@
 package com.style.utils.msg;
 
-public class MsgUtils {
+public class EmailUtils {
+
 }

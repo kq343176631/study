@@ -23,7 +23,8 @@ public class ValidatorUtils {
     public static void validateEntity(Object object, Class<?>... groups) throws ValidateException {
         Set<ConstraintViolation<Object>> constraintViolations = validator.validate(object, groups);
         if (!constraintViolations.isEmpty()) {
-            throw new ValidateException(constraintViolations.iterator().next().getMessage());
+            String msg = constraintViolations.iterator().next().getMessage();
+            throw new ValidateException(msg);
         }
     }
 }

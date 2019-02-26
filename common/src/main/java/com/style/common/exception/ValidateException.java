@@ -1,7 +1,7 @@
 package com.style.common.exception;
 
 import com.style.common.constant.ErrorCode;
-import com.style.utils.MessageUtils;
+import com.style.common.utils.MsgUtils;
 
 /**
  * 验证异常
@@ -16,24 +16,24 @@ public class ValidateException extends RuntimeException {
 
     public ValidateException(int code) {
         this.code = code;
-        this.msg = MessageUtils.getMessage(code);
+        this.msg = MsgUtils.getMessage(code);
     }
 
     public ValidateException(int code, String... params) {
         this.code = code;
-        this.msg = MessageUtils.getMessage(code, params);
+        this.msg = MsgUtils.getMessage(code, params);
     }
 
     public ValidateException(int code, Throwable e) {
         super(e);
         this.code = code;
-        this.msg = MessageUtils.getMessage(code);
+        this.msg = MsgUtils.getMessage(code);
     }
 
     public ValidateException(int code, Throwable e, String... params) {
         super(e);
         this.code = code;
-        this.msg = MessageUtils.getMessage(code, params);
+        this.msg = MsgUtils.getMessage(code, params);
     }
 
     public ValidateException(String msg) {

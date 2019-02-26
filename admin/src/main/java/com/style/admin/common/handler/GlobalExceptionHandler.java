@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 异常处理器
@@ -21,6 +22,7 @@ public class GlobalExceptionHandler {
      * 处理自定义异常
      */
     @ExceptionHandler(ValidateException.class)
+    @ResponseBody
     public Result handleRenException(ValidateException ex) {
         return new Result(ex.getCode(), ex.getMsg());
     }
@@ -29,6 +31,7 @@ public class GlobalExceptionHandler {
      * 全局异常处理
      */
     @ExceptionHandler(Exception.class)
+    @ResponseBody
     public Result handleException(Exception ex) {
         logger.error(ex.getMessage(), ex);
         LogUtils.saveSysLog(ex);

@@ -1,6 +1,6 @@
 package com.style.common.model;
 
-import com.style.utils.MessageUtils;
+import com.style.common.utils.MsgUtils;
 
 import java.io.Serializable;
 
@@ -15,7 +15,7 @@ public class Result<T> implements Serializable {
     private int code = 0;
 
     // 消息内容
-    private String msg = "success";
+    private String msg = "成功";
 
     // 响应数据
     private T data;
@@ -26,7 +26,7 @@ public class Result<T> implements Serializable {
 
     public Result(int code) {
         this.code = code;
-        this.msg = MessageUtils.getMessage(this.code);
+        this.msg = MsgUtils.getMessage(this.code);
     }
 
     public Result(int code, String msg) {
@@ -40,7 +40,7 @@ public class Result<T> implements Serializable {
 
     public Result(int code, T data) {
         this.code = code;
-        this.msg = MessageUtils.getMessage(this.code);
+        this.msg = MsgUtils.getMessage(this.code);
         this.data = data;
     }
 

@@ -1,6 +1,5 @@
 package com.style.common.config;
 
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -61,32 +60,5 @@ public class WebAutoConfiguration {
         return registration;
     }
 
-    @Bean("jackson2HttpMessageConverter")
-    public MappingJackson2HttpMessageConverter jackson2HttpMessageConverter() {
-        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        ObjectMapper mapper = new ObjectMapper();
 
-        //日期格式转换
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
-        mapper.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-
-        //Long类型转String类型
-        SimpleModule simpleModule = new SimpleModule();
-        simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
-        simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
-        mapper.registerModule(simpleModule);
-
-        converter.setObjectMapper(mapper);
-        return converter;
-    }
-
-    /**
-     * 配置分页
-     */
-    @Bean
-    @Order(0)
-    public PaginationInterceptor paginationInterceptor() {
-        return new PaginationInterceptor();
-    }
 }

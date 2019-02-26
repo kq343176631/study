@@ -13,7 +13,7 @@ import javax.validation.Validator;
 @Configuration
 public class MsgAutoConfiguration {
 
-    @Bean("messageSource")
+    @Bean("message")
     public MessageSource messageSource() {
         ResourceBundleMessageSource bundleMessageSource = new ResourceBundleMessageSource();
         bundleMessageSource.setDefaultEncoding("UTF-8");

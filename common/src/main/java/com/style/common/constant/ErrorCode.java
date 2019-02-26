@@ -8,40 +8,55 @@ package com.style.common.constant;
  */
 public interface ErrorCode {
 
-    int INTERNAL_SERVER_ERROR = 500;
+    //  未经认证
     int UNAUTHORIZED = 401;
+    //  没有权限
     int FORBIDDEN = 403;
+    // 请求的资源不存在
+    int RESOURCE_NOT_FOUND = 404;
 
-    int NOT_NULL = 10001;
-    int DB_RECORD_EXISTS = 10002;
-    int PARAMS_GET_ERROR = 10003;
-    int ACCOUNT_PASSWORD_ERROR = 10004;
-    int ACCOUNT_DISABLE = 10005;
-    int IDENTIFIER_NOT_NULL = 10006;
-    int CAPTCHA_ERROR = 10007;
-    int SUB_MENU_EXIST = 10008;
-    int PASSWORD_ERROR = 10009;
-    int ACCOUNT_NOT_EXIST = 10010;
-    int SUPERIOR_DEPT_ERROR = 10011;
-    int SUPERIOR_MENU_ERROR = 10012;
-    int DATA_SCOPE_PARAMS_ERROR = 10013;
-    int DEPT_SUB_DELETE_ERROR = 10014;
-    int DEPT_USER_DELETE_ERROR = 10015;
-    int ACT_DEPLOY_ERROR = 10016;
-    int ACT_MODEL_IMG_ERROR = 10017;
-    int ACT_MODEL_EXPORT_ERROR = 10018;
-    int UPLOAD_FILE_EMPTY = 10019;
-    int TOKEN_NOT_EMPTY = 10020;
-    int TOKEN_INVALID = 10021;
-    int ACCOUNT_LOCK = 10022;
-    int ACT_DEPLOY_FORMAT_ERROR = 10023;
-    int OSS_UPLOAD_FILE_ERROR = 10024;
-    int SEND_SMS_ERROR = 10025;
-    int MAIL_TEMPLATE_NOT_EXISTS = 10026;
-    int REDIS_ERROR = 10027;
-    int JOB_ERROR = 10028;
-    int INVALID_SYMBOL = 10029;
-    int JSON_FORMAT_ERROR = 10030;
-    int SMS_CONFIG = 10031;
+    //  内部错误
+    int INTERNAL_SERVER_ERROR = 500;
+    //  添加失败
+    int INSERT_RECORD_ERROR = 501;
+    //  删除失败
+    int DELETE_RECORD_ERROR = 502;
+    //  修改失败
+    int UPDATE_RECORD_ERROR = 503;
+
+
+    //  缺少必备的参数
+    int PARAM_MISS = 10001;
+    //  参数不能为空
+    int PARAM_NOT_NULL = 10002;
+    //  参数类型不匹配
+    int PARAM_NOT_MATCH = 10003;
+
+
+    //  数据库中已存在该记录
+    int DB_RECORD_EXISTS = 10004;
+    //  唯一标识不能为空
+    int IDENTIFIER_NOT_NULL = 10005;
+    //  验证码错误
+    int CAPTCHA_ERROR = 10006;
+
+    //  token不能为空
+    int TOKEN_NOT_EMPTY = 10007;
+    //  token失效，请重新登录
+    int TOKEN_INVALID = 10008;
+
+
+    //  账号已存在
+    int ACCOUNT_EXIST = 10011;
+    //  账号不存在
+    int ACCOUNT_NOT_EXIST = 10012;
+    //  账号未登录
+    int ACCOUNT_NOT_LOGIN = 10013;
+    //  账号或密码错误
+    int ACCOUNT_PASSWORD_ERROR = 10014;
+    //  账号已被停用
+    int ACCOUNT_DISABLE = 10015;
+    //  账号已被锁定
+    int ACCOUNT_LOCK = 10016;
 
 }
