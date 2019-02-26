@@ -1,9 +1,5 @@
 package com.style.common.config;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.style.common.web.filter.XssFilter;
 import com.style.utils.core.SpringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -13,12 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.context.request.RequestContextListener;
 
 import javax.servlet.DispatcherType;
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
 
 @Configuration
 public class WebAutoConfiguration {
@@ -59,6 +52,5 @@ public class WebAutoConfiguration {
         registration.setOrder(Integer.MAX_VALUE);
         return registration;
     }
-
 
 }

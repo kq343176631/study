@@ -1,4 +1,4 @@
-package com.style.common.web;
+package com.style.common.utils;
 
 import com.style.common.entity.TreeNode;
 import com.style.common.validator.AssertUtils;
@@ -14,7 +14,7 @@ import java.util.Map;
  * @author Mark sunlightcs@gmail.com
  * @since 1.0.0
  */
-public class TreeNodeUtils {
+public class TreeUtils {
 
     /**
      * 构建树节点
