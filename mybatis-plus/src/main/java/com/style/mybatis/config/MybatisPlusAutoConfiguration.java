@@ -1,6 +1,5 @@
 package com.style.mybatis.config;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties;
 import com.baomidou.mybatisplus.autoconfigure.SpringBootVFS;
@@ -13,7 +12,7 @@ import com.style.mybatis.annotation.MyBatisPlus;
 import com.style.mybatis.fatory.DynamicTransactionFactory;
 import com.style.mybatis.injector.CrudSqlInjector;
 import com.style.mybatis.mapper.BaseMapper;
-import com.style.mybatis.plugin.dynamic.DataSourceInterceptor;
+import com.style.mybatis.plugin.dynamic.DynamicDataSourceInterceptor;
 import com.style.mybatis.plugin.dynamic.DynamicDataSource;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.plugin.Interceptor;
@@ -121,15 +120,15 @@ public class MybatisPlusAutoConfiguration {
         }
         // 添加动态数据源拦截器
         if (!ObjectUtils.isEmpty(this.interceptors)) {
+
             if (dataSource instanceof DynamicDataSource) {
+
                 Interceptor[] interceptors = new Interceptor[this.interceptors.length + 1];
-                for (int i = 0; i < interceptors.length; i++) {
-                    if (i == 0) {
-                        interceptors[i] = new DataSourceInterceptor();
-                    } else {
-                        interceptors[i] = this.interceptors[i - 1];
-                    }
-                }
+
+                System.arraycopy(this.interceptors,0,interceptors,0,this.interceptors.length);
+                // 动态数据源拦截器需要优先执行，故放到最后。
+                interceptors[this.interceptors.length] = new DynamicDataSourceInterceptor();
+
                 factory.setPlugins(interceptors);
             } else {
                 factory.setPlugins(this.interceptors);

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LogOperationAspect {
 
-    @Autowired
+    //@Autowired
     private SysLogOperationService sysLogOperationService;
 
     @Pointcut("@annotation(com.style.common.annotation.OpsLog)")
