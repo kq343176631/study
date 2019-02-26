@@ -39,7 +39,7 @@ public class DataSourceInterceptor implements Interceptor {
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
-        // 接口的全限定名.方法命名
+        // 接口的全限定名.方法命名 com.style.admin.modules.log.dao.logDao.insert
         String id = ((MappedStatement) invocation.getArgs()[0]).getId();
         String className = StringUtils.substringBeforeLast(id, ".");
         String methodName = StringUtils.substringAfterLast(id, ".");
