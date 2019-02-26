@@ -3,7 +3,7 @@ package com.style.mybatis.fatory;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.xa.DruidXADataSource;
 import com.atomikos.jdbc.AtomikosSQLException;
-import com.style.mybatis.plugin.dynamic.DataSourceHolder;
+import com.style.mybatis.plugin.dynamic.DynamicDataSourceHolder;
 import com.style.mybatis.plugin.dynamic.DynamicDataSource;
 import com.style.mybatis.properties.DataSourceProperties;
 import com.style.mybatis.properties.DynamicDataSourceProperties;
@@ -28,7 +28,7 @@ public class DataSourceFactory {
         if (dataSourcePropertiesMap.size() > 1) {
             return getDynamicDataSource(dynamicDataSourceProperties);
         }
-        return getDruidDataSource(dataSourcePropertiesMap.get(DataSourceHolder.getDefaultDataSourceName()));
+        return getDruidDataSource(dataSourcePropertiesMap.get(DynamicDataSourceHolder.getDefaultDataSourceName()));
     }
 
     public static DruidDataSource getDruidDataSource(DataSourceProperties dataSourceProperties) {
@@ -50,7 +50,7 @@ public class DataSourceFactory {
             initDruidDataSource(dataSourceProperties, druidXADataSource);
             AtomikosDataSourceBean atomikosDataSourceBean = convertAtomikosDataSource(datasourceName, druidXADataSource);
 
-            if (DataSourceHolder.getDefaultDataSourceName().equals(datasourceName)) {
+            if (DynamicDataSourceHolder.getDefaultDataSourceName().equals(datasourceName)) {
                 // 默认数据源
                 dynamicDataSource.setDefaultTargetDataSource(atomikosDataSourceBean);
             } else {

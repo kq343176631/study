@@ -63,9 +63,9 @@ public class DynamicDataSourceInterceptor implements Interceptor {
         DataSource targetDataSource = targetMethod.getAnnotation(DataSource.class);
         if (targetDataSource != null && StringUtils.isNotBlank(targetDataSource.value())) {
             // 更新数据源
-            DataSourceHolder.setDataSourceName(targetDataSource.value());
+            DynamicDataSourceHolder.setDataSourceName(targetDataSource.value());
         } else {
-            DataSourceHolder.setDataSourceName(null);
+            DynamicDataSourceHolder.setDataSourceName(null);
         }
         // 调用下一个拦截器
         return invocation.proceed();

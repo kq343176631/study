@@ -1,7 +1,7 @@
 package com.style.mybatis.config;
 
 import com.style.mybatis.fatory.DataSourceFactory;
-import com.style.mybatis.plugin.dynamic.DataSourceHolder;
+import com.style.mybatis.plugin.dynamic.DynamicDataSourceHolder;
 import com.style.mybatis.properties.DataSourceProperties;
 import com.style.mybatis.properties.DynamicDataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -42,7 +42,7 @@ public class DataSourceAutoConfiguration {
     public DynamicDataSourceProperties dynamicDataSourceProperties(DataSourceProperties properties) {
         DynamicDataSourceProperties dynamicDataSourceProperties = new DynamicDataSourceProperties();
         // 添加默认数据源
-        dynamicDataSourceProperties.getDatasource().put(DataSourceHolder.getDefaultDataSourceName(), properties);
+        dynamicDataSourceProperties.getDatasource().put(DynamicDataSourceHolder.getDefaultDataSourceName(), properties);
         return dynamicDataSourceProperties;
     }
 

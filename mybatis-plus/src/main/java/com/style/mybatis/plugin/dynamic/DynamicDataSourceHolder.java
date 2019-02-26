@@ -5,7 +5,7 @@ import com.style.mybatis.utils.StringUtils;
 /**
  * 本地数据源持有者
  */
-public class DataSourceHolder {
+public class DynamicDataSourceHolder {
 
     /**
      * 定义默认数据源
@@ -19,8 +19,6 @@ public class DataSourceHolder {
 
     /**
      * 从本地线程中获取 dataSourceName
-     *
-     * @return dataSourceName
      */
     public static String getCurDataSourceName() {
         return dataSourceName.get();
@@ -28,13 +26,11 @@ public class DataSourceHolder {
 
     /**
      * 设置 dataSourceName
-     *
-     * @param dataSourceName dataSourceName
      */
     public static void setDataSourceName(String dataSourceName) {
         // 判断dataSourceName是否为空以及是否为默认值
         if (StringUtils.isNotBlank(dataSourceName) && !dataSourceName.equals(getDefaultDataSourceName())) {
-            DataSourceHolder.dataSourceName.set(dataSourceName);
+            DynamicDataSourceHolder.dataSourceName.set(dataSourceName);
         } else {
             clearDataSourceName();
         }
@@ -49,8 +45,6 @@ public class DataSourceHolder {
 
     /**
      * 获取默认的数据源名称
-     *
-     * @return defaultDataSourceName
      */
     public static String getDefaultDataSourceName() {
         return DEFAULT_DATA_SOURCE_NAME;
