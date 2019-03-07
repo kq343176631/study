@@ -3,28 +3,31 @@ package com.style.admin.modules.activiti.config;
 import org.activiti.engine.*;
 import org.activiti.spring.SpringProcessEngineConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.io.IOException;
 
-@Configuration
-public class ActivitiAutoConfiguration {
+/**
+ * 手动配置
+ */
+//@Configuration
+public class ActivityAutoConfiguration {
 
     @Bean
-    public ProcessEngine processEngine(DataSourceTransactionManager transactionManager, DataSource dataSource) throws IOException {
+    public ProcessEngine processEngine(PlatformTransactionManager transactionManager, DataSource dataSource) throws IOException {
+
         SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
+
         //自动部署已有的流程文件
-        Resource[] resources = new PathMatchingResourcePatternResolver().getResources(ResourceLoader.CLASSPATH_URL_PREFIX + "processes/*.bpmn");
+        //Resource[] resources = ResourceUtils.getResources("classpath:processes/*.bpmn");
+
         configuration.setTransactionManager(transactionManager);
         configuration.setDataSource(dataSource);
         configuration.setDatabaseSchemaUpdate("true");
-        configuration.setDeploymentResources(resources);
+        //configuration.setDeploymentResources(resources);
         configuration.setDbIdentityUsed(false);
+
         return configuration.buildProcessEngine();
     }
 

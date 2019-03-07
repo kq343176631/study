@@ -41,15 +41,15 @@ spring:
 #============== Dynamic Datasource settings ==============#
 #=========================================================#
 
-dynamic:
-  datasource:
-    slave1:
-      driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://192.168.1.11:3306/slave1?allowMultiQueries=true&useUnicode=false&characterEncoding=UTF-8&useSSL=false
-      username: root
-      password: root
-    slave2:
-      driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://192.168.1.11:3306/slave2?allowMultiQueries=true&useUnicode=false&characterEncoding=UTF-8&useSSL=false
-      username: root
-      password: root
+#dynamic:
+#  datasource:
+#    slave1:
+#      driver-class-name: com.mysql.jdbc.Driver
+#      url: jdbc:mysql://192.168.1.11:3306/slave1?allowMultiQueries=true&useUnicode=false&characterEncoding=UTF-8&useSSL=false
+#      username: root
+#      password: root
+#    slave2:
+#      driver-class-name: com.mysql.jdbc.Driver
+#      url: jdbc:mysql://192.168.1.11:3306/slave2?allowMultiQueries=true&useUnicode=false&characterEncoding=UTF-8&useSSL=false
+#      username: root
+#      password: root

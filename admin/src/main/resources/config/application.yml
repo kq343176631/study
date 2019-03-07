@@ -5,7 +5,7 @@
 server:
   port: 9091
   servlet:
-    context-path: /
+    context-path: /admin
     session:
       cookie:
         http-only: true
@@ -14,6 +14,7 @@ server:
     max-threads: 1000
     min-spare-threads: 30
   connection-timeout: 5000ms
+
 
 
 #=========================================================#
@@ -35,6 +36,8 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
       enabled: true
+  activiti:
+      check-process-definitions: false  #关闭流程定义自动部署
 #  autoconfigure:
 #    exclude:
 #      org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration,
@@ -70,32 +73,32 @@ spring:
 #=================== Web MVC settings ====================#
 #=========================================================#
 
-web:
-  view:  # MVC 视图相关
-    root: /views
-    themeName: default  # 页面主题名称
-  interceptor:  # MVC 拦截器
-    log:  # 后台管理日志记录拦截器
-      enabled: true
-      add-path-patterns: >
-        ${adminPath}/**
-      exclude-path-patterns: >
-        ${adminPath}/index,
-        ${adminPath}/login,
-        ${adminPath}/desktop,
-        ${adminPath}/sys/online/count,
-        ${adminPath}/state/server/rtInfo,
-        ${adminPath}/**/treeData,
-        ${adminPath}/file/**,
-        ${adminPath}/tags/*,
-        ${adminPath}/msg/**
-    mobile:  # 手机视图拦截器
-      enabled: false
-      add-path-patterns: >
-        ${frontPath}/**
-      exclude-path-patterns: ~
-  staticFile: .html,.css,.js,.map,.png,.jpg,.gif,.jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk,.otf,.eot,.svg,.ttf,.woff,.woff2
-  staticFileExcludeUri: /druid/
+#web:
+#  view:  # MVC 视图相关
+#    root: /views
+#    themeName: default  # 页面主题名称
+#  interceptor:  # MVC 拦截器
+#    log:  # 后台管理日志记录拦截器
+#      enabled: true
+#      add-path-patterns: >
+#        ${adminPath}/**
+#      exclude-path-patterns: >
+#        ${adminPath}/index,
+#        ${adminPath}/login,
+#        ${adminPath}/desktop,
+#        ${adminPath}/sys/online/count,
+#        ${adminPath}/state/server/rtInfo,
+#        ${adminPath}/**/treeData,
+#        ${adminPath}/file/**,
+#        ${adminPath}/tags/*,
+#        ${adminPath}/msg/**
+#    mobile:  # 手机视图拦截器
+#      enabled: false
+#      add-path-patterns: >
+#        ${frontPath}/**
+#      exclude-path-patterns: ~
+#  staticFile: .html,.css,.js,.map,.png,.jpg,.gif,.jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk,.otf,.eot,.svg,.ttf,.woff,.woff2
+#  staticFileExcludeUri: /druid/
 
 #=========================================================#
 #================= Mybatis Plus settings =================#
