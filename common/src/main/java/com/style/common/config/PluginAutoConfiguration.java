@@ -16,11 +16,11 @@ public class PluginAutoConfiguration {
     /**
      * 数据范围
      */
-    @Bean
+    /*@Bean
     @Order(1)
     public DataScopeInterceptor dataScopeInterceptor() {
         return new DataScopeInterceptor();
-    }
+    }*/
 
     /**
      * 配置分页
