@@ -66,4 +66,6 @@ public interface ErrorCode {
     int ACT_MODEL_EXPORT_ERROR = 10018;
     int ACT_DEPLOY_FORMAT_ERROR = 10023;
 
+    int JOB_ERROR = 10028;
+
 }

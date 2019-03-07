@@ -66,7 +66,7 @@ public abstract class CrudServiceImpl<D extends BaseDao<T>, T> extends BaseServi
 
     @Override
     public boolean delete(Wrapper<T> wrapper) {
-        return retBool(baseDao.delete(wrapper));
+        return SqlHelper.delBool(baseDao.delete(wrapper));
     }
 
     @Override

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
  * 流程引擎配置信息
  */
 @Configuration
-public class ProcessEngineConfig implements ProcessEngineConfigurationConfigurer {
+public class ProcessEngineConfiguration implements ProcessEngineConfigurationConfigurer {
 
     @Override
     public void configure(SpringProcessEngineConfiguration processEngineConfiguration) {

@@ -153,7 +153,7 @@ public class CrudTest {
     @Test
     public void deleteById(){
 
-        newsService.deleteById(1100250229434814465L);
+       // newsService.deleteById(1100250229434814465L);
     }
 
     @Test

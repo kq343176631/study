@@ -21,6 +21,7 @@
 
         <shiro.version>1.4.0</shiro.version>
         <activiti.version>5.22.0</activiti.version>
+        <quartz.version>2.3.0</quartz.version>
 
     </properties>
 
@@ -112,10 +113,15 @@
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
+            <version>${quartz.version}</version>
             <exclusions>
                 <exclusion>
+                    <groupId>com.mchange</groupId>
                     <artifactId>c3p0</artifactId>
-                    <groupId>c3p0</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.zaxxer</groupId>
+                    <artifactId>HikariCP-java6</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
