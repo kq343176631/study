@@ -1,0 +1,27 @@
+
+1、下载源码：activity 5.22.0官方下载地址
+
+2、解压源码，拷贝相关文件到自己的项目中。
+
+   复制前端页面：
+       进入源码文件中的modules\activiti-webapp-explorer2\src\main\webapp目录，
+       复制diagram-viewer、editor-app、modeler.html三个文件到springboot项目中的resources\public目录下。
+
+   复制三个Controller：
+        在Activiti-5.22.0的libs中找到activiti-modeler-5.22.0-sources.jar，将其解压，将以下三个类：
+        StencilsetRestResource ModelEditorJsonRestResource ModelSaveRestResource，复制到项目中。
+
+3、将源码路径modules\activiti-webapp-explorer2\src\main\resources\stencilset.json复制到springboot项目中的resources目录下
+
+4、排除spring security自动配置。
+
+5、修改 resources\editor-app目录下的app-cfg.js, 如下更改(这个是项目的路径，springboot是不需要项目路径的，所以把项目路径删除掉)
+   ACTIVITI.CONFIG = {
+    	'contextRoot' : '/service',
+    };
+
+6、修改activiti初始化资源的3个类
+   在每个类的类名上加上RequestMapping(value = “/service”)注解。(页面会访问这个路径)
+
+7、修改ModelSaveRestResource类（修改接收参数）。
+
