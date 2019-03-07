@@ -59,4 +59,11 @@ public interface ErrorCode {
     //  账号已被锁定
     int ACCOUNT_LOCK = 10016;
 
+    int UPLOAD_FILE_EMPTY = 10019;
+
+    int ACT_DEPLOY_ERROR = 10016;
+    int ACT_MODEL_IMG_ERROR = 10017;
+    int ACT_MODEL_EXPORT_ERROR = 10018;
+    int ACT_DEPLOY_FORMAT_ERROR = 10023;
+
 }
