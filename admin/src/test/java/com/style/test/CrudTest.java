@@ -36,8 +36,8 @@ public class CrudTest {
         news.setDeptId(280167106L);
         news.setPubDate(new Date());
         news.setTitle("fgggg");
-        news.setCreateBy(1415L);
-        news.setUpdateBy(25126L);
+        news.setCreator(1415L);
+        news.setUpdater(25126L);
         System.out.println( newsService.save(news));
     }
 
@@ -50,8 +50,8 @@ public class CrudTest {
             news.setDeptId(IdGenUtils.idWorker());
             news.setPubDate(new Date());
             news.setTitle(StringUtils.getRandomStr(5));
-            news.setCreateBy(IdGenUtils.idWorker());
-            news.setUpdateBy(IdGenUtils.idWorker());
+            news.setCreator(IdGenUtils.idWorker());
+            news.setUpdater(IdGenUtils.idWorker());
             newsList.add(news);
         }
         if(newsService.saveBatch(newsList,10)){
@@ -68,8 +68,8 @@ public class CrudTest {
         news.setDeptId(333L);
         news.setPubDate(new Date());
         news.setTitle("333");
-        news.setCreateBy(333L);
-        news.setUpdateBy(333L);
+        news.setCreator(333L);
+        news.setUpdater(333L);
         newsService.updateById(news);
     }
 
@@ -80,13 +80,13 @@ public class CrudTest {
         news1.setId(1100247981107507201L);
         news1.setContent("111");
         news1.setTitle("111");
-        news1.setUpdateBy(111L);
+        news1.setUpdater(111L);
 
         News news2 = new News();
         news2.setId(1100247981115895809L);
         news2.setContent("222");
         news2.setTitle("222");
-        news2.setUpdateBy(222L);
+        news2.setUpdater(222L);
 
 
         List<News> newsList = ListUtils.newArrayList();
@@ -103,7 +103,7 @@ public class CrudTest {
         News news1 = new News();
         news1.setContent("77777");
         news1.setTitle("7777");
-        news1.setUpdateBy(7777L);
+        news1.setUpdater(7777L);
 
         QueryWrapper<News> wrapper = new QueryWrapper<>();
         wrapper.eq("title","222").or().eq("content","111");

@@ -26,7 +26,7 @@ public abstract class BaseEntity implements Serializable {
     /**
      * 创建者
      */
-    protected Long createBy;
+    protected Long creator;
 
     /**
      * 创建日期
@@ -37,7 +37,7 @@ public abstract class BaseEntity implements Serializable {
     /**
      * 更新者
      */
-    protected Long updateBy;
+    protected Long updater;
 
     /**
      * 更新日期
