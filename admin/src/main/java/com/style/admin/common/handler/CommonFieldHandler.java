@@ -16,8 +16,6 @@ public class CommonFieldHandler implements MetaObjectHandler {
 
     private final static String UPDATE_DATE = "updateDate";
 
-    private final static String DEL_FLAG = "del";
-
     @Override
     public void insertFill(MetaObject metaObject) {
 
@@ -27,8 +25,7 @@ public class CommonFieldHandler implements MetaObjectHandler {
         setFieldValByName(CREATE_DATE, date, metaObject);
         //更新时间
         setFieldValByName(UPDATE_DATE, date, metaObject);
-        //删除标记
-        setFieldValByName(DEL_FLAG, 0, metaObject);
+
     }
 
     @Override

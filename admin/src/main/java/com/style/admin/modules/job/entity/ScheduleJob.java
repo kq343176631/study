@@ -1,5 +1,8 @@
 package com.style.admin.modules.job.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.style.common.entity.BaseEntity;
 import lombok.Data;
@@ -33,5 +36,12 @@ public class ScheduleJob extends BaseEntity {
      * 备注
      */
     private String remark;
+
+    /**
+     * 删除标记（0：正常；1：删除）
+     */
+    @TableLogic
+    @TableField(fill = FieldFill.INSERT)
+    protected Integer del;
 
 }
