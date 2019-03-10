@@ -9,6 +9,19 @@ public interface Constants {
     //===============         基  本  常  量      ================//
     //===========================================================//
 
+    /**
+     * 成功
+     */
+    int SUCCESS = 1;
+    /**
+     * 失败
+     */
+    int FAIL = 0;
+    /**
+     * OK
+     */
+    String OK = "OK";
+
     String POINT = ".";
     String SPLIT = ",";
     String COLON = ":";
@@ -61,6 +74,19 @@ public interface Constants {
      */
     String ORDER_METHOD = "order";
 
+    /**
+     * 云存储配置KEY
+     */
+    String CLOUD_STORAGE_CONFIG_KEY = "CLOUD_STORAGE_CONFIG_KEY";
+    /**
+     * 短信配置KEY
+     */
+    String SMS_CONFIG_KEY = "SMS_CONFIG_KEY";
+    /**
+     * 邮件配置KEY
+     */
+    String MAIL_CONFIG_KEY = "MAIL_CONFIG_KEY";
+
 
     /**
      * 定时任务状态
@@ -78,6 +104,66 @@ public interface Constants {
         private int value;
 
         ScheduleStatus(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
+    /**
+     * 短信服务商
+     */
+    enum SmsService {
+        /**
+         * 阿里云
+         */
+        ALIYUN(1),
+        /**
+         * 腾讯云
+         */
+        QCLOUD(2);
+
+        private int value;
+
+        SmsService(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
+    /**
+     * 云服务商
+     */
+    enum CloudService {
+        /**
+         * 七牛云
+         */
+        QINIU(1),
+        /**
+         * 阿里云
+         */
+        ALIYUN(2),
+        /**
+         * 腾讯云
+         */
+        QCLOUD(3),
+        /**
+         * FASTDFS
+         */
+        FASTDFS(4),
+        /**
+         * 本地
+         */
+        LOCAL(5);
+
+        private int value;
+
+        CloudService(int value) {
             this.value = value;
         }
 

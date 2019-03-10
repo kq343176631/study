@@ -68,4 +68,14 @@ public interface ErrorCode {
 
     int JOB_ERROR = 10028;
 
+    int JSON_FORMAT_ERROR = 10030;
+
+    int MAIL_TEMPLATE_NOT_EXISTS = 10026;
+
+    int PARAMS_GET_ERROR = 10003;
+
+    int SMS_CONFIG = 10031;
+
+    int SEND_SMS_ERROR = 10025;
+
 }

@@ -23,6 +23,14 @@
         <activiti.version>5.22.0</activiti.version>
         <quartz.version>2.3.0</quartz.version>
 
+        <freemarker.version>2.3.28</freemarker.version>
+
+        <aliyun.core.version>3.2.2</aliyun.core.version>
+        <aliyun.dysmsapi.version>1.1.0</aliyun.dysmsapi.version>
+
+        <qcloud.cos.version>5.4.4</qcloud.cos.version>
+        <qcloud.qcloudsms.version>1.0.5</qcloud.qcloudsms.version>
+
     </properties>
 
     <dependencies>
@@ -122,6 +130,43 @@
                 <exclusion>
                     <groupId>com.zaxxer</groupId>
                     <artifactId>HikariCP-java6</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- freemarker -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>${freemarker.version}</version>
+        </dependency>
+
+        <!-- aliyun sms service -->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>${aliyun.core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+            <version>${aliyun.dysmsapi.version}</version>
+        </dependency>
+
+        <!-- tenxun sms service -->
+        <dependency>
+            <groupId>com.github.qcloudsms</groupId>
+            <artifactId>qcloudsms</artifactId>
+            <version>${qcloud.qcloudsms.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.qcloud</groupId>
+            <artifactId>cos_api</artifactId>
+            <version>${qcloud.cos.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
