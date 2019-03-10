@@ -1,7 +1,6 @@
 package com.style.admin.modules.msg.service;
 
-import com.style.admin.modules.msg.entity.SysSmsEntity;
-import com.style.common.service.BaseService;
+import com.style.admin.modules.msg.entity.SysSms;
 import com.style.common.service.CrudService;
 
 import java.util.LinkedHashMap;
@@ -11,7 +10,7 @@ import java.util.LinkedHashMap;
  *
  * @author Mark sunlightcs@gmail.com
  */
-public interface SysSmsService extends CrudService<SysSmsEntity> {
+public interface SysSmsService extends CrudService<SysSms> {
 
     /**
      * 发送短信

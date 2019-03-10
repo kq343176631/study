@@ -1,12 +1,12 @@
 package com.style.admin.modules.msg.service;
 
-import com.style.admin.modules.msg.entity.SysMailTemplateEntity;
+import com.style.admin.modules.msg.entity.SysMailTemplate;
 import com.style.common.service.CrudService;
 
 /**
  * 邮件模板
  */
-public interface SysMailTemplateService extends CrudService<SysMailTemplateEntity> {
+public interface SysMailTemplateService extends CrudService<SysMailTemplate> {
 
     /**
      * 发送邮件

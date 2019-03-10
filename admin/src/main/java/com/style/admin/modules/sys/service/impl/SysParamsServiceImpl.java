@@ -2,7 +2,7 @@ package com.style.admin.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.style.admin.modules.sys.dao.SysParamsDao;
-import com.style.admin.modules.sys.entity.SysParamsEntity;
+import com.style.admin.modules.sys.entity.SysParams;
 import com.style.admin.modules.sys.service.SysParamsService;
 import com.style.common.constant.ErrorCode;
 import com.style.common.convert.http.json.JsonMapper;
@@ -20,15 +20,15 @@ import java.util.Map;
  * 参数管理
  */
 @Service
-public class SysParamsServiceImpl extends CrudServiceImpl<SysParamsDao, SysParamsEntity> implements SysParamsService {
+public class SysParamsServiceImpl extends CrudServiceImpl<SysParamsDao, SysParams> implements SysParamsService {
 
     //@Autowired
     //private SysParamsRedis sysParamsRedis;
 
-    protected QueryWrapper<SysParamsEntity> getWrapper(Map<String, Object> params) {
+    protected QueryWrapper<SysParams> getWrapper(Map<String, Object> params) {
         String paramCode = (String) params.get("paramCode");
 
-        QueryWrapper<SysParamsEntity> wrapper = new QueryWrapper<>();
+        QueryWrapper<SysParams> wrapper = new QueryWrapper<>();
         wrapper.eq("param_type", 1);
         wrapper.like(StringUtils.isNotBlank(paramCode), "param_code", paramCode);
 

@@ -1,7 +1,7 @@
 package com.style.admin.modules.job.utils;
 
-import com.style.admin.modules.job.model.ScheduleJob;
-import com.style.admin.modules.job.entity.ScheduleJobEntity;
+import com.style.admin.modules.job.model.ScheduleJobBean;
+import com.style.admin.modules.job.entity.ScheduleJob;
 import com.style.common.constant.Constants;
 import com.style.common.constant.ErrorCode;
 import com.style.common.exception.ValidateException;
@@ -45,10 +45,10 @@ public class ScheduleUtils {
     /**
      * 创建定时任务
      */
-    public static void createScheduleJob(Scheduler scheduler, ScheduleJobEntity scheduleJob) {
+    public static void createScheduleJob(Scheduler scheduler, ScheduleJob scheduleJob) {
         try {
             //构建job信息
-            JobDetail jobDetail = JobBuilder.newJob(ScheduleJob.class).withIdentity(getJobKey(scheduleJob.getId())).build();
+            JobDetail jobDetail = JobBuilder.newJob(ScheduleJobBean.class).withIdentity(getJobKey(scheduleJob.getId())).build();
 
             //表达式调度构建器
             CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(scheduleJob.getCronExpression())
@@ -74,7 +74,7 @@ public class ScheduleUtils {
     /**
      * 更新定时任务
      */
-    public static void updateScheduleJob(Scheduler scheduler, ScheduleJobEntity scheduleJob) {
+    public static void updateScheduleJob(Scheduler scheduler, ScheduleJob scheduleJob) {
         try {
             TriggerKey triggerKey = getTriggerKey(scheduleJob.getId());
 
@@ -105,7 +105,7 @@ public class ScheduleUtils {
     /**
      * 立即执行任务
      */
-    public static void run(Scheduler scheduler, ScheduleJobEntity scheduleJob) {
+    public static void run(Scheduler scheduler, ScheduleJob scheduleJob) {
         try {
             //参数
             JobDataMap dataMap = new JobDataMap();

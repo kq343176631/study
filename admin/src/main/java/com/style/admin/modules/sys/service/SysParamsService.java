@@ -1,13 +1,12 @@
 package com.style.admin.modules.sys.service;
 
-import com.style.admin.modules.sys.entity.SysParamsEntity;
-import com.style.common.service.BaseService;
+import com.style.admin.modules.sys.entity.SysParams;
 import com.style.common.service.CrudService;
 
 /**
  * 参数管理
  */
-public interface SysParamsService extends CrudService<SysParamsEntity> {
+public interface SysParamsService extends CrudService<SysParams> {
 
     void delete(Long[] ids);
 

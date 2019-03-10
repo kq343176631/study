@@ -1,6 +1,6 @@
 package com.style.admin.modules.sys.dao;
 
-import com.style.admin.modules.sys.entity.SysParamsEntity;
+import com.style.admin.modules.sys.entity.SysParams;
 import com.style.common.dao.BaseDao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -9,12 +9,9 @@ import java.util.List;
 
 /**
  * 参数管理
- *
- * @author Mark sunlightcs@gmail.com
- * @since 1.0.0
  */
 @Mapper
-public interface SysParamsDao extends BaseDao<SysParamsEntity> {
+public interface SysParamsDao extends BaseDao<SysParams> {
     /**
      * 根据参数编码，查询value
      * @param paramCode 参数编码

@@ -1,12 +1,12 @@
 package com.style.admin.modules.msg.service;
 
-import com.style.admin.modules.msg.entity.SysMailLogEntity;
+import com.style.admin.modules.msg.entity.SysMailLog;
 import com.style.common.service.CrudService;
 
 /**
  * 邮件发送记录
  */
-public interface SysMailLogService extends CrudService<SysMailLogEntity> {
+public interface SysMailLogService extends CrudService<SysMailLog> {
 
     /**
      * 保存邮件发送记录

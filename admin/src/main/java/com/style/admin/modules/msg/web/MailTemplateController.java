@@ -1,7 +1,7 @@
 package com.style.admin.modules.msg.web;
 
 import com.style.admin.modules.msg.config.EmailConfig;
-import com.style.admin.modules.msg.entity.SysMailTemplateEntity;
+import com.style.admin.modules.msg.entity.SysMailTemplate;
 import com.style.admin.modules.msg.service.SysMailTemplateService;
 import com.style.admin.modules.sys.service.SysParamsService;
 import com.style.common.constant.Constants;
@@ -82,7 +82,7 @@ public class MailTemplateController extends WebController {
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("sys:mail:all")
-    public Result<SysMailTemplateEntity> info(@PathVariable("id") Long id) {
+    public Result<SysMailTemplate> info(@PathVariable("id") Long id) {
 
         return success(sysMailTemplateService.get(id));
     }
@@ -90,7 +90,7 @@ public class MailTemplateController extends WebController {
     @PostMapping
     @ApiOperation("保存")
     @RequiresPermissions("sys:mail:all")
-    public Result save(SysMailTemplateEntity dto) {
+    public Result save(SysMailTemplate dto) {
         //校验类型
         ValidatorUtils.validateEntity(dto, AddGroup.class);
 
@@ -102,7 +102,7 @@ public class MailTemplateController extends WebController {
     @PutMapping
     @ApiOperation("修改")
     @RequiresPermissions("sys:mail:all")
-    public Result update(SysMailTemplateEntity dto) {
+    public Result update(SysMailTemplate dto) {
         //校验类型
         ValidatorUtils.validateEntity(dto, UpdateGroup.class);
 

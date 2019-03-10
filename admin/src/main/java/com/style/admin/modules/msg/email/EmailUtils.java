@@ -1,7 +1,7 @@
 package com.style.admin.modules.msg.email;
 
 import com.style.admin.modules.msg.config.EmailConfig;
-import com.style.admin.modules.msg.entity.SysMailTemplateEntity;
+import com.style.admin.modules.msg.entity.SysMailTemplate;
 import com.style.admin.modules.msg.service.SysMailLogService;
 import com.style.admin.modules.msg.service.SysMailTemplateService;
 import com.style.admin.modules.sys.service.SysParamsService;
@@ -67,7 +67,7 @@ public class EmailUtils {
      * @return true：成功   false：失败
      */
     public boolean sendMail(Long templateId, String[] to, String[] cc, Map<String, Object> params) throws Exception {
-        SysMailTemplateEntity template = sysMailTemplateService.get(templateId);
+        SysMailTemplate template = sysMailTemplateService.get(templateId);
         if (template == null) {
             throw new ValidateException(ErrorCode.MAIL_TEMPLATE_NOT_EXISTS);
         }

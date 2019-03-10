@@ -2,7 +2,7 @@ package com.style.admin.modules.job.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.style.admin.modules.job.dao.ScheduleJobDao;
-import com.style.admin.modules.job.entity.ScheduleJobEntity;
+import com.style.admin.modules.job.entity.ScheduleJob;
 import com.style.admin.modules.job.service.ScheduleJobService;
 import com.style.admin.modules.job.utils.ScheduleUtils;
 import com.style.common.constant.Constants;
@@ -18,16 +18,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class ScheduleJobServiceImpl extends CrudServiceImpl<ScheduleJobDao, ScheduleJobEntity> implements ScheduleJobService {
+public class ScheduleJobServiceImpl extends CrudServiceImpl<ScheduleJobDao, ScheduleJob> implements ScheduleJobService {
 
     @Autowired
     private Scheduler scheduler;
 
     @Override
-    protected QueryWrapper<ScheduleJobEntity> getWrapper(Map<String, Object> params) {
+    protected QueryWrapper<ScheduleJob> getWrapper(Map<String, Object> params) {
 
         String beanName = (String) params.get("beanName");
-        QueryWrapper<ScheduleJobEntity> wrapper = new QueryWrapper<>();
+        QueryWrapper<ScheduleJob> wrapper = new QueryWrapper<>();
 
         if (StringUtils.isNotBlank(beanName)) {
             wrapper.like("bean_name", beanName);
@@ -38,7 +38,7 @@ public class ScheduleJobServiceImpl extends CrudServiceImpl<ScheduleJobDao, Sche
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean save(ScheduleJobEntity entity) {
+    public boolean save(ScheduleJob entity) {
 
         entity.setStatus(Constants.ScheduleStatus.NORMAL.getValue());
         ScheduleUtils.createScheduleJob(scheduler, entity);
@@ -48,7 +48,7 @@ public class ScheduleJobServiceImpl extends CrudServiceImpl<ScheduleJobDao, Sche
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean updateById(ScheduleJobEntity entity) {
+    public boolean updateById(ScheduleJob entity) {
 
         ScheduleUtils.updateScheduleJob(scheduler, entity);
 

@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("schedule_job")
-public class ScheduleJobEntity extends BaseEntity {
+public class ScheduleJob extends BaseEntity {
 
     /**
      * spring bean名称

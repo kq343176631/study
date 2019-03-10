@@ -1,6 +1,6 @@
 package com.style.admin.modules.job.model;
 
-import com.style.admin.modules.job.entity.ScheduleJobEntity;
+import com.style.admin.modules.job.entity.ScheduleJob;
 import com.style.admin.modules.job.utils.ScheduleUtils;
 import com.style.utils.core.SpringUtils;
 import org.quartz.JobExecutionContext;
@@ -13,13 +13,13 @@ import java.lang.reflect.Method;
 /**
  * 定时任务
  */
-public class ScheduleJob extends QuartzJobBean {
+public class ScheduleJobBean extends QuartzJobBean {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     protected void executeInternal(JobExecutionContext context) {
-        ScheduleJobEntity scheduleJob = (ScheduleJobEntity) context.getMergedJobDataMap().
+        ScheduleJob scheduleJob = (ScheduleJob) context.getMergedJobDataMap().
                 get(ScheduleUtils.JOB_PARAM_KEY);
 
         //数据库保存执行记录

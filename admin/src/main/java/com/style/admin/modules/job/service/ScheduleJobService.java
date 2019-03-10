@@ -1,16 +1,14 @@
 package com.style.admin.modules.job.service;
 
-import com.style.admin.modules.job.entity.ScheduleJobEntity;
+import com.style.admin.modules.job.entity.ScheduleJob;
 import com.style.common.service.CrudService;
-
-import java.util.Map;
 
 /**
  * 定时任务
  *
  * @author Mark sunlightcs@gmail.com
  */
-public interface ScheduleJobService extends CrudService<ScheduleJobEntity> {
+public interface ScheduleJobService extends CrudService<ScheduleJob> {
 
 	/**
 	 * 批量更新定时任务状态

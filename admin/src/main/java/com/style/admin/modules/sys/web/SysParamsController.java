@@ -1,6 +1,6 @@
 package com.style.admin.modules.sys.web;
 
-import com.style.admin.modules.sys.entity.SysParamsEntity;
+import com.style.admin.modules.sys.entity.SysParams;
 import com.style.admin.modules.sys.excel.SysParamsExcel;
 import com.style.admin.modules.sys.service.SysParamsService;
 import com.style.common.constant.Constants;
@@ -57,7 +57,7 @@ public class SysParamsController extends WebController {
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("sys:params:info")
-    public Result<SysParamsEntity> get(@PathVariable("id") Long id){
+    public Result<SysParams> get(@PathVariable("id") Long id) {
 
         return success(sysParamsService.get(id));
     }
@@ -65,7 +65,7 @@ public class SysParamsController extends WebController {
     @PostMapping
     @ApiOperation("保存")
     @RequiresPermissions("sys:params:save")
-    public Result save(@RequestBody SysParamsEntity entity){
+    public Result save(@RequestBody SysParams entity) {
         //效验数据
         ValidatorUtils.validateEntity(entity, AddGroup.class);
 
@@ -77,7 +77,7 @@ public class SysParamsController extends WebController {
     @PutMapping
     @ApiOperation("修改")
     @RequiresPermissions("sys:params:update")
-    public Result update(@RequestBody SysParamsEntity dto){
+    public Result update(@RequestBody SysParams dto) {
 
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class);
@@ -106,7 +106,7 @@ public class SysParamsController extends WebController {
     @ApiImplicitParam(name = "paramCode", value = "参数编码", paramType = "query", dataType="String")
     public void export(@ApiIgnore @RequestParam Map<String, Object> params, HttpServletResponse response) throws Exception {
 
-        List<SysParamsEntity> list = sysParamsService.list(params);
+        List<SysParams> list = sysParamsService.list(params);
 
         ExcelUtils.exportExcelToTarget(response, null, list, SysParamsExcel.class);
     }

@@ -1,7 +1,7 @@
 package com.style.admin.modules.job.init;
 
 import com.style.admin.modules.job.dao.ScheduleJobDao;
-import com.style.admin.modules.job.entity.ScheduleJobEntity;
+import com.style.admin.modules.job.entity.ScheduleJob;
 import com.style.admin.modules.job.utils.ScheduleUtils;
 import org.quartz.CronTrigger;
 import org.quartz.Scheduler;
@@ -25,8 +25,8 @@ public class JobCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        List<ScheduleJobEntity> scheduleJobList = scheduleJobDao.list(null);
-        for(ScheduleJobEntity scheduleJob : scheduleJobList){
+        List<ScheduleJob> scheduleJobList = scheduleJobDao.list(null);
+        for (ScheduleJob scheduleJob : scheduleJobList) {
             CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(scheduler, scheduleJob.getId());
             //如果不存在，则创建
             if(cronTrigger == null) {

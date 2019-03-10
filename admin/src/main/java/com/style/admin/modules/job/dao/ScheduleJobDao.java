@@ -1,6 +1,6 @@
 package com.style.admin.modules.job.dao;
 
-import com.style.admin.modules.job.entity.ScheduleJobEntity;
+import com.style.admin.modules.job.entity.ScheduleJob;
 import com.style.common.dao.BaseDao;
 import com.style.mybatis.annotation.MyBatisPlus;
 
@@ -11,7 +11,7 @@ import java.util.Map;
  *
  */
 @MyBatisPlus
-public interface ScheduleJobDao extends BaseDao<ScheduleJobEntity> {
+public interface ScheduleJobDao extends BaseDao<ScheduleJob> {
 	
 	/**
 	 * 批量更新状态

@@ -18,7 +18,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_params")
-public class SysParamsEntity extends BaseEntity {
+public class SysParams extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

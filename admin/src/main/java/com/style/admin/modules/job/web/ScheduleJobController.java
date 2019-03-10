@@ -1,6 +1,6 @@
 package com.style.admin.modules.job.web;
 
-import com.style.admin.modules.job.entity.ScheduleJobEntity;
+import com.style.admin.modules.job.entity.ScheduleJob;
 import com.style.admin.modules.job.service.ScheduleJobService;
 import com.style.common.constant.Constants;
 import com.style.common.constant.ErrorCode;
@@ -43,7 +43,7 @@ public class ScheduleJobController extends WebController {
             @ApiImplicitParam(name = "beanName", value = "beanName", paramType = "query", dataType = "String")
     })
     @RequiresPermissions("sys:schedule:page")
-    public Result<Page<ScheduleJobEntity>> page(@ApiIgnore @RequestParam Map<String, Object> params) {
+    public Result<Page<ScheduleJob>> page(@ApiIgnore @RequestParam Map<String, Object> params) {
 
         return success(scheduleJobService.page(params));
     }
@@ -51,7 +51,7 @@ public class ScheduleJobController extends WebController {
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("sys:schedule:get")
-    public Result<ScheduleJobEntity> get(@PathVariable("id") Long id) {
+    public Result<ScheduleJob> get(@PathVariable("id") Long id) {
 
         return success(scheduleJobService.get(id));
     }
@@ -59,7 +59,7 @@ public class ScheduleJobController extends WebController {
     @PostMapping
     @ApiOperation("保存")
     @RequiresPermissions("sys:schedule:save")
-    public Result save(@RequestBody ScheduleJobEntity dto) {
+    public Result save(@RequestBody ScheduleJob dto) {
 
         ValidatorUtils.validateEntity(dto, AddGroup.class);
         if (scheduleJobService.save(dto)) {
@@ -71,7 +71,7 @@ public class ScheduleJobController extends WebController {
     @PutMapping
     @ApiOperation("修改")
     @RequiresPermissions("sys:schedule:update")
-    public Result update(@RequestBody ScheduleJobEntity dto) {
+    public Result update(@RequestBody ScheduleJob dto) {
 
         ValidatorUtils.validateEntity(dto, UpdateGroup.class);
 

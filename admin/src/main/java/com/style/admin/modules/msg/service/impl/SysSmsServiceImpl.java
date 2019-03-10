@@ -2,7 +2,7 @@ package com.style.admin.modules.msg.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.style.admin.modules.msg.dao.SysSmsDao;
-import com.style.admin.modules.msg.entity.SysSmsEntity;
+import com.style.admin.modules.msg.entity.SysSms;
 import com.style.admin.modules.msg.service.SysSmsService;
 import com.style.admin.modules.msg.sms.AbstractSmsService;
 import com.style.admin.modules.msg.sms.SmsFactory;
@@ -18,14 +18,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Service
-public class SysSmsServiceImpl extends CrudServiceImpl<SysSmsDao, SysSmsEntity> implements SysSmsService {
+public class SysSmsServiceImpl extends CrudServiceImpl<SysSmsDao, SysSms> implements SysSmsService {
 
 
-    protected QueryWrapper<SysSmsEntity> getWrapper(Map<String, Object> params) {
+    protected QueryWrapper<SysSms> getWrapper(Map<String, Object> params) {
         String mobile = (String) params.get("mobile");
         String status = (String) params.get("status");
 
-        QueryWrapper<SysSmsEntity> wrapper = new QueryWrapper<>();
+        QueryWrapper<SysSms> wrapper = new QueryWrapper<>();
         wrapper.like(StringUtils.isNotBlank(mobile), "mobile", mobile);
         wrapper.eq(StringUtils.isNotBlank(status), "status", status);
 
@@ -53,7 +53,7 @@ public class SysSmsServiceImpl extends CrudServiceImpl<SysSmsDao, SysSmsEntity> 
 
     @Override
     public void save(Integer platform, String mobile, LinkedHashMap<String, String> params, Integer status) {
-        SysSmsEntity sms = new SysSmsEntity();
+        SysSms sms = new SysSms();
         sms.setPlatform(platform);
         sms.setMobile(mobile);
 

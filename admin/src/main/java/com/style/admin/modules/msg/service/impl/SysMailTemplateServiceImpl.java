@@ -3,7 +3,7 @@ package com.style.admin.modules.msg.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.style.admin.modules.msg.dao.SysMailTemplateDao;
 import com.style.admin.modules.msg.email.EmailUtils;
-import com.style.admin.modules.msg.entity.SysMailTemplateEntity;
+import com.style.admin.modules.msg.entity.SysMailTemplate;
 import com.style.admin.modules.msg.service.SysMailTemplateService;
 import com.style.common.constant.ErrorCode;
 import com.style.common.convert.http.json.JsonMapper;
@@ -16,16 +16,16 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 @Service
-public class SysMailTemplateServiceImpl extends CrudServiceImpl<SysMailTemplateDao, SysMailTemplateEntity> implements SysMailTemplateService {
+public class SysMailTemplateServiceImpl extends CrudServiceImpl<SysMailTemplateDao, SysMailTemplate> implements SysMailTemplateService {
 
     @Autowired
     private EmailUtils emailUtils;
 
     @Override
-    public QueryWrapper<SysMailTemplateEntity> getWrapper(Map<String, Object> params) {
+    public QueryWrapper<SysMailTemplate> getWrapper(Map<String, Object> params) {
         String name = (String) params.get("name");
 
-        QueryWrapper<SysMailTemplateEntity> wrapper = new QueryWrapper<>();
+        QueryWrapper<SysMailTemplate> wrapper = new QueryWrapper<>();
         wrapper.like(StringUtils.isNotBlank(name), "name", name);
 
         return wrapper;

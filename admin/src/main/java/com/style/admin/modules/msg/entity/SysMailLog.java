@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_mail_log")
-public class SysMailLogEntity extends BaseEntity {
+public class SysMailLog extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

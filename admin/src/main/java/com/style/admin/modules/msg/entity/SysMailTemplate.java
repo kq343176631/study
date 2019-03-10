@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_mail_template")
-public class SysMailTemplateEntity extends BaseEntity {
+public class SysMailTemplate extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
