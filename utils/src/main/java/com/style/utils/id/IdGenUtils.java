@@ -26,7 +26,7 @@ public class IdGenUtils {
         return String.valueOf(idWorker.nextId());
     }
 
-    public static Long idWorker(){
+    public static Long idWorker() {
         return idWorker.nextId();
     }
 

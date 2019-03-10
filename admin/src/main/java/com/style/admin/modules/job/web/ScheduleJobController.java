@@ -87,7 +87,7 @@ public class ScheduleJobController extends WebController {
     @RequiresPermissions("sys:schedule:delete")
     public Result delete(@RequestBody Long[] ids) {
 
-        if(scheduleJobService.deleteByIds(Arrays.asList(ids))){
+        if (scheduleJobService.deleteByIds(Arrays.asList(ids))) {
             return success();
         }
 

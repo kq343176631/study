@@ -29,9 +29,9 @@ public class JobCommandLineRunner implements CommandLineRunner {
         for (ScheduleJob scheduleJob : scheduleJobList) {
             CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(scheduler, scheduleJob.getId());
             //如果不存在，则创建
-            if(cronTrigger == null) {
+            if (cronTrigger == null) {
                 ScheduleUtils.createScheduleJob(scheduler, scheduleJob);
-            }else {
+            } else {
                 ScheduleUtils.updateScheduleJob(scheduler, scheduleJob);
             }
         }

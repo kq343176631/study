@@ -103,7 +103,7 @@ public class SmsController extends WebController {
     @ApiOperation("删除")
     @RequiresPermissions("sys:sms:all")
     public Result delete(@RequestBody Long[] ids) {
-        
+
         sysSmsService.deleteByIds(Arrays.asList(ids));
 
         return new Result();

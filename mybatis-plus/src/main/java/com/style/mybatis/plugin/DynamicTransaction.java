@@ -1,7 +1,7 @@
 package com.style.mybatis.plugin;
 
-import com.style.mybatis.plugin.dynamic.DynamicDataSourceHolder;
 import com.style.mybatis.plugin.dynamic.DynamicDataSource;
+import com.style.mybatis.plugin.dynamic.DynamicDataSourceHolder;
 import com.style.mybatis.utils.StringUtils;
 import org.apache.ibatis.transaction.Transaction;
 import org.mybatis.spring.transaction.SpringManagedTransaction;

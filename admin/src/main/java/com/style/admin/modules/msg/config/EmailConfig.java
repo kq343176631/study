@@ -16,19 +16,19 @@ public class EmailConfig implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "SMTP")
-    @NotBlank(message="{email.smtp.require}")
+    @NotBlank(message = "{email.smtp.require}")
     private String smtp;
 
     @ApiModelProperty(value = "端口号")
-    @NotNull(message="{email.port.require}")
+    @NotNull(message = "{email.port.require}")
     private Integer port;
 
     @ApiModelProperty(value = "邮箱账号")
-    @NotBlank(message="{email.username.require}")
+    @NotBlank(message = "{email.username.require}")
     private String username;
 
     @ApiModelProperty(value = "邮箱密码")
-    @NotBlank(message="{email.password.require}")
+    @NotBlank(message = "{email.password.require}")
     private String password;
 
     public String getSmtp() {

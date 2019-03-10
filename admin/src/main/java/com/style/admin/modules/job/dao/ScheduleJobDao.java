@@ -8,13 +8,12 @@ import java.util.Map;
 
 /**
  * 定时任务
- *
  */
 @MyBatisPlus
 public interface ScheduleJobDao extends BaseDao<ScheduleJob> {
-	
-	/**
-	 * 批量更新状态
-	 */
-	int updateBatch(Map<String, Object> map);
+
+    /**
+     * 批量更新状态
+     */
+    int updateBatch(Map<String, Object> map);
 }

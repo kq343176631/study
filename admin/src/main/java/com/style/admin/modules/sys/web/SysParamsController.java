@@ -34,7 +34,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("sys/params")
-@Api(tags="参数管理")
+@Api(tags = "参数管理")
 public class SysParamsController extends WebController {
     @Autowired
     private SysParamsService sysParamsService;
@@ -42,14 +42,14 @@ public class SysParamsController extends WebController {
     @GetMapping("page")
     @ApiOperation("分页")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = Constants.PAGE_NO, value = "当前页码，从1开始", paramType = "query", required = true, dataType="int") ,
-        @ApiImplicitParam(name = Constants.PAGE_SIZE, value = "每页显示记录数", paramType = "query",required = true, dataType="int") ,
-        @ApiImplicitParam(name = Constants.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
-        @ApiImplicitParam(name = Constants.ORDER_METHOD, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String") ,
-        @ApiImplicitParam(name = "paramCode", value = "参数编码", paramType = "query", dataType="String")
+            @ApiImplicitParam(name = Constants.PAGE_NO, value = "当前页码，从1开始", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constants.PAGE_SIZE, value = "每页显示记录数", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constants.ORDER_FIELD, value = "排序字段", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = Constants.ORDER_METHOD, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "paramCode", value = "参数编码", paramType = "query", dataType = "String")
     })
     @RequiresPermissions("sys:params:page")
-    public Result<Page> page(@ApiIgnore @RequestParam Map<String, Object> params){
+    public Result<Page> page(@ApiIgnore @RequestParam Map<String, Object> params) {
 
         return success(sysParamsService.page(params));
     }
@@ -90,7 +90,7 @@ public class SysParamsController extends WebController {
     @DeleteMapping
     @ApiOperation("删除")
     @RequiresPermissions("sys:params:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody Long[] ids) {
 
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
@@ -103,7 +103,7 @@ public class SysParamsController extends WebController {
     @GetMapping("export")
     @ApiOperation("导出")
     @RequiresPermissions("sys:params:export")
-    @ApiImplicitParam(name = "paramCode", value = "参数编码", paramType = "query", dataType="String")
+    @ApiImplicitParam(name = "paramCode", value = "参数编码", paramType = "query", dataType = "String")
     public void export(@ApiIgnore @RequestParam Map<String, Object> params, HttpServletResponse response) throws Exception {
 
         List<SysParams> list = sysParamsService.list(params);

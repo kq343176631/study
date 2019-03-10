@@ -18,13 +18,13 @@ public class SmsFactory {
         SmsFactory.sysParamsService = SpringUtils.getBean(SysParamsService.class);
     }
 
-    public static AbstractSmsService build(){
+    public static AbstractSmsService build() {
         //获取短信配置信息
         SmsConfig config = sysParamsService.getValueObject(Constants.SMS_CONFIG_KEY, SmsConfig.class);
 
-        if(config.getPlatform() == Constants.SmsService.ALIYUN.getValue()){
+        if (config.getPlatform() == Constants.SmsService.ALIYUN.getValue()) {
             return new AliyunSmsService(config);
-        }else if(config.getPlatform() == Constants.SmsService.QCLOUD.getValue()){
+        } else if (config.getPlatform() == Constants.SmsService.QCLOUD.getValue()) {
             return new QcloudSmsService(config);
         }
 

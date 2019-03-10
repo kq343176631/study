@@ -12,8 +12,8 @@ import com.style.mybatis.annotation.MyBatisPlus;
 import com.style.mybatis.fatory.DynamicTransactionFactory;
 import com.style.mybatis.injector.CrudSqlInjector;
 import com.style.mybatis.mapper.BaseMapper;
-import com.style.mybatis.plugin.dynamic.DynamicDataSourceInterceptor;
 import com.style.mybatis.plugin.dynamic.DynamicDataSource;
+import com.style.mybatis.plugin.dynamic.DynamicDataSourceInterceptor;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.ExecutorType;
@@ -125,7 +125,7 @@ public class MybatisPlusAutoConfiguration {
 
                 Interceptor[] interceptors = new Interceptor[this.interceptors.length + 1];
 
-                System.arraycopy(this.interceptors,0,interceptors,0,this.interceptors.length);
+                System.arraycopy(this.interceptors, 0, interceptors, 0, this.interceptors.length);
                 // 动态数据源拦截器需要优先执行，故放到最后。
                 interceptors[this.interceptors.length] = new DynamicDataSourceInterceptor();
 

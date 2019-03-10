@@ -14,14 +14,16 @@ public interface SysSmsService extends CrudService<SysSms> {
 
     /**
      * 发送短信
-     * @param mobile   手机号
-     * @param params   短信参数
+     *
+     * @param mobile 手机号
+     * @param params 短信参数
      */
     void send(String mobile, String params);
 
     /**
      * 保存短信发送记录
-     * @param platform   平台
+     *
+     * @param platform 平台
      * @param mobile   手机号
      * @param params   短信参数
      * @param status   发送状态

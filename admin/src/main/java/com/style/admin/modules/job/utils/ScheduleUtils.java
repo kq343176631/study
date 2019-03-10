@@ -1,7 +1,7 @@
 package com.style.admin.modules.job.utils;
 
-import com.style.admin.modules.job.model.ScheduleJobBean;
 import com.style.admin.modules.job.entity.ScheduleJob;
+import com.style.admin.modules.job.model.ScheduleJobBean;
 import com.style.common.constant.Constants;
 import com.style.common.constant.ErrorCode;
 import com.style.common.exception.ValidateException;

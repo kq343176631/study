@@ -21,7 +21,7 @@ import java.util.LinkedHashMap;
  */
 public class QcloudSmsService extends AbstractSmsService {
 
-    public QcloudSmsService(SmsConfig config){
+    public QcloudSmsService(SmsConfig config) {
         this.config = config;
     }
 
@@ -36,8 +36,8 @@ public class QcloudSmsService extends AbstractSmsService {
 
         //短信参数
         ArrayList<String> paramsList = new ArrayList<>();
-        if(MapUtils.isNotEmpty(params)){
-            for(String value : params.values()){
+        if (MapUtils.isNotEmpty(params)) {
+            for (String value : params.values()) {
                 paramsList.add(value);
             }
         }
@@ -49,7 +49,7 @@ public class QcloudSmsService extends AbstractSmsService {
         }
 
         int status = Constants.SUCCESS;
-        if(result.result != 0){
+        if (result.result != 0) {
             status = Constants.FAIL;
         }
 
@@ -57,7 +57,7 @@ public class QcloudSmsService extends AbstractSmsService {
         SysSmsService sysSmsService = SpringUtils.getBean(SysSmsService.class);
         sysSmsService.save(Constants.SmsService.QCLOUD.getValue(), mobile, params, status);
 
-        if(status == Constants.FAIL){
+        if (status == Constants.FAIL) {
             throw new ValidateException(ErrorCode.SEND_SMS_ERROR, result.errMsg);
         }
     }

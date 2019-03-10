@@ -11,14 +11,14 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 @Service
-public class NewsServiceImpl extends CrudServiceImpl<NewsDao,News> implements NewsService {
+public class NewsServiceImpl extends CrudServiceImpl<NewsDao, News> implements NewsService {
 
     @Override
     protected QueryWrapper<News> getWrapper(Map<String, Object> params) {
 
-        String title =  (String)params.get("title");
-        String startDate =  (String)params.get("startDate");
-        String endDate =  (String)params.get("endDate");
+        String title = (String) params.get("title");
+        String startDate = (String) params.get("startDate");
+        String endDate = (String) params.get("endDate");
 
         QueryWrapper<News> wrapper = new QueryWrapper<>();
 

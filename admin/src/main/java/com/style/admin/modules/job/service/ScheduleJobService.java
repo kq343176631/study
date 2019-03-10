@@ -10,23 +10,23 @@ import com.style.common.service.CrudService;
  */
 public interface ScheduleJobService extends CrudService<ScheduleJob> {
 
-	/**
-	 * 批量更新定时任务状态
-	 */
-	int updateBatch(Long[] ids, int status);
-	
-	/**
-	 * 立即执行
-	 */
-	void run(Long[] ids);
-	
-	/**
-	 * 暂停运行
-	 */
-	void pause(Long[] ids);
-	
-	/**
-	 * 恢复运行
-	 */
-	void resume(Long[] ids);
+    /**
+     * 批量更新定时任务状态
+     */
+    int updateBatch(Long[] ids, int status);
+
+    /**
+     * 立即执行
+     */
+    void run(Long[] ids);
+
+    /**
+     * 暂停运行
+     */
+    void pause(Long[] ids);
+
+    /**
+     * 恢复运行
+     */
+    void resume(Long[] ids);
 }

@@ -89,7 +89,7 @@ public interface CrudService<T> extends BaseService<T> {
      *
      * @param params params
      */
-    List<T> list(Map<String,Object> params);
+    List<T> list(Map<String, Object> params);
 
     /**
      * 根据 wrapper 分页查询

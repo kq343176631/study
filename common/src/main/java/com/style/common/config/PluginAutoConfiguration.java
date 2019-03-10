@@ -1,7 +1,6 @@
 package com.style.common.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.style.mybatis.plugin.scope.DataScopeInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
