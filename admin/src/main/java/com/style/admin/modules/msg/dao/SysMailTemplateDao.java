@@ -2,12 +2,12 @@ package com.style.admin.modules.msg.dao;
 
 import com.style.admin.modules.msg.entity.SysMailTemplate;
 import com.style.common.dao.BaseDao;
-import org.apache.ibatis.annotations.Mapper;
+import com.style.mybatis.annotation.MyBatisPlus;
 
 /**
  * 邮件模板
  */
-@Mapper
+@MyBatisPlus
 public interface SysMailTemplateDao extends BaseDao<SysMailTemplate> {
 
 }

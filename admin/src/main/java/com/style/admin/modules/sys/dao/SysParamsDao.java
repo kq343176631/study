@@ -2,7 +2,7 @@ package com.style.admin.modules.sys.dao;
 
 import com.style.admin.modules.sys.entity.SysParams;
 import com.style.common.dao.BaseDao;
-import org.apache.ibatis.annotations.Mapper;
+import com.style.mybatis.annotation.MyBatisPlus;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 参数管理
  */
-@Mapper
+@MyBatisPlus
 public interface SysParamsDao extends BaseDao<SysParams> {
     /**
      * 根据参数编码，查询value
