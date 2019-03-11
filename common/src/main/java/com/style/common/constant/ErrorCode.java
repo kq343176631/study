@@ -78,4 +78,6 @@ public interface ErrorCode {
 
     int SEND_SMS_ERROR = 10025;
 
+    int OSS_UPLOAD_FILE_ERROR = 10024;
+
 }

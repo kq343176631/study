@@ -1,6 +1,9 @@
-package com.style.admin.modules.msg.sms;
+package com.style.admin.modules.msg.factory;
 
 import com.style.admin.modules.msg.config.SmsConfig;
+import com.style.admin.modules.msg.sms.AbstractSmsService;
+import com.style.admin.modules.msg.sms.AliyunSmsService;
+import com.style.admin.modules.msg.sms.QcloudSmsService;
 import com.style.admin.modules.sys.service.SysParamsService;
 import com.style.common.constant.Constants;
 import com.style.utils.core.SpringUtils;

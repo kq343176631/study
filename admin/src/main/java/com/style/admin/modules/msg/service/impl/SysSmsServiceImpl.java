@@ -5,7 +5,7 @@ import com.style.admin.modules.msg.dao.SysSmsDao;
 import com.style.admin.modules.msg.entity.SysSms;
 import com.style.admin.modules.msg.service.SysSmsService;
 import com.style.admin.modules.msg.sms.AbstractSmsService;
-import com.style.admin.modules.msg.sms.SmsFactory;
+import com.style.admin.modules.msg.factory.SmsFactory;
 import com.style.common.constant.ErrorCode;
 import com.style.common.convert.http.json.JsonMapper;
 import com.style.common.exception.ValidateException;
