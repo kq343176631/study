@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_oss")
-public class SysOssEntity extends BaseEntity {
+public class SysOss extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

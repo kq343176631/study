@@ -1,6 +1,6 @@
 package com.style.admin.modules.oss.dao;
 
-import com.style.admin.modules.oss.entity.SysOssEntity;
+import com.style.admin.modules.oss.entity.SysOss;
 import com.style.common.dao.BaseDao;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -8,6 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
  * 文件上传
  */
 @Mapper
-public interface SysOssDao extends BaseDao<SysOssEntity> {
+public interface SysOssDao extends BaseDao<SysOss> {
 	
 }

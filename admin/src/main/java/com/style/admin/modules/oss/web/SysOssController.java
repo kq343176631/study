@@ -5,7 +5,7 @@ import com.style.admin.common.group.AliyunGroup;
 import com.style.admin.common.group.QcloudGroup;
 import com.style.admin.common.group.QiniuGroup;
 import com.style.admin.modules.oss.config.CloudStorageConfig;
-import com.style.admin.modules.oss.entity.SysOssEntity;
+import com.style.admin.modules.oss.entity.SysOss;
 import com.style.admin.modules.oss.factory.OSSFactory;
 import com.style.admin.modules.oss.service.SysOssService;
 import com.style.admin.modules.sys.service.SysParamsService;
@@ -99,7 +99,7 @@ public class SysOssController extends WebController {
         String url = OSSFactory.build().uploadSuffix(file.getBytes(), extension);
 
         //保存文件信息
-        SysOssEntity ossEntity = new SysOssEntity();
+        SysOss ossEntity = new SysOss();
         ossEntity.setUrl(url);
         ossEntity.setCreateDate(new Date());
         sysOssService.save(ossEntity);
@@ -114,7 +114,7 @@ public class SysOssController extends WebController {
     @ApiOperation(value = "删除")
     @RequiresPermissions("sys:oss:all")
     public Result delete(@RequestBody Long[] ids) {
-        
+
         sysOssService.deleteByIds(Arrays.asList(ids));
 
         return new Result();
