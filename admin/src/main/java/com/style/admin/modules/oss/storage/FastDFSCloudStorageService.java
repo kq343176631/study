@@ -26,12 +26,13 @@ public class FastDFSCloudStorageService extends AbstractCloudStorageService {
     }
 
     @Override
-    public String upload(byte[] data, String path) {
-        return upload(new ByteArrayInputStream(data), path);
+    public String upload(byte[] data, String suffix) {
+        return upload(new ByteArrayInputStream(data), suffix);
     }
 
     @Override
     public String upload(InputStream inputStream, String suffix) {
+
         StorePath storePath;
         try {
             storePath = defaultGenerateStorageClient.uploadFile("group1", inputStream, inputStream.available(), suffix);
@@ -40,15 +41,5 @@ public class FastDFSCloudStorageService extends AbstractCloudStorageService {
         }
 
         return config.getFastdfsDomain() + "/" + storePath.getPath();
-    }
-
-    @Override
-    public String uploadSuffix(byte[] data, String suffix) {
-        return upload(data, suffix);
-    }
-
-    @Override
-    public String uploadSuffix(InputStream inputStream, String suffix) {
-        return upload(inputStream, suffix);
     }
 }

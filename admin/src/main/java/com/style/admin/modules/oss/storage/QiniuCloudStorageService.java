@@ -17,7 +17,9 @@ import java.io.InputStream;
  * 七牛云存储
  */
 public class QiniuCloudStorageService extends AbstractCloudStorageService {
+
     private UploadManager uploadManager;
+    
     private String token;
 
     public QiniuCloudStorageService(CloudStorageConfig config) {
@@ -35,7 +37,8 @@ public class QiniuCloudStorageService extends AbstractCloudStorageService {
     }
 
     @Override
-    public String upload(byte[] data, String path) {
+    public String upload(byte[] data, String suffix) {
+        String path = getPath(config.getQiniuPrefix(), suffix);
         try {
             Response res = uploadManager.put(data, path, token);
             if (!res.isOK()) {
@@ -49,22 +52,12 @@ public class QiniuCloudStorageService extends AbstractCloudStorageService {
     }
 
     @Override
-    public String upload(InputStream inputStream, String path) {
+    public String upload(InputStream inputStream, String suffix) {
         try {
             byte[] data = IOUtils.toByteArray(inputStream);
-            return this.upload(data, path);
+            return this.upload(data, suffix);
         } catch (IOException e) {
             throw new ValidateException(ErrorCode.OSS_UPLOAD_FILE_ERROR, e, "");
         }
-    }
-
-    @Override
-    public String uploadSuffix(byte[] data, String suffix) {
-        return upload(data, getPath(config.getQiniuPrefix(), suffix));
-    }
-
-    @Override
-    public String uploadSuffix(InputStream inputStream, String suffix) {
-        return upload(inputStream, getPath(config.getQiniuPrefix(), suffix));
     }
 }

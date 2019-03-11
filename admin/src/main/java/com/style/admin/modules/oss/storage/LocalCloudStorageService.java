@@ -12,8 +12,6 @@ import java.io.InputStream;
 
 /**
  * 本地上传
- *
- * @author Mark sunlightcs@gmail.com
  */
 public class LocalCloudStorageService extends AbstractCloudStorageService {
 
@@ -22,12 +20,13 @@ public class LocalCloudStorageService extends AbstractCloudStorageService {
     }
 
     @Override
-    public String upload(byte[] data, String path) {
-        return upload(new ByteArrayInputStream(data), path);
+    public String upload(byte[] data, String suffix) {
+        return upload(new ByteArrayInputStream(data), suffix);
     }
 
     @Override
-    public String upload(InputStream inputStream, String path) {
+    public String upload(InputStream inputStream, String suffix) {
+        String path = getPath(config.getLocalPrefix(), suffix);
         File file = new File(config.getLocalPath() + File.separator + path);
         try {
             FileUtils.copyInputStreamToFile(inputStream, file);
@@ -35,15 +34,5 @@ public class LocalCloudStorageService extends AbstractCloudStorageService {
             throw new ValidateException(ErrorCode.OSS_UPLOAD_FILE_ERROR, e, "");
         }
         return config.getLocalDomain() + "/" + path;
-    }
-
-    @Override
-    public String uploadSuffix(byte[] data, String suffix) {
-        return upload(data, getPath(config.getLocalPrefix(), suffix));
-    }
-
-    @Override
-    public String uploadSuffix(InputStream inputStream, String suffix) {
-        return upload(inputStream, getPath(config.getLocalPrefix(), suffix));
     }
 }

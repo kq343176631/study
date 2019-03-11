@@ -18,6 +18,7 @@ public final class OSSFactory {
     }
 
     public static AbstractCloudStorageService build() {
+
         //获取云存储配置信息
         CloudStorageConfig config = sysParamsService.getValueObject(Constants.CLOUD_STORAGE_CONFIG_KEY, CloudStorageConfig.class);
 

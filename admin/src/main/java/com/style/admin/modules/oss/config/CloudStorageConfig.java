@@ -17,12 +17,16 @@ import java.io.Serializable;
 @Data
 @ApiModel(value = "云存储配置信息")
 public class CloudStorageConfig implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "类型 1：七牛  2：阿里云  3：腾讯云   4：FastDFS   5：本地上传")
     @Range(min = 1, max = 5, message = "{oss.type.range}")
     private Integer type;
 
+    /**
+     * 七牛云存储配置
+     */
     @ApiModelProperty(value = "七牛绑定的域名")
     @NotBlank(message = "{qiniu.domain.require}", groups = QiniuGroup.class)
     @URL(message = "{qiniu.domain.url}", groups = QiniuGroup.class)
@@ -43,6 +47,9 @@ public class CloudStorageConfig implements Serializable {
     @NotBlank(message = "{qiniu.bucketname.require}", groups = QiniuGroup.class)
     private String qiniuBucketName;
 
+    /**
+     * 阿里云存储配置
+     */
     @ApiModelProperty(value = "阿里云绑定的域名")
     @NotBlank(message = "{aliyun.domain.require}", groups = AliyunGroup.class)
     @URL(message = "{aliyun.domain.url}", groups = AliyunGroup.class)
@@ -67,6 +74,9 @@ public class CloudStorageConfig implements Serializable {
     @NotBlank(message = "{aliyun.bucketname.require}", groups = AliyunGroup.class)
     private String aliyunBucketName;
 
+    /**
+     * 腾讯云存储配置
+     */
     @ApiModelProperty(value = "腾讯云绑定的域名")
     @NotBlank(message = "{qcloud.domain.require}", groups = QcloudGroup.class)
     @URL(message = "{qcloud.domain.url}", groups = QcloudGroup.class)
@@ -95,11 +105,17 @@ public class CloudStorageConfig implements Serializable {
     @NotBlank(message = "{qcloud.region.require}", groups = QcloudGroup.class)
     private String qcloudRegion;
 
+    /**
+     * FastDFS云存储配置
+     */
     @ApiModelProperty(value = "FastDFS绑定的域名")
     @NotBlank(message = "{fastdfs.domain.require}", groups = FastDFSGroup.class)
     @URL(message = "{fastdfs.domain.url}", groups = FastDFSGroup.class)
     private String fastdfsDomain;
 
+    /**
+     * 本地云存储配置
+     */
     @ApiModelProperty(value = "本地上传绑定的域名")
     @NotBlank(message = "{local.domain.require}", groups = LocalGroup.class)
     @URL(message = "{local.domain.url}", groups = LocalGroup.class)

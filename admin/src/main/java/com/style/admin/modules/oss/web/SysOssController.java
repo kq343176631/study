@@ -89,14 +89,14 @@ public class SysOssController extends WebController {
     @PostMapping("upload")
     @ApiOperation(value = "上传文件")
     @RequiresPermissions("sys:oss:all")
-    public Result<Map<String, Object>> upload(@RequestParam("file") MultipartFile file) throws Exception {
+    public Result upload(@RequestParam("file") MultipartFile file) throws Exception {
         if (file.isEmpty()) {
             return error(ErrorCode.UPLOAD_FILE_EMPTY);
         }
 
         //上传文件
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-        String url = OSSFactory.build().uploadSuffix(file.getBytes(), extension);
+        String url = OSSFactory.build().upload(file.getBytes(), extension);
 
         //保存文件信息
         SysOss ossEntity = new SysOss();

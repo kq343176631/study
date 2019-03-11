@@ -39,12 +39,14 @@ public class QcloudCloudStorageService extends AbstractCloudStorageService {
     }
 
     @Override
-    public String upload(byte[] data, String path) {
-        return upload(new ByteArrayInputStream(data), path);
+    public String upload(byte[] data, String suffix) {
+        return upload(new ByteArrayInputStream(data), suffix);
     }
 
     @Override
-    public String upload(InputStream inputStream, String path) {
+    public String upload(InputStream inputStream, String suffix) {
+
+        String path = getPath(config.getQcloudPrefix(), suffix);
         try {
             COSClient client = new COSClient(credentials, clientConfig);
 
@@ -63,15 +65,5 @@ public class QcloudCloudStorageService extends AbstractCloudStorageService {
         }
 
         return config.getQcloudDomain() + "/" + path;
-    }
-
-    @Override
-    public String uploadSuffix(byte[] data, String suffix) {
-        return upload(data, getPath(config.getQcloudPrefix(), suffix));
-    }
-
-    @Override
-    public String uploadSuffix(InputStream inputStream, String suffix) {
-        return upload(inputStream, getPath(config.getQcloudPrefix(), suffix));
     }
 }
