@@ -1,0 +1,81 @@
+
+#=========================================================#
+#================= Cache Common settings =================#
+#=========================================================#
+
+spring:
+  cache:
+    j2cache:
+      cache_names: sys_cache,sys_session,sys_user
+      broadcast:
+        cache_clean_mode: passive
+        config_xml: /config/network.xml
+        channel:
+          name: j2cache_channel
+        provider_class: com.style.cache.redis.SpringRedisPubSubPolicy
+        config_section: broadcast
+      l1_cache:
+        provider_class: com.style.cache.caffeine.CaffeineProvider
+        config_section: caffeine
+      l2_cache:
+        provider_class: com.style.cache.redis.SpringRedisProvider
+        config_section: redis
+      serialization : fst
+      sync_ttl_to_redis: true
+      default_cache_null_object: true
+#=========================================================#
+#=================== L1Cache settings ====================#
+#=========================================================#
+    caffeine:
+      default: initialCapacity=1000,maximumSize=3000,expireAfterWrite=30m
+      sys-user: initialCapacity=1000,maximumSize=3000,expireAfterWrite=30m
+      sys-session: initialCapacity=1000,maximumSize=3000,expireAfterWrite=30m
+#=========================================================#
+#=================== L2Cache settings ====================#
+#=========================================================#
+    redis:
+      namespace: style   # redis cache namespace optional, default[j2cache]
+      mode: single
+      expire: 30      # cache expire time , unit is minutes
+      storage: hash   #redis storage mode (generic|hash)
+      scheme: redis
+      hosts: 192.168.1.11:6379
+      timeout: 2000
+      channel:
+        name: j2cache   # redis pub/sub channel name
+        host:   # redis pub/sub server (using redis.hosts when empty)
+      password:
+      database: 0
+      sentinelMasterId: 192.168.1.10:6379
+      pool:
+        maxTotal: 100
+        maxIdle: 10
+        minIdle: 1
+        maxWaitMillis: 5000
+        minEvictableIdleTimeMillis: 60000
+        numTestsPerEvictionRun: 10
+        lifo: false
+        softMinEvictableIdleTimeMillis: 10
+        testOnBorrow: true
+        testOnReturn: false
+        testWhileIdle: true
+        timeBetweenEvictionRunsMillis: 300000
+        blockWhenExhausted: false
+        jmxEnabled: false
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
