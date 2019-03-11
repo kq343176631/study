@@ -9,9 +9,7 @@ import com.style.common.constant.Constants;
 import com.style.utils.core.SpringUtils;
 
 /**
- * 短信Factory
- *
- * @author Mark sunlightcs@gmail.com
+ * Sms Factory
  */
 public class SmsFactory {
 
