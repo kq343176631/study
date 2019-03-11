@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
-public class LogOperationAspect {
+public class OpsLogAspect {
 
     //@Autowired
     private SysLogOperationService sysLogOperationService;
