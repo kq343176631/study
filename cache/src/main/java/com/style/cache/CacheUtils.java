@@ -58,7 +58,7 @@ public class CacheUtils {
      * @return object
      */
     public static Object get(String cacheName, String key) {
-        return getCache(cacheName);
+        return getCache(cacheName).get(key).get();
     }
 
     /**
