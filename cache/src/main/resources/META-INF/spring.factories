@@ -1,3 +1,7 @@
+
+org.springframework.boot.env.PropertySourceLoader=\
+com.style.utils.io.PropertyLoader
+
 # AutoConfiguration
 
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\

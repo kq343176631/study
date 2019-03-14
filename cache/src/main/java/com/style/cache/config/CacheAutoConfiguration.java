@@ -43,9 +43,6 @@ public class CacheAutoConfiguration {
 
     /**
      * 缓存高速通道
-     *
-     * @param j2CacheConfig j2CacheConfig
-     * @return CacheChannel
      */
     @Bean("cacheChannel")
     @DependsOn({"springUtils", "redisTemplate", "j2CacheConfig", "j2CacheRedisMessageListenerContainer"})
@@ -74,10 +71,6 @@ public class CacheAutoConfiguration {
 
     /**
      * Redis缓存管理器
-     *
-     * @param redisConnectionFactory redisConnectionFactory
-     * @param j2CacheValueSerializer j2CacheValueSerializer
-     * @return redisCacheManager
      */
     @Bean("redisCacheManager")
     @DependsOn({"redisConnectionFactory", "j2CacheValueSerializer"})
@@ -101,9 +94,6 @@ public class CacheAutoConfiguration {
 
     /**
      * 两级缓存管理
-     *
-     * @param cacheChannel cacheChannel
-     * @return SpringJ2CacheManager
      */
     @Bean("springJ2CacheManager")
     @Primary
