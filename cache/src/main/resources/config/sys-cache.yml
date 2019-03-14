@@ -51,7 +51,7 @@ redis:
     host:   # redis pub/sub server (using redis.hosts when empty)
   password:
   database: 0
-  sentinelMasterId: 192.168.1.10:6379
+  sentinelMasterId: 192.168.1.11:6379
   pool:
     maxTotal: 100
     maxIdle: 10
