@@ -6,10 +6,6 @@
 j2cache:
   cache_names: sys_cache,sys_session,sys_user
   broadcast:
-    cache_clean_mode: passive
-    config_xml: /config/network.xml
-    channel:
-      name: j2cache_channel
     provider_class: com.style.cache.redis.SpringRedisPubSubPolicy
     config_section: broadcast
   l1_cache:
@@ -21,6 +17,19 @@ j2cache:
   serialization : fst
   sync_ttl_to_redis: true
   default_cache_null_object: true
+
+
+
+#=========================================================#
+#================== broadcast settings ===================#
+#=========================================================#
+
+broadcast:
+  cache_clean_mode: passive
+  configXml: /configs/network.xml
+  channel:
+    name: j2cache_channel
+
 
 
 #=========================================================#
@@ -67,20 +76,4 @@ redis:
     timeBetweenEvictionRunsMillis: 300000
     blockWhenExhausted: false
     jmxEnabled: false
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

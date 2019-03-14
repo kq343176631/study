@@ -57,9 +57,9 @@ public class PropertyUtils {
         public static void releadInstance() {
             // 获取平台及模块相关的配置文件
             Set<String> configSet = SetUtils.newLinkedHashSet();
-            Resource[] resources = ResourceUtils.getResources("classpath*:/configs/sys-*.*");
+            Resource[] resources = ResourceUtils.getResources("classpath*:/config/sys-*.*");
             for (Resource resource : resources) {
-                configSet.add("classpath:configs/" + resource.getFilename());
+                configSet.add("classpath:config/" + resource.getFilename());
             }
             // 获取全局设置默认的配置文件（以下是支持环境配置的属性文件）
             Set<String> set = SetUtils.newLinkedHashSet();

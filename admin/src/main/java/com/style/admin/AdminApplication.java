@@ -11,7 +11,8 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication(exclude = {
         com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration.class,
         org.activiti.spring.boot.SecurityAutoConfiguration.class,
-        org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class
+        org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
+        org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration.class
 })
 public class AdminApplication extends SpringBootServletInitializer {
 
