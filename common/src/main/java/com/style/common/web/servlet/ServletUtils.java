@@ -6,7 +6,9 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,6 +66,23 @@ public class ServletUtils {
         defaultLanguage = request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
 
         return defaultLanguage;
+    }
+
+    public static boolean isStaticFile(String requestURI) {
+
+        return true;
+    }
+
+    public static boolean isAjaxRequest(HttpServletRequest request) {
+        return false;
+    }
+
+    public static void renderString(HttpServletResponse response, String aTrue, String property) {
+    }
+
+    public static Map<String,Object> getExtParams(ServletRequest request) {
+
+        return null;
     }
 }
 

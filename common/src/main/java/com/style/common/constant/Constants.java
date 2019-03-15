@@ -87,6 +87,14 @@ public interface Constants {
      */
     String MAIL_CONFIG_KEY = "MAIL_CONFIG_KEY";
 
+    //===========================================================//
+    //===============         系  统  安  全      ================//
+    //===========================================================//
+
+    int SALT_SIZE = 8;
+    int HASH_INTERATIONS = 1024;
+    String HASH_ALGORITHM = "SHA-1";
+
 
     /**
      * 定时任务状态
