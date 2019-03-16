@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.style.study</groupId>
+        <groupId>com.style</groupId>
         <artifactId>parent</artifactId>
         <version>1.0.0</version>
         <relativePath>../parent/pom.xml</relativePath>
@@ -20,7 +20,7 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.style.study</groupId>
+            <groupId>com.style</groupId>
             <artifactId>common</artifactId>
             <version>1.0.0</version>
         </dependency>

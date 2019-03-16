@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.style.study</groupId>
+        <groupId>com.style</groupId>
         <artifactId>parent</artifactId>
         <version>1.0.0</version>
         <relativePath>../parent/pom.xml</relativePath>
@@ -26,14 +26,14 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.style.study</groupId>
+            <groupId>com.style</groupId>
             <artifactId>utils</artifactId>
             <version>1.0.0</version>
         </dependency>
 
         <!-- mybatis-plus -->
         <dependency>
-            <groupId>com.style.study</groupId>
+            <groupId>com.style</groupId>
             <artifactId>mybatis-plus</artifactId>
             <version>1.0.0</version>
         </dependency>

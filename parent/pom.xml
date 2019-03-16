@@ -10,7 +10,7 @@
         <version>2.0.6.RELEASE</version>
     </parent>
 
-    <groupId>com.style.study</groupId>
+    <groupId>com.style</groupId>
     <artifactId>parent</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
