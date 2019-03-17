@@ -1,4 +1,4 @@
-package com.style.admin.modules.security.config;
+package com.style.admin.modules.security.filter;
 
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.Ini.Section;

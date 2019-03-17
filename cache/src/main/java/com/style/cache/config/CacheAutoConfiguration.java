@@ -109,9 +109,4 @@ public class CacheAutoConfiguration {
         return j2CacheManager;
     }
 
-    /*@Bean("shiroCacheManager")
-    @DependsOn("cacheChannel")
-    public CacheManager ShiroJ2CacheManager(CacheChannel cacheChannel) {
-        return new ShiroJ2CacheManager(cacheChannel);
-    }*/
 }

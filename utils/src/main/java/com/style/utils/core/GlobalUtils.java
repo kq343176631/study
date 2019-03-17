@@ -49,6 +49,11 @@ public class GlobalUtils {
         return null;
     }
 
+    public static String getAdminPath() {
+
+        return null;
+    }
+
     public String getProperty(String key, String defaultValue) {
         String value = getProperty(key);
         return value != null ? value : defaultValue;
