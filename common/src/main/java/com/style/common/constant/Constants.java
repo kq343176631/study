@@ -95,11 +95,6 @@ public interface Constants {
     int HASH_INTERATIONS = 1024;
     String HASH_ALGORITHM = "SHA-1";
 
-    /**
-     * token header
-     */
-    String TOKEN_HEADER = "token";
-
 
     /**
      * 定时任务状态
