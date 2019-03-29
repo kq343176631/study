@@ -9,13 +9,12 @@ import com.style.utils.lang.ObjectUtils;
 import net.oschina.j2cache.CacheChannel;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
 /**
  * 自定义会话管理配置
  */
-@Configuration
+//@Configuration
 public class SessionAutoConfiguration {
 
     public SessionAutoConfiguration() {

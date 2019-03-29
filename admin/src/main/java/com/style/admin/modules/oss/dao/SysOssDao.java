@@ -9,5 +9,5 @@ import com.style.mybatis.annotation.MyBatisPlus;
  */
 @MyBatisPlus
 public interface SysOssDao extends BaseDao<SysOss> {
-	
+
 }

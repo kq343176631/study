@@ -20,7 +20,6 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.web.filter.authc.AnonymousFilter;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
 import javax.servlet.Filter;
@@ -30,7 +29,7 @@ import java.util.Map;
 /**
  * 系统安全管理配置
  */
-@Configuration
+//@Configuration
 public class ShiroAutoConfiguration {
 
     public ShiroAutoConfiguration() {
@@ -68,7 +67,7 @@ public class ShiroAutoConfiguration {
      * 定义Shiro安全管理配置
      */
     @Bean("webSecurityManager")
-    @DependsOn({"formAuthorizingRealm","casAuthorizingRealm", "sessionManager", "shiroCacheManager"})
+    @DependsOn({"formAuthorizingRealm", "casAuthorizingRealm", "sessionManager", "shiroCacheManager"})
     public WebSecurityManager webSecurityManager(
             FormAuthorizingRealm formAuthorizingRealm,
             CasAuthorizingRealm casAuthorizingRealm,

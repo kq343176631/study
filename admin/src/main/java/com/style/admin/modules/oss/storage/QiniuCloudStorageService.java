@@ -19,7 +19,7 @@ import java.io.InputStream;
 public class QiniuCloudStorageService extends AbstractCloudStorageService {
 
     private UploadManager uploadManager;
-    
+
     private String token;
 
     public QiniuCloudStorageService(CloudStorageConfig config) {

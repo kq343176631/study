@@ -2,9 +2,7 @@ package com.style.admin.modules.log;
 
 import com.style.admin.modules.log.entity.SysLog;
 import com.style.admin.modules.log.service.SysLogService;
-import com.style.common.convert.http.json.JsonMapper;
 import com.style.common.web.servlet.ServletUtils;
-import com.style.utils.collect.MapUtils;
 import com.style.utils.core.SpringUtils;
 import com.style.utils.lang.ExceptionUtils;
 import com.style.utils.network.IpUtils;
@@ -13,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 /**
  * 日志工具类
@@ -40,10 +37,10 @@ public class LogUtils {
             log.setRequestUri(request.getRequestURI());
             log.setRequestMethod(request.getMethod());
 
-            Map<String, String> params = ServletUtils.getParameterMap(request);
-            if (MapUtils.isNotEmpty(params)) {
+            //Map<String, String> params = ServletUtils.getParameterMap(request);
+            /*if (MapUtils.isNotEmpty(params)) {
                 log.setRequestParams(JsonMapper.toJson(params));
-            }
+            }*/
             //异常信息
             log.setErrorInfo(ExceptionUtils.getStackTraceAsString(ex));
             //保存

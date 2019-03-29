@@ -143,13 +143,13 @@ public class CasAuthorizingRealm extends BaseAuthorizingRealm {
                     try {
                         //EmpUser empUser = new EmpUser();
                         //empUser.setIsNewRecord(true);
-                       // empUser.setMobile(user.getMobile());
+                        // empUser.setMobile(user.getMobile());
                         //empUser.setEmail(user.getEmail());
                         //empUser.setPhone(user.getPhone());
                         // empUser.getEmployee().getCompany().setCompanyCode(CodecUtils
-                                //.decodeUrl(ObjectUtils.toString(params.get("companyCode"))));
+                        //.decodeUrl(ObjectUtils.toString(params.get("companyCode"))));
                         //empUser.getEmployee().getOffice().setOfficeCode(CodecUtils
-                                //.decodeUrl(ObjectUtils.toString(params.get("officeCode"))));
+                        //.decodeUrl(ObjectUtils.toString(params.get("officeCode"))));
                         //getEmpUserService().save(empUser);
                     } catch (ValidationException ve) {
                         throw new AuthenticationException("msg:" + ve.getMessage());
