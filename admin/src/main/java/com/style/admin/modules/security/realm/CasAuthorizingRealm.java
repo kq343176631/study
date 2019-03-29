@@ -4,7 +4,7 @@ import com.style.admin.modules.security.authc.CasToken;
 import com.style.admin.modules.security.authc.LoginInfo;
 import com.style.admin.modules.security.cas.CasCreateUser;
 import com.style.admin.modules.security.cas.CasOutHandler;
-import com.style.admin.modules.sys.entity.User;
+import com.style.admin.modules.sys.entity.SysUser;
 import com.style.admin.modules.sys.utils.UserUtils;
 import com.style.common.web.servlet.ServletUtils;
 import com.style.utils.collect.MapUtils;
@@ -113,15 +113,15 @@ public class CasAuthorizingRealm extends BaseAuthorizingRealm {
     public void onLogoutSuccess(LoginInfo loginInfo, HttpServletRequest request) {
         super.onLogoutSuccess(loginInfo, request);
         // 记录用户退出日志
-        User user = UserUtils.get(loginInfo.getId());
+        SysUser user = UserUtils.get(loginInfo.getId());
         //LogUtils.saveLog(user, request, "系统退出", Log.TYPE_LOGIN_LOGOUT);
     }
 
     /**
      * 获取登录信息
      */
-    private User getUserInfo(String loginName, Map<String, Object> params) {
-        User user = UserUtils.getUserByLoginName(loginName);
+    private SysUser getUserInfo(String loginName, Map<String, Object> params) {
+        SysUser user = UserUtils.getUserByLoginName(loginName);
         if (user == null) {
             // 如果允许客户端创建账号，则创建账号
             if (ObjectUtils.toBoolean(params.get("isAllowClientCreateUser"))) {
@@ -137,7 +137,7 @@ public class CasAuthorizingRealm extends BaseAuthorizingRealm {
                 //user.setUserType(CodecUtils.decodeUrl(ObjectUtils.toString(params.get("userType"))));
 
                 // 如果是员工类型，则平台自动创建
-                if (User.USER_TYPE_EMPLOYEE.equals(user.getUserType())) {
+                if (SysUser.USER_TYPE_EMPLOYEE.equals(user.getUserType())) {
 
                     // 保存员工和用户
                     try {

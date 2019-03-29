@@ -1,9 +1,9 @@
 package com.style.admin.modules.security.cas;
 
-import com.style.admin.modules.sys.entity.User;
+import com.style.admin.modules.sys.entity.SysUser;
 
 import java.util.Map;
 
 public interface CasCreateUser {
-    void createUser(User user, Map<String, Object> attrs);
+    void createUser(SysUser user, Map<String, Object> attrs);
 }

@@ -1,6 +1,6 @@
 package com.style.admin.modules.sys.entity;
 
-public class User {
+public class SysUser {
     public static final String USER_TYPE_EMPLOYEE = "";
 
     public String getId() {

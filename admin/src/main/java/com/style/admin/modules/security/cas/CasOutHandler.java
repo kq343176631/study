@@ -1,7 +1,7 @@
 package com.style.admin.modules.security.cas;
 
 import com.style.admin.modules.security.authc.LoginInfo;
-import com.style.admin.modules.sys.entity.User;
+import com.style.admin.modules.sys.entity.SysUser;
 import com.style.common.constant.Constants;
 import com.style.utils.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -76,7 +76,7 @@ public final class CasOutHandler {
      * @param logoutRequest logoutRequest
      * @return User
      */
-    public User destroySession(HttpServletRequest request, String logoutRequest) {
+    public SysUser destroySession(HttpServletRequest request, String logoutRequest) {
         /*if (StringUtils.isBlank(logoutRequest)) {
             logoutRequest = CommonUtils.safeGetParameter(request, this.logoutParameterName);
         }

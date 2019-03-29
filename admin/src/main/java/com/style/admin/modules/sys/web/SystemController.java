@@ -1,6 +1,6 @@
 package com.style.admin.modules.sys.web;
 
-import com.style.admin.modules.sys.entity.System;
+import com.style.admin.modules.sys.entity.SysInfo;
 import com.style.common.model.Result;
 import com.sun.management.OperatingSystemMXBean;
 import io.swagger.annotations.Api;
@@ -23,11 +23,11 @@ public class SystemController {
 
     @GetMapping("sys/info")
     @ApiOperation("系统信息")
-    public Result<System> info() {
+    public Result<SysInfo> info() {
 
         OperatingSystemMXBean osmx = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 
-        System dto = new System();
+        SysInfo dto = new SysInfo();
         dto.setSysTime(java.lang.System.currentTimeMillis());
         dto.setOsName(java.lang.System.getProperty("os.name"));
         dto.setOsArch(java.lang.System.getProperty("os.arch"));

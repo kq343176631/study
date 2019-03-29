@@ -1,18 +1,18 @@
 package com.style.admin.modules.sys.utils;
 
-import com.style.admin.modules.sys.entity.Menu;
-import com.style.admin.modules.sys.entity.User;
+import com.style.admin.modules.sys.entity.SysMenu;
+import com.style.admin.modules.sys.entity.SysUser;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
 import java.util.List;
 
 public class UserUtils {
-    public static List<Menu> getUserMenuList() {
+    public static List<SysMenu> getUserMenuList() {
         return null;
     }
 
-    public static User getUserByLoginName(String name) {
+    public static SysUser getUserByLoginName(String name) {
 
         return null;
     }
@@ -26,10 +26,10 @@ public class UserUtils {
         return null;
     }
 
-    public static void updateLoginInfo(User user) {
+    public static void updateLoginInfo(SysUser user) {
     }
 
-    public static User get(String id) {
+    public static SysUser get(String id) {
         return null;
     }
 }

@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  */
 @Data
 @ApiModel(value = "系统数据")
-public class System implements Serializable {
+public class SysInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long sysTime;

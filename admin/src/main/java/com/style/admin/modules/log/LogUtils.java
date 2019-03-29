@@ -1,6 +1,6 @@
 package com.style.admin.modules.log;
 
-import com.style.admin.modules.log.entity.SysLog;
+import com.style.admin.modules.log.entity.SysLogError;
 import com.style.admin.modules.log.service.SysLogService;
 import com.style.common.web.servlet.ServletUtils;
 import com.style.utils.core.SpringUtils;
@@ -26,7 +26,7 @@ public class LogUtils {
      */
     public static void saveSysLog(Exception ex) {
 
-        SysLog log = new SysLog();
+        SysLogError log = new SysLogError();
 
         HttpServletRequest request = ServletUtils.getHttpServletRequest();
 

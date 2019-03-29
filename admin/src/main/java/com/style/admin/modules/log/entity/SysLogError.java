@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_log_error")
-public class SysLog extends BaseEntity {
+public class SysLogError extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

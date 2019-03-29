@@ -3,8 +3,8 @@ package com.style.admin.modules.security.realm;
 import com.style.admin.modules.security.authc.FormToken;
 import com.style.admin.modules.security.authc.LoginInfo;
 import com.style.admin.modules.security.session.SessionDAO;
-import com.style.admin.modules.sys.entity.Menu;
-import com.style.admin.modules.sys.entity.User;
+import com.style.admin.modules.sys.entity.SysMenu;
+import com.style.admin.modules.sys.entity.SysUser;
 import com.style.admin.modules.sys.utils.UserUtils;
 import com.style.common.constant.Constants;
 import com.style.utils.core.GlobalUtils;
@@ -42,11 +42,11 @@ public abstract class BaseAuthorizingRealm extends AuthorizingRealm {
         }
         this.HandleMultiAccountLogin(loginInfo);
         // 获取当前已登录的用户
-        User user = UserUtils.getUserByLoginName(loginInfo.getName());
+        SysUser user = UserUtils.getUserByLoginName(loginInfo.getName());
         if (user != null) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-            List<Menu> list = UserUtils.getUserMenuList();
-            for (Menu menu : list) {
+            List<SysMenu> list = UserUtils.getUserMenuList();
+            for (SysMenu menu : list) {
                 if (StringUtils.isNotBlank(menu.getPermission())) {
                     // 添加基于Permission的权限信息
                     for (String permission : StringUtils.split(menu.getPermission(), ",")) {
@@ -120,7 +120,7 @@ public abstract class BaseAuthorizingRealm extends AuthorizingRealm {
     /**
      * 创建认证信息
      */
-    public SimpleAuthenticationInfo getAuthenticationInfo(User user, Map<String, Object> params) {
+    public SimpleAuthenticationInfo getAuthenticationInfo(SysUser user, Map<String, Object> params) {
         // 构建身份信息
         LoginInfo info = new LoginInfo(user.getId(),
                 user.getLoginName(),

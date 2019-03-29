@@ -2,7 +2,7 @@ package com.style.admin.modules.security.realm;
 
 import com.style.admin.modules.security.authc.FormToken;
 import com.style.admin.modules.security.authc.LoginInfo;
-import com.style.admin.modules.sys.entity.User;
+import com.style.admin.modules.sys.entity.SysUser;
 import com.style.admin.modules.sys.utils.UserUtils;
 import com.style.cache.CacheUtils;
 import com.style.common.constant.Constants;
@@ -47,7 +47,7 @@ public class FormAuthorizingRealm extends BaseAuthorizingRealm {
         }
 
         // 检查账号是否被冻结、停用、删除。
-        User user = UserUtils.getUserByLoginName(formToken.getUsername());
+        SysUser user = UserUtils.getUserByLoginName(formToken.getUsername());
         if (user == null) {
             throw new AuthenticationException("User info is empty !!!");
         }
@@ -58,7 +58,7 @@ public class FormAuthorizingRealm extends BaseAuthorizingRealm {
     }
 
     @Override
-    public SimpleAuthenticationInfo getAuthenticationInfo(User user, Map<String, Object> params) {
+    public SimpleAuthenticationInfo getAuthenticationInfo(SysUser user, Map<String, Object> params) {
         SimpleAuthenticationInfo info = super.getAuthenticationInfo(user, params);
         // 设置用户凭证
         String credential = user.getPassword();
@@ -76,7 +76,7 @@ public class FormAuthorizingRealm extends BaseAuthorizingRealm {
     public void onLoginSuccess(LoginInfo loginInfo, HttpServletRequest request) {
         super.onLoginSuccess(loginInfo, request);
         // 更新登录IP、时间、会话ID等
-        User user = UserUtils.getUserByLoginName(loginInfo.getLoginName());
+        SysUser user = UserUtils.getUserByLoginName(loginInfo.getLoginName());
         UserUtils.updateLoginInfo(user);
         // 记录用户登录日志
         //LogUtils.saveLog(user, request, "系统登录", Log.TYPE_LOGIN_LOGOUT);
@@ -86,7 +86,7 @@ public class FormAuthorizingRealm extends BaseAuthorizingRealm {
     public void onLogoutSuccess(LoginInfo loginInfo, HttpServletRequest request) {
         super.onLogoutSuccess(loginInfo, request);
         // 记录用户退出日志
-        User user = UserUtils.getUserByLoginName(loginInfo.getLoginName());
+        SysUser user = UserUtils.getUserByLoginName(loginInfo.getLoginName());
         //LogUtils.saveLog(user, request, "系统退出", Log.TYPE_LOGIN_LOGOUT);
     }
 
