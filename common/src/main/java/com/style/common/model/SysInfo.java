@@ -1,4 +1,4 @@
-package com.style.admin.modules.sys.entity;
+package com.style.common.model;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;

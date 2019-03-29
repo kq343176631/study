@@ -1,7 +1,7 @@
 package com.style.admin.modules.sys.web;
 
-import com.style.admin.modules.sys.entity.SysInfo;
 import com.style.common.model.Result;
+import com.style.common.model.SysInfo;
 import com.sun.management.OperatingSystemMXBean;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
