@@ -121,7 +121,9 @@ public class ServletUtils {
         return StringUtils.inStringIgnoreCase(ajax, "json", "xml");
     }
 
-    public static void renderString(HttpServletResponse response, String aTrue, String property) {
+    public static void renderString(HttpServletResponse response, String result) {
+
+
     }
 
     public static Map<String, Object> getExtParams(ServletRequest request) {

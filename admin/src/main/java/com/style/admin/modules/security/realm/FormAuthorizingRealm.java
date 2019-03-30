@@ -1,13 +1,19 @@
 package com.style.admin.modules.security.realm;
 
+import com.style.admin.modules.log.entity.SysLogLogin;
+import com.style.admin.modules.log.enums.OperateStatusEnum;
+import com.style.admin.modules.log.enums.OperateTypeEnum;
+import com.style.admin.modules.log.utils.SysLogUtils;
 import com.style.admin.modules.security.authc.FormToken;
-import com.style.admin.modules.security.authc.LoginInfo;
+import com.style.admin.modules.security.authc.UserPrincipal;
 import com.style.admin.modules.sys.entity.SysUser;
-import com.style.admin.modules.sys.utils.UserUtils;
+import com.style.admin.modules.sys.utils.SysUserUtils;
 import com.style.cache.CacheUtils;
 import com.style.common.constant.Constants;
 import com.style.utils.codec.EncodeUtils;
 import com.style.utils.lang.StringUtils;
+import com.style.utils.network.IpUtils;
+import com.style.utils.network.UserAgentUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -41,19 +47,19 @@ public class FormAuthorizingRealm extends BaseAuthorizingRealm {
         // 检查验证码是否正确。
         this.checkValidateCode(formToken);
 
-        // 登录次数超过3次，则5分钟后才能继续登录。
+        // 登录次数超过3次，则3分钟后才能继续登录。
         if (getLoginTimes(formToken.getUsername()) > 3) {
-            //
+            throw new AuthenticationException("Password error 3 times , It takes three minutes to log in !!!");
         }
 
         // 检查账号是否被冻结、停用、删除。
-        SysUser user = UserUtils.getUserByLoginName(formToken.getUsername());
+        SysUser user = SysUserUtils.getUserByLoginName(formToken.getUsername());
         if (user == null) {
             throw new AuthenticationException("User info is empty !!!");
         }
-        /*if (!"0".equals(user.getStatus())) {
+        if (user.getStatus() != 0) {
             throw new AuthenticationException("This loginName is deleted or freeze or disabled !!!");
-        }*/
+        }
         return this.getAuthenticationInfo(user, formToken.getParams());
     }
 
@@ -72,31 +78,11 @@ public class FormAuthorizingRealm extends BaseAuthorizingRealm {
         return info;
     }
 
-    @Override
-    public void onLoginSuccess(LoginInfo loginInfo, HttpServletRequest request) {
-        super.onLoginSuccess(loginInfo, request);
-        // 更新登录IP、时间、会话ID等
-        SysUser user = UserUtils.getUserByLoginName(loginInfo.getLoginName());
-        UserUtils.updateLoginInfo(user);
-        // 记录用户登录日志
-        //LogUtils.saveLog(user, request, "系统登录", Log.TYPE_LOGIN_LOGOUT);
-    }
-
-    @Override
-    public void onLogoutSuccess(LoginInfo loginInfo, HttpServletRequest request) {
-        super.onLogoutSuccess(loginInfo, request);
-        // 记录用户退出日志
-        SysUser user = UserUtils.getUserByLoginName(loginInfo.getLoginName());
-        //LogUtils.saveLog(user, request, "系统退出", Log.TYPE_LOGIN_LOGOUT);
-    }
-
     /**
      * 判断验证码是否正确
-     *
-     * @param formToken formToken
      */
     private void checkValidateCode(FormToken formToken) {
-        Session session = UserUtils.getSession();
+        Session session = SysUserUtils.getSession();
         String validCode;
         if (session != null) {
             validCode = (String) session.getAttribute("validateCode");

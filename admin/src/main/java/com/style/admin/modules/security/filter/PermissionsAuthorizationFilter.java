@@ -31,11 +31,6 @@ public class PermissionsAuthorizationFilter extends org.apache.shiro.web.filter.
 
     /**
      * 无访问权限时，跳转到403页面
-     *
-     * @param request  request
-     * @param response response
-     * @return boolean
-     * @throws IOException IOException
      */
     public static boolean redirectTo403Page(ServletRequest request, ServletResponse response) throws IOException {
         Subject subject = SecurityUtils.getSubject();

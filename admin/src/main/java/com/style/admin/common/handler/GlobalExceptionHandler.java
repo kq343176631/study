@@ -1,6 +1,6 @@
 package com.style.admin.common.handler;
 
-import com.style.admin.modules.log.LogUtils;
+import com.style.admin.modules.log.utils.SysLogUtils;
 import com.style.common.constant.ErrorCode;
 import com.style.common.exception.ValidateException;
 import com.style.common.model.Result;
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public Result handleException(Exception ex) {
         logger.error(ex.getMessage(), ex);
-        LogUtils.saveSysLog(ex);
+        SysLogUtils.saveSysLogError(ex);
         return new Result(ErrorCode.INTERNAL_SERVER_ERROR);
     }
 

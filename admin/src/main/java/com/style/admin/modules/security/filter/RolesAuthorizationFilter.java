@@ -6,9 +6,6 @@ import java.io.IOException;
 
 /**
  * 角色权限过滤器
- *
- * @author ThinkGem
- * @version 2017-03-22
  */
 public class RolesAuthorizationFilter extends org.apache.shiro.web.filter.authz.RolesAuthorizationFilter {
 

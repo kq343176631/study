@@ -9,12 +9,13 @@ import com.style.utils.lang.ObjectUtils;
 import net.oschina.j2cache.CacheChannel;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
 /**
  * 自定义会话管理配置
  */
-//@Configuration
+@Configuration
 public class SessionAutoConfiguration {
 
     public SessionAutoConfiguration() {
@@ -23,10 +24,6 @@ public class SessionAutoConfiguration {
 
     /**
      * 会话管理器
-     *
-     * @param sessionDAO      sessionDAO
-     * @param sessionIdCookie sessionIdCookie
-     * @return sessionManager
      */
     @Bean("sessionManager")
     @DependsOn({"sessionDAO", "sessionIdCookie"})
@@ -35,9 +32,9 @@ public class SessionAutoConfiguration {
         sessionManager.setSessionDAO(sessionDAO);
         sessionManager.setSessionIdUrlRewritingEnabled(false);
         //会话超时时间，单位：毫秒
-        sessionManager.setGlobalSessionTimeout(ObjectUtils.toLong(GlobalUtils.getProperty("session.sessionTimeout")));
+        sessionManager.setGlobalSessionTimeout(ObjectUtils.toLong(GlobalUtils.getProperty("session.session-timeout")));
         //定时清理失效会话, 清理用户直接关闭浏览器造成的孤立会话
-        sessionManager.setSessionValidationInterval(ObjectUtils.toLong(GlobalUtils.getProperty("session.sessionTimeoutClean")));
+        sessionManager.setSessionValidationInterval(ObjectUtils.toLong(GlobalUtils.getProperty("session.session-timeout-clean")));
         sessionManager.setSessionValidationSchedulerEnabled(true);
         sessionManager.setSessionIdCookie(sessionIdCookie);
         sessionManager.setSessionIdCookieEnabled(true);
@@ -45,9 +42,7 @@ public class SessionAutoConfiguration {
     }
 
     /**
-     * 自定义Session存储容器
-     *
-     * @return sessionDAO
+     * 自定义会话存储
      */
     @Bean("sessionDAO")
     @DependsOn("cacheChannel")
@@ -62,7 +57,7 @@ public class SessionAutoConfiguration {
     public SimpleCookie sessionIdCookie() {
         SimpleCookie simpleCookie = new SimpleCookie();
         // 设置cookieId
-        simpleCookie.setName(GlobalUtils.getProperty("session.sessionIdCookieName"));
+        simpleCookie.setName(GlobalUtils.getProperty("session.session-id-cookie-name"));
         return simpleCookie;
     }
 }

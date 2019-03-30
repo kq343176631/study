@@ -40,6 +40,7 @@ caffeine:
   default: initialCapacity=1000,maximumSize=3000,expireAfterWrite=30m
   sys-user: initialCapacity=1000,maximumSize=3000,expireAfterWrite=30m
   sys-session: initialCapacity=1000,maximumSize=3000,expireAfterWrite=30m
+  login-fail-map: initialCapacity=1000,maximumSize=3000,expireAfterWrite=3m
 
 
 

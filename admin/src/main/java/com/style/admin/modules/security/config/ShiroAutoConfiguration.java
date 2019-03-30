@@ -3,10 +3,7 @@ package com.style.admin.modules.security.config;
 import com.style.admin.modules.security.ShiroFilterFactoryBean;
 import com.style.admin.modules.security.WebSecurityManager;
 import com.style.admin.modules.security.cache.ShiroJ2CacheManager;
-import com.style.admin.modules.security.cas.CasOutHandler;
-import com.style.admin.modules.security.cas.CasSubjectFactory;
 import com.style.admin.modules.security.filter.*;
-import com.style.admin.modules.security.realm.CasAuthorizingRealm;
 import com.style.admin.modules.security.realm.FormAuthorizingRealm;
 import com.style.admin.modules.security.session.SessionDAO;
 import com.style.admin.modules.security.session.SessionManager;
@@ -42,15 +39,13 @@ public class ShiroAutoConfiguration {
     @Bean("shiroFilter")
     @DependsOn({"webSecurityManager", "formAuthorizingRealm", "casAuthorizingRealm"})
     public ShiroFilterFactoryBean shiroFilter(WebSecurityManager webSecurityManager,
-                                              FormAuthorizingRealm formAuthorizingRealm,
-                                              CasAuthorizingRealm casAuthorizingRealm) {
+                                              FormAuthorizingRealm formAuthorizingRealm) {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(webSecurityManager);
-        bean.setLoginUrl(GlobalUtils.getProperty("shiro.form.loginUrl"));
-        bean.setSuccessUrl(GlobalUtils.getProperty("shiro.form.successUrl"));
+        bean.setLoginUrl(GlobalUtils.getProperty("shiro.form.login-url"));
+        bean.setSuccessUrl(GlobalUtils.getProperty("shiro.form.success-url"));
         Map<String, Filter> filters = bean.getFilters();
         filters.put("anon", anonFilter());
-        filters.put("cas", casFilter(casAuthorizingRealm));
         filters.put("auth", authFilter(formAuthorizingRealm));
         filters.put("logout", logoutFilter());
         filters.put("perms", permsFilter());
@@ -67,21 +62,18 @@ public class ShiroAutoConfiguration {
      * 定义Shiro安全管理配置
      */
     @Bean("webSecurityManager")
-    @DependsOn({"formAuthorizingRealm", "casAuthorizingRealm", "sessionManager", "shiroCacheManager"})
+    @DependsOn({"formAuthorizingRealm", "sessionManager", "shiroCacheManager"})
     public WebSecurityManager webSecurityManager(
             FormAuthorizingRealm formAuthorizingRealm,
-            CasAuthorizingRealm casAuthorizingRealm,
             SessionManager sessionManager, CacheManager shiroCacheManager) {
         WebSecurityManager bean = new WebSecurityManager();
         Collection<Realm> realms = ListUtils.newArrayList();
         // 第一个域：作为授权域使用。
         realms.add(formAuthorizingRealm);
-        realms.add(casAuthorizingRealm);
         bean.setRealms(realms);
         bean.setSessionManager(sessionManager);
         bean.setCacheManager(shiroCacheManager);
         // 设置支持CAS的subjectFactory
-        bean.setSubjectFactory(new CasSubjectFactory());
         return bean;
     }
 
@@ -95,29 +87,6 @@ public class ShiroAutoConfiguration {
         bean.setCachingEnabled(false);
         bean.setSessionDAO(sessionDAO);
         return bean;
-    }
-
-    /**
-     * 单点安全认证实现类
-     */
-    @Bean("casAuthorizingRealm")
-    @DependsOn({"sessionDAO", "casOutHandler"})
-    public CasAuthorizingRealm casAuthorizingRealm(SessionDAO sessionDAO, CasOutHandler casOutHandler) {
-        CasAuthorizingRealm bean = new CasAuthorizingRealm();
-        bean.setCachingEnabled(false);
-        bean.setSessionDAO(sessionDAO);
-        bean.setCasOutHandler(casOutHandler);
-        bean.setCasServerUrl(GlobalUtils.getProperty("shiro.cas.serverUrl"));
-        bean.setCasServerCallbackUrl(GlobalUtils.getProperty("shiro.cas.clientUrl") + GlobalUtils.getAdminPath() + "/login-cas");
-        return bean;
-    }
-
-    /**
-     * 单点登录信息句柄，单点退出用
-     */
-    @Bean("casOutHandler")
-    public CasOutHandler casOutHandler() {
-        return new CasOutHandler();
     }
 
     /**
@@ -158,15 +127,6 @@ public class ShiroAutoConfiguration {
     }
 
     /**
-     * CAS登录过滤器
-     */
-    private CasAuthenticationFilter casFilter(CasAuthorizingRealm casAuthorizingRealm) {
-        CasAuthenticationFilter bean = new CasAuthenticationFilter();
-        bean.setAuthorizingRealm(casAuthorizingRealm);
-        return bean;
-    }
-
-    /**
      * Form登录过滤器
      */
     private FormAuthenticationFilter authFilter(FormAuthorizingRealm formAuthorizingRealm) {
@@ -199,18 +159,9 @@ public class ShiroAutoConfiguration {
     /**
      * 用户权限过滤器
      */
-    private UserFilter userFilter() {
-        return new UserFilter();
+    private SysUserFilter userFilter() {
+        return new SysUserFilter();
     }
-
-	/*@Bean
-	public MethodInvokingFactoryBean methodInvokingFactoryBean(DefaultWebSecurityManager securityManager) {
-		MethodInvokingFactoryBean bean = new MethodInvokingFactoryBean();
-		bean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
-		bean.setArguments(new Object[] { securityManager });
-		return bean;
-	}*/
-
 
     @Bean("shiroCacheManager")
     @DependsOn("cacheChannel")

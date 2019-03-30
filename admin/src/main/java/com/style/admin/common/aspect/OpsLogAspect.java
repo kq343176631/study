@@ -1,6 +1,6 @@
 package com.style.admin.common.aspect;
 
-import com.style.admin.modules.log.service.SysLogOperationService;
+import com.style.admin.modules.log.service.SysLogOperateService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class OpsLogAspect {
 
     //@Autowired
-    private SysLogOperationService sysLogOperationService;
+    private SysLogOperateService sysLogOperationService;
 
     @Pointcut("@annotation(com.style.common.annotation.OpsLog)")
     public void logPointCut() {

@@ -1,6 +1,5 @@
 package com.style.admin.modules.security;
 
-import com.style.common.web.http.XssHttpServletRequestWrapper;
 import com.style.common.web.servlet.ServletUtils;
 import org.apache.shiro.web.filter.mgt.FilterChainResolver;
 import org.apache.shiro.web.mgt.WebSecurityManager;
@@ -44,10 +43,5 @@ public class ShiroFilter extends AbstractShiroFilter {
             // 不是静态文件，则执行内部过滤。
             super.doFilterInternal(request, response, chain);
         }
-    }
-
-    @Override
-    protected ServletRequest wrapServletRequest(HttpServletRequest request) {
-        return new XssHttpServletRequestWrapper((HttpServletRequest) super.wrapServletRequest(request));
     }
 }

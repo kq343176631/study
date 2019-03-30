@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * 登录信息（用户省份）
+ * 登录信息（用户身份）
  */
-public class LoginInfo implements Principal, Serializable {
+public class UserPrincipal implements Principal, Serializable {
 
     // 主键
     private String id;
@@ -24,15 +24,15 @@ public class LoginInfo implements Principal, Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public LoginInfo() {
+    public UserPrincipal() {
 
     }
 
-    public LoginInfo(String id, String loginName) {
+    public UserPrincipal(String id, String loginName) {
         this(id, loginName, null);
     }
 
-    public LoginInfo(String id, String loginName, Map<String, Object> params) {
+    public UserPrincipal(String id, String loginName, Map<String, Object> params) {
         this.id = id;
         this.loginName = loginName;
         this.params = params;
@@ -100,7 +100,7 @@ public class LoginInfo implements Principal, Serializable {
             return false;
         } else {
             // 比较属性
-            LoginInfo info = (LoginInfo) obj;
+            UserPrincipal info = (UserPrincipal) obj;
             if (this.getId() == null) {
                 return info.getId() == null;
             } else {

@@ -7,12 +7,18 @@ import org.apache.shiro.subject.Subject;
 
 import java.util.List;
 
-public class UserUtils {
+public class SysUserUtils {
+
     public static List<SysMenu> getUserMenuList() {
         return null;
     }
 
-    public static SysUser getUserByLoginName(String name) {
+    /**
+     * 需要查询数据库
+     * @param loginName loginName
+     * @return SysUser SysUser
+     */
+    public static SysUser getUserByLoginName(String loginName) {
 
         return null;
     }

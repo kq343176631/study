@@ -1,9 +1,16 @@
 package com.style.admin.modules.security.filter;
 
-import com.style.common.constant.Constants;
+import com.style.admin.modules.log.entity.SysLogLogin;
+import com.style.admin.modules.log.enums.OperateStatusEnum;
+import com.style.admin.modules.log.enums.OperateTypeEnum;
+import com.style.admin.modules.log.utils.SysLogUtils;
+import com.style.admin.modules.security.authc.UserPrincipal;
+import com.style.admin.modules.sys.entity.SysUser;
+import com.style.admin.modules.sys.utils.SysUserUtils;
 import com.style.common.exception.ValidateException;
 import com.style.common.web.servlet.ServletUtils;
-import com.style.utils.core.GlobalUtils;
+import com.style.utils.network.IpUtils;
+import com.style.utils.network.UserAgentUtils;
 import org.apache.shiro.session.SessionException;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -16,9 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 登出过滤器
- *
- * @author ThinkGem
- * @version 2017-03-22
  */
 public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter {
 
@@ -43,8 +47,7 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 
             // 如果是Ajax请求，返回Json字符串。
             if (ServletUtils.isAjaxRequest((HttpServletRequest) request)) {
-                ServletUtils.renderString((HttpServletResponse) response,
-                        Constants.TRUE, GlobalUtils.getText("sys.logout.success"));
+                ServletUtils.renderString((HttpServletResponse) response,"sys.logout.success");
                 return false;
             }
 
@@ -67,4 +70,20 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 		}*/
         return super.getRedirectUrl(request, response, subject);
     }
+
+    public void onLogoutSuccess(UserPrincipal loginInfo, HttpServletRequest request){
+
+        // 记录用户退出日志
+        SysUser user = SysUserUtils.getUserByLoginName(loginInfo.getLoginName());
+        SysLogLogin sysLogLogin = new SysLogLogin();
+        sysLogLogin.setIp(IpUtils.getIpAddr(request));
+        sysLogLogin.setOperation(OperateTypeEnum.LOGOUT.value());
+        sysLogLogin.setStatus(OperateStatusEnum.SUCCESS.value());
+        sysLogLogin.setLoginName(loginInfo.getLoginName());
+        sysLogLogin.setUserAgent(UserAgentUtils.getUserAgent(request).toString());
+        SysLogUtils.saveSysLogLogin(sysLogLogin);
+
+    }
+
+
 }

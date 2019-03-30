@@ -1,9 +1,18 @@
 package com.style.admin.modules.security.filter;
 
+import com.style.admin.modules.log.entity.SysLogLogin;
+import com.style.admin.modules.log.enums.OperateStatusEnum;
+import com.style.admin.modules.log.enums.OperateTypeEnum;
+import com.style.admin.modules.log.utils.SysLogUtils;
 import com.style.admin.modules.security.authc.FormToken;
-import com.style.admin.modules.security.authc.LoginInfo;
+import com.style.admin.modules.security.authc.UserPrincipal;
 import com.style.admin.modules.security.realm.BaseAuthorizingRealm;
+import com.style.admin.modules.sys.entity.SysUser;
+import com.style.admin.modules.sys.utils.SysUserUtils;
 import com.style.cache.CacheUtils;
+import com.style.cache.CaffeineUtils;
+import com.style.common.convert.http.json.JsonMapper;
+import com.style.common.model.Result;
 import com.style.common.web.servlet.ServletUtils;
 import com.style.utils.codec.DesUtils;
 import com.style.utils.collect.MapUtils;
@@ -11,10 +20,9 @@ import com.style.utils.core.GlobalUtils;
 import com.style.utils.lang.ObjectUtils;
 import com.style.utils.lang.StringUtils;
 import com.style.utils.network.IpUtils;
+import com.style.utils.network.UserAgentUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.servlet.Cookie;
 import org.apache.shiro.web.servlet.SimpleCookie;
@@ -46,6 +54,8 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 
     // 记住用户名
     public static final String DEFAULT_REMEMBER_USER_CODE_PARAM = "rememberUserCode";
+
+    public static final String LOGIN_FAIL_MAP_CACHE_NAME = "login-fail-map";
 
     // 安全认证类
     private BaseAuthorizingRealm authorizingRealm;
@@ -86,7 +96,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
             username = ObjectUtils.toString(request.getAttribute(getUsernameParam()));
         }
         // 登录用户名解密（解决登录用户名明文传输安全问题）
-        String secretKey = GlobalUtils.getProperty("shiro.loginSubmit.secretKey");
+        String secretKey = GlobalUtils.getProperty("shiro.login-submit.secret-key");
         if (StringUtils.isNotBlank(secretKey)) {
             username = DesUtils.decode(username, secretKey);
             if (StringUtils.isBlank(username)) {
@@ -113,7 +123,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
             password = ObjectUtils.toString(request.getAttribute(getPasswordParam()));
         }
         // 登录密码解密（解决登录密码明文传输安全问题）
-        String secretKey = GlobalUtils.getProperty("shiro.loginSubmit.secretKey");
+        String secretKey = GlobalUtils.getProperty("shiro.login-submit.secret-key");
         if (StringUtils.isNotBlank(secretKey)) {
             password = DesUtils.decode(password, secretKey);
             if (StringUtils.isBlank(password)) {
@@ -152,7 +162,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
             captcha = ObjectUtils.toString(request.getAttribute(DEFAULT_CAPTCHA_PARAM));
         }
         // 登录用户名解密（解决登录用户名明文传输安全问题）
-        String secretKey = GlobalUtils.getProperty("shiro.loginSubmit.secretKey");
+        String secretKey = GlobalUtils.getProperty("shiro.login-submit.secret-key");
         if (StringUtils.isNotBlank(secretKey)) {
             captcha = DesUtils.decode(captcha, secretKey);
         }
@@ -217,24 +227,29 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
      * 登录成功调用事件
      */
     @Override
-    protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
+    protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) {
 
-        // 登录成功后初始化授权信息并处理登录后的操作
-        authorizingRealm.onLoginSuccess((LoginInfo) subject.getPrincipals(), (HttpServletRequest) request);
+        // 更新登录IP、时间、会话ID等
+        UserPrincipal loginInfo = (UserPrincipal) subject.getPrincipals();
+        SysUser user = SysUserUtils.getUserByLoginName(loginInfo.getLoginName());
+        SysUserUtils.updateLoginInfo(user);
+
+        // 登录成功后立即授权
+        authorizingRealm.executeAuthOnLoginSuccess(subject.getPrincipals());
+
+        // 记录用户登录日志
+        SysLogLogin sysLogLogin = new SysLogLogin();
+        sysLogLogin.setIp(IpUtils.getIpAddr((HttpServletRequest) request));
+        sysLogLogin.setOperation(OperateTypeEnum.LOGIN.value());
+        sysLogLogin.setStatus(OperateStatusEnum.SUCCESS.value());
+        sysLogLogin.setLoginName(loginInfo.getLoginName());
+        sysLogLogin.setUserAgent(UserAgentUtils.getUserAgent((HttpServletRequest)request).toString());
+        SysLogUtils.saveSysLogLogin(sysLogLogin);
 
         // 登录操作如果是Ajax操作，直接返回登录信息字符串。
-        if (ServletUtils.isAjaxRequest((HttpServletRequest) request)) {
-            // AJAX不支持Redirect改用Forward
-            request.getRequestDispatcher(getSuccessUrl()).forward(request, response);
-        } else {
-            // 登录成功直接返回到首页
-            String url = request.getParameter("__url");
-            if (StringUtils.isNotBlank(url)) {
-                WebUtils.issueRedirect(request, response, url, null, true);
-            } else {
-                WebUtils.issueRedirect(request, response, getSuccessUrl(), null, true);
-            }
-        }
+        Result result = new Result();
+        ServletUtils.renderString((HttpServletResponse) response,JsonMapper.toJson(result));
+
         return false;
     }
 
@@ -244,20 +259,24 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
     @Override
     protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
 
-        this.recordLoginFailTimes((String) token.getPrincipal());
+        String loginName =  (String) token.getPrincipal();
+        this.recordLoginFailTimes(loginName);
 
-        String className = e.getClass().getName(), message;
-        if (IncorrectCredentialsException.class.getName().equals(className) || UnknownAccountException.class.getName().equals(className)) {
-            message = GlobalUtils.getText("sys.login.failure");
-        } else if (e.getMessage() != null && StringUtils.startsWith(e.getMessage(), "msg:")) {
-            message = StringUtils.replace(e.getMessage(), "msg:", "");
-        } else {
-            message = GlobalUtils.getText("sys.login.error");
-            logger.error(message, e); // 输出到日志文件
-        }
-        request.setAttribute(getFailureKeyAttribute(), className);
-        request.setAttribute(DEFAULT_MESSAGE_PARAM, message);
-        return true;
+        // 记录用户登录日志
+        SysLogLogin sysLogLogin = new SysLogLogin();
+        sysLogLogin.setIp(IpUtils.getIpAddr((HttpServletRequest) request));
+        sysLogLogin.setOperation(OperateTypeEnum.LOGIN.value());
+        sysLogLogin.setStatus(OperateStatusEnum.SUCCESS.value());
+        sysLogLogin.setLoginName(loginName);
+        sysLogLogin.setUserAgent(UserAgentUtils.getUserAgent((HttpServletRequest)request).toString());
+        SysLogUtils.saveSysLogLogin(sysLogLogin);
+
+        setFailureAttribute(request, e);
+
+        Result result = new Result();
+        ServletUtils.renderString((HttpServletResponse) response,JsonMapper.toJson(result));
+
+        return false;
     }
 
     /**
@@ -265,10 +284,10 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
      */
     @SuppressWarnings("unchecked")
     private void recordLoginFailTimes(String loginName) {
-        Map<String, Integer> loginFailMap = (Map<String, Integer>) CacheUtils.get("loginFailMap");
+        Map<String, Integer> loginFailMap = (Map<String, Integer>) CaffeineUtils.get("loginFailMap");
         if (loginFailMap == null) {
             loginFailMap = MapUtils.newHashMap();
-            CacheUtils.put("loginFailMap", loginFailMap);
+            CacheUtils.put(LOGIN_FAIL_MAP_CACHE_NAME,"loginFailMap", loginFailMap);
         }
         Integer loginFailNum = loginFailMap.get(loginName);
         if (loginFailNum == null) {

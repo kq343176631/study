@@ -1,11 +1,11 @@
 package com.style.admin.modules.security.realm;
 
 import com.style.admin.modules.security.authc.FormToken;
-import com.style.admin.modules.security.authc.LoginInfo;
+import com.style.admin.modules.security.authc.UserPrincipal;
 import com.style.admin.modules.security.session.SessionDAO;
 import com.style.admin.modules.sys.entity.SysMenu;
 import com.style.admin.modules.sys.entity.SysUser;
-import com.style.admin.modules.sys.utils.UserUtils;
+import com.style.admin.modules.sys.utils.SysUserUtils;
 import com.style.common.constant.Constants;
 import com.style.utils.core.GlobalUtils;
 import com.style.utils.lang.StringUtils;
@@ -36,16 +36,16 @@ public abstract class BaseAuthorizingRealm extends AuthorizingRealm {
      */
     @Override
     protected final AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        LoginInfo loginInfo = (LoginInfo) getAvailablePrincipal(principals);
+        UserPrincipal loginInfo = (UserPrincipal) getAvailablePrincipal(principals);
         if (loginInfo == null) {
             return null;
         }
         this.HandleMultiAccountLogin(loginInfo);
         // 获取当前已登录的用户
-        SysUser user = UserUtils.getUserByLoginName(loginInfo.getName());
+        SysUser user = SysUserUtils.getUserByLoginName(loginInfo.getName());
         if (user != null) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-            List<SysMenu> list = UserUtils.getUserMenuList();
+            List<SysMenu> list = SysUserUtils.getUserMenuList();
             for (SysMenu menu : list) {
                 if (StringUtils.isNotBlank(menu.getPermission())) {
                     // 添加基于Permission的权限信息
@@ -91,23 +91,31 @@ public abstract class BaseAuthorizingRealm extends AuthorizingRealm {
     }
 
     /**
+     * 登录成功后回调
+     * @param principals
+     */
+    public final void executeAuthOnLoginSuccess(PrincipalCollection principals){
+        getAuthorizationInfo(principals);
+    }
+
+    /**
      * 处理账号同时登录问题
      */
-    private void HandleMultiAccountLogin(LoginInfo loginInfo) {
+    private void HandleMultiAccountLogin(UserPrincipal loginInfo) {
         if (Constants.TRUE.equals(GlobalUtils.getProperty("user.multiAccountLogin"))) {
             return;
         }
         // 查询在线会话
-        Collection<Session> sessions = this.sessionDAO.getActiveSessions(false, loginInfo, UserUtils.getSession());
+        Collection<Session> sessions = this.sessionDAO.getActiveSessions(false, loginInfo, SysUserUtils.getSession());
         if (sessions.size() > 0) {
             // 如果是登录进来的，则踢出已在线用户
-            if (UserUtils.getSubject().isAuthenticated()) {
+            if (SysUserUtils.getSubject().isAuthenticated()) {
                 for (Session session : sessions) {
                     this.sessionDAO.delete(session);
                 }
             } else {
                 // 记住我进来的，并且当前用户已登录，则退出当前用户提示信息。
-                UserUtils.getSubject().logout();
+                SysUserUtils.getSubject().logout();
                 throw new AuthenticationException("msg:账号已在其它地方登录，请重新登录。");
             }
         }
@@ -122,23 +130,9 @@ public abstract class BaseAuthorizingRealm extends AuthorizingRealm {
      */
     public SimpleAuthenticationInfo getAuthenticationInfo(SysUser user, Map<String, Object> params) {
         // 构建身份信息
-        LoginInfo info = new LoginInfo(user.getId(),
+        UserPrincipal info = new UserPrincipal(user.getId(),
                 user.getLoginName(),
                 params);
         return new SimpleAuthenticationInfo(info, Constants.EMPTY, this.getName());
-    }
-
-    /**
-     * 登录回调
-     */
-    public void onLoginSuccess(LoginInfo loginInfo, HttpServletRequest request) {
-
-    }
-
-    /**
-     * 退出回调
-     */
-    public void onLogoutSuccess(LoginInfo loginInfo, HttpServletRequest request) {
-
     }
 }

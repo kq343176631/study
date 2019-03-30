@@ -16,10 +16,10 @@ public class ShiroFilterFactoryBean extends org.apache.shiro.spring.web.ShiroFil
     }
 
     /**
-     * 创建Shiro过滤器实例
+     * 创建过滤器实例
      */
     @Override
-    protected AbstractShiroFilter createInstance() throws Exception {
+    protected AbstractShiroFilter createInstance(){
 
         SecurityManager securityManager = this.getSecurityManager();
         // 先决条件验证
@@ -38,7 +38,7 @@ public class ShiroFilterFactoryBean extends org.apache.shiro.spring.web.ShiroFil
     }
 
     /**
-     * 获取Shiro过滤器实例
+     * 获取滤器实例
      */
     public AbstractShiroFilter getInstance() throws Exception {
         if (this.instance == null) {
