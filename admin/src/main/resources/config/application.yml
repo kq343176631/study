@@ -38,67 +38,8 @@ spring:
       enabled: true
   activiti:
       check-process-definitions: false  #关闭流程定义自动部署
-#  autoconfigure:
-#    exclude:
-#      org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration,
-#      org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration,
-#      org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration,
-#
-#      org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration,
-#      org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration,
-#      org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration,
-#      org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration,
-#
-#      org.springframework.boot.autoconfigure.quartz.QuartzAutoConfiguration,
-#      org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration,
-#      org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration,
-#
-#      org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration,
-#      org.springframework.boot.autoconfigure.data.redis.RedisReactiveAutoConfiguration,
-#      org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration,
-#
-#      org.springframework.boot.autoconfigure.reactor.core.ReactorCoreAutoConfiguration,
-#      org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration,
-#
-#      org.springframework.boot.autoconfigure.transaction.jta.JtaAutoConfiguration,
-#      org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration,
-#      org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,
-#      org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration,
-#      org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration,
-#
-#      com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration,
 
 
-#=========================================================#
-#=================== Web MVC settings ====================#
-#=========================================================#
-
-#web:
-#  view:  # MVC 视图相关
-#    root: /views
-#    themeName: default  # 页面主题名称
-#  interceptor:  # MVC 拦截器
-#    log:  # 后台管理日志记录拦截器
-#      enabled: true
-#      add-path-patterns: >
-#        ${adminPath}/**
-#      exclude-path-patterns: >
-#        ${adminPath}/index,
-#        ${adminPath}/login,
-#        ${adminPath}/desktop,
-#        ${adminPath}/sys/online/count,
-#        ${adminPath}/state/server/rtInfo,
-#        ${adminPath}/**/treeData,
-#        ${adminPath}/file/**,
-#        ${adminPath}/tags/*,
-#        ${adminPath}/msg/**
-#    mobile:  # 手机视图拦截器
-#      enabled: false
-#      add-path-patterns: >
-#        ${frontPath}/**
-#      exclude-path-patterns: ~
-#  staticFile: .html,.css,.js,.map,.png,.jpg,.gif,.jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk,.otf,.eot,.svg,.ttf,.woff,.woff2
-#  staticFileExcludeUri: /druid/
 
 #=========================================================#
 #================= Mybatis Plus settings =================#
@@ -123,60 +64,6 @@ mybatis-plus:
     cache-enabled: false
     call-setters-on-nulls: true
     jdbc-type-for-null: 'null'
-
-
-#=========================================================#
-#=================== Security settings ===================#
-#=========================================================#
-
-adminPath: /a  #管理基础路径
-frontPath: /f  #前端基础路径
-
-shiro:
-  form: # 表单登录相关设置
-    login-url: ${adminPath}/login
-    logout-url: ${adminPath}/logout
-    success-url: ${adminPath}/index
-  login-submit:  # 登录提交信息加密
-    secret-key: thinkgem,jeesite,com  # 登录提交信息安全Key，加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）
-  is-allow-multi-addr-login: true   # 是否允许账号多地登录，如果设置为false，同一个设备类型的其它地点登录的相同账号被踢下线
-  filter-chain-definitions: |  # URI 权限过滤器定义
-    /ReportServer/** = user
-    ${adminPath}/** = user
-    ${adminPath}/file/** = anon
-    ${adminPath}/cms/* = anon
-    ${adminPath}/cms/site/* = anon
-    ${adminPath}/cms/site/select = anon
-    ${adminPath}/cms/category/* = anon
-    ${adminPath}/cms/category/treeData = anon
-    ${adminPath}/cms/article/* = anon
-    ${adminPath}/cms/link/* = anon
-  default-filter-chain-definitions: |  # 默认的授权过滤定义，如果在filterChainDefinitions中已经定义，则该定义会被覆盖。
-    /admin/** = anon
-    /files/** = anon
-    ${adminPath}/login = auth
-    ${adminPath}/logout = logout
-    ${adminPath}/login-cas = cas
-    ${adminPath}/file/** = user
-    /druid/** = perms[sys:state:druid]
-    ${adminPath}/cms/* = perms[cms:view]
-    ${adminPath}/cms/site/* = perms[cms:site:view]
-    ${adminPath}/cms/site/select = user
-    ${adminPath}/cms/category/* = perms[cms:category:view]
-    ${adminPath}/cms/category/treeData = user
-    ${adminPath}/cms/article/* = perms[cms:article:view]
-    ${adminPath}/cms/link/* = perms[cms:link:view]
-
-
-#=========================================================#
-#=================== Session settings ====================#
-#=========================================================#
-
-session:
-  session-timeout: 1800000  #全局会话超时，单位：毫秒， 20m=1200000ms, 30m=1800000ms, 60m=3600000ms
-  mobile-session-timeout: 43200000  #手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效
-  session-timeout-clean: 1200000  #定时清理失效会话，清理用户直接关闭浏览器造成的孤立会话
-  session-id-cookie-name: style.session.id  #会话唯一标识SessionId在Cookie中的名称。
 
 
 #=========================================================#

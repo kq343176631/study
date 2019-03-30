@@ -94,7 +94,7 @@ public class J2SessionDAO extends AbstractSessionDAO implements SessionDAO {
         if (session instanceof ValidatingSession && ((ValidatingSession) session).isValid()) {
             this.channel.set(this.region, ObjectUtils.toString(session.getId()), session);
         } else {
-            channel.evict(this.region, ObjectUtils.toString(session.getId()));
+            this.channel.evict(this.region, ObjectUtils.toString(session.getId()));
         }
     }
 
@@ -103,7 +103,7 @@ public class J2SessionDAO extends AbstractSessionDAO implements SessionDAO {
         if (session == null || session.getId() == null) {
             return;
         }
-        channel.evict(this.region, ObjectUtils.toString(session.getId()));
+        this.channel.evict(this.region, ObjectUtils.toString(session.getId()));
     }
 
     /**

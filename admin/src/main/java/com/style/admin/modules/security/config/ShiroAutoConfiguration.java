@@ -6,7 +6,7 @@ import com.style.admin.modules.security.cache.ShiroJ2CacheManager;
 import com.style.admin.modules.security.filter.*;
 import com.style.admin.modules.security.realm.FormAuthorizingRealm;
 import com.style.admin.modules.security.session.SessionDAO;
-import com.style.admin.modules.security.session.SessionManager;
+import com.style.admin.modules.security.session.WebSessionManager;
 import com.style.utils.collect.ListUtils;
 import com.style.utils.core.GlobalUtils;
 import net.oschina.j2cache.CacheChannel;
@@ -17,6 +17,7 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.web.filter.authc.AnonymousFilter;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
 import javax.servlet.Filter;
@@ -26,18 +27,24 @@ import java.util.Map;
 /**
  * 系统安全管理配置
  */
-//@Configuration
+@Configuration
 public class ShiroAutoConfiguration {
 
     public ShiroAutoConfiguration() {
 
     }
 
+    @Bean("shiroCacheManager")
+    @DependsOn("cacheChannel")
+    public CacheManager ShiroJ2CacheManager(CacheChannel cacheChannel) {
+        return new ShiroJ2CacheManager(cacheChannel);
+    }
+
     /**
      * Shiro认证过滤器
      */
     @Bean("shiroFilter")
-    @DependsOn({"webSecurityManager", "formAuthorizingRealm", "casAuthorizingRealm"})
+    @DependsOn({"webSecurityManager", "formAuthorizingRealm"})
     public ShiroFilterFactoryBean shiroFilter(WebSecurityManager webSecurityManager,
                                               FormAuthorizingRealm formAuthorizingRealm) {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
@@ -52,8 +59,8 @@ public class ShiroAutoConfiguration {
         filters.put("roles", rolesFilter());
         filters.put("user", userFilter());
         FilterChainDefinitionMap chains = new FilterChainDefinitionMap();
-        chains.setFilterChainDefinitions(GlobalUtils.getProperty("shiro.filterChainDefinitions"));
-        chains.setDefaultFilterChainDefinitions(GlobalUtils.getProperty("shiro.defaultFilterChainDefinitions"));
+        chains.setFilterChainDefinitions(GlobalUtils.getProperty("shiro.filter-chain-definitions"));
+        chains.setDefaultFilterChainDefinitions(GlobalUtils.getProperty("shiro.default-filter-chain-definitions"));
         bean.setFilterChainDefinitionMap(chains.getObject());
         return bean;
     }
@@ -65,7 +72,7 @@ public class ShiroAutoConfiguration {
     @DependsOn({"formAuthorizingRealm", "sessionManager", "shiroCacheManager"})
     public WebSecurityManager webSecurityManager(
             FormAuthorizingRealm formAuthorizingRealm,
-            SessionManager sessionManager, CacheManager shiroCacheManager) {
+            WebSessionManager sessionManager, CacheManager shiroCacheManager) {
         WebSecurityManager bean = new WebSecurityManager();
         Collection<Realm> realms = ListUtils.newArrayList();
         // 第一个域：作为授权域使用。
@@ -163,9 +170,4 @@ public class ShiroAutoConfiguration {
         return new SysUserFilter();
     }
 
-    @Bean("shiroCacheManager")
-    @DependsOn("cacheChannel")
-    public CacheManager ShiroJ2CacheManager(CacheChannel cacheChannel) {
-        return new ShiroJ2CacheManager(cacheChannel);
-    }
 }

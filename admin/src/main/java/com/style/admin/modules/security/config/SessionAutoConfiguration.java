@@ -2,7 +2,7 @@ package com.style.admin.modules.security.config;
 
 import com.style.admin.modules.security.session.J2SessionDAO;
 import com.style.admin.modules.security.session.SessionDAO;
-import com.style.admin.modules.security.session.SessionManager;
+import com.style.admin.modules.security.session.WebSessionManager;
 import com.style.utils.core.GlobalUtils;
 import com.style.utils.id.IdGenUtils;
 import com.style.utils.lang.ObjectUtils;
@@ -27,8 +27,8 @@ public class SessionAutoConfiguration {
      */
     @Bean("sessionManager")
     @DependsOn({"sessionDAO", "sessionIdCookie"})
-    public SessionManager sessionManager(SessionDAO sessionDAO, SimpleCookie sessionIdCookie) {
-        SessionManager sessionManager = new SessionManager();
+    public WebSessionManager sessionManager(SessionDAO sessionDAO, SimpleCookie sessionIdCookie) {
+        WebSessionManager sessionManager = new WebSessionManager();
         sessionManager.setSessionDAO(sessionDAO);
         sessionManager.setSessionIdUrlRewritingEnabled(false);
         //会话超时时间，单位：毫秒

@@ -14,4 +14,9 @@ public class SysUserServiceImpl extends CrudServiceImpl<SysUserDao,SysUser> impl
     protected QueryWrapper<SysUser> getWrapper(Map<String, Object> params) {
         return new QueryWrapper<>();
     }
+
+    @Override
+    public SysUser getUserByLoginName(String loginName) {
+        return null;
+    }
 }

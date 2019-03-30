@@ -9,19 +9,7 @@ public interface Constants {
     //===============         基  本  常  量      ================//
     //===========================================================//
 
-    /**
-     * 成功
-     */
-    int SUCCESS = 1;
-    /**
-     * 失败
-     */
-    int FAIL = 0;
-    /**
-     * OK
-     */
     String OK = "OK";
-
     String POINT = ".";
     String SPLIT = ",";
     String COLON = ":";
@@ -37,6 +25,9 @@ public interface Constants {
     String GET = "GET";
     String POST = "POST";
 
+    int SUCCESS = 1;
+    int FAIL = 0;
+
     /**
      * 升序
      */
@@ -45,6 +36,8 @@ public interface Constants {
      * 降序
      */
     String DESC = "desc";
+
+
 
     //===========================================================//
     //===============         分  页  常  量      ================//
@@ -87,6 +80,8 @@ public interface Constants {
      */
     String MAIL_CONFIG_KEY = "MAIL_CONFIG_KEY";
 
+
+
     //===========================================================//
     //===============         系  统  安  全      ================//
     //===========================================================//
@@ -94,6 +89,14 @@ public interface Constants {
     int SALT_SIZE = 8;
     int HASH_INTERATIONS = 1024;
     String HASH_ALGORITHM = "SHA-1";
+
+    String LOGIN_FAIL_TIMES_CACHE = "login-fail-times";
+
+    String SYS_USER_CACHE = "sysUserCache";
+    String SYS_USER_CACHE_KEY_PREFIX = "user_login_";
+
+    String AUTH_INFO_CACHE = "authInfoCache";
+    String AUTH_INFO_CACHE_KEY_PREFIX = "auth_info_";
 
 
     /**

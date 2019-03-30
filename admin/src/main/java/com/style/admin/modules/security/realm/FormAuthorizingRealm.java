@@ -1,19 +1,12 @@
 package com.style.admin.modules.security.realm;
 
-import com.style.admin.modules.log.entity.SysLogLogin;
-import com.style.admin.modules.log.enums.OperateStatusEnum;
-import com.style.admin.modules.log.enums.OperateTypeEnum;
-import com.style.admin.modules.log.utils.SysLogUtils;
 import com.style.admin.modules.security.authc.FormToken;
-import com.style.admin.modules.security.authc.UserPrincipal;
 import com.style.admin.modules.sys.entity.SysUser;
 import com.style.admin.modules.sys.utils.SysUserUtils;
-import com.style.cache.CacheUtils;
+import com.style.cache.CaffeineUtils;
 import com.style.common.constant.Constants;
 import com.style.utils.codec.EncodeUtils;
 import com.style.utils.lang.StringUtils;
-import com.style.utils.network.IpUtils;
-import com.style.utils.network.UserAgentUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -23,7 +16,6 @@ import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.util.ByteSource;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -98,8 +90,7 @@ public class FormAuthorizingRealm extends BaseAuthorizingRealm {
      */
     @SuppressWarnings("unchecked")
     private Integer getLoginTimes(String loginName) {
-        Map<String, Integer> loginFailMap = (Map<String, Integer>) CacheUtils.get("loginFailMap");
-        return loginFailMap.get(loginName);
+        return (Integer) CaffeineUtils.get(Constants.LOGIN_FAIL_TIMES_CACHE,loginName);
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * 登录信息（用户身份）
  */
-public class UserPrincipal implements Principal, Serializable {
+public class LoginInfo implements Principal, Serializable {
 
     // 主键
     private String id;
@@ -24,15 +24,15 @@ public class UserPrincipal implements Principal, Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public UserPrincipal() {
+    public LoginInfo() {
 
     }
 
-    public UserPrincipal(String id, String loginName) {
+    public LoginInfo(String id, String loginName) {
         this(id, loginName, null);
     }
 
-    public UserPrincipal(String id, String loginName, Map<String, Object> params) {
+    public LoginInfo(String id, String loginName, Map<String, Object> params) {
         this.id = id;
         this.loginName = loginName;
         this.params = params;
@@ -100,7 +100,7 @@ public class UserPrincipal implements Principal, Serializable {
             return false;
         } else {
             // 比较属性
-            UserPrincipal info = (UserPrincipal) obj;
+            LoginInfo info = (LoginInfo) obj;
             if (this.getId() == null) {
                 return info.getId() == null;
             } else {

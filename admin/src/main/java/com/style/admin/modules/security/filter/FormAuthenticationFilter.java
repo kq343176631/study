@@ -5,17 +5,17 @@ import com.style.admin.modules.log.enums.OperateStatusEnum;
 import com.style.admin.modules.log.enums.OperateTypeEnum;
 import com.style.admin.modules.log.utils.SysLogUtils;
 import com.style.admin.modules.security.authc.FormToken;
-import com.style.admin.modules.security.authc.UserPrincipal;
+import com.style.admin.modules.security.authc.LoginInfo;
 import com.style.admin.modules.security.realm.BaseAuthorizingRealm;
 import com.style.admin.modules.sys.entity.SysUser;
+import com.style.admin.modules.sys.utils.RedirectUtils;
 import com.style.admin.modules.sys.utils.SysUserUtils;
-import com.style.cache.CacheUtils;
 import com.style.cache.CaffeineUtils;
+import com.style.common.constant.Constants;
 import com.style.common.convert.http.json.JsonMapper;
 import com.style.common.model.Result;
 import com.style.common.web.servlet.ServletUtils;
 import com.style.utils.codec.DesUtils;
-import com.style.utils.collect.MapUtils;
 import com.style.utils.core.GlobalUtils;
 import com.style.utils.lang.ObjectUtils;
 import com.style.utils.lang.StringUtils;
@@ -54,8 +54,6 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 
     // 记住用户名
     public static final String DEFAULT_REMEMBER_USER_CODE_PARAM = "rememberUserCode";
-
-    public static final String LOGIN_FAIL_MAP_CACHE_NAME = "login-fail-map";
 
     // 安全认证类
     private BaseAuthorizingRealm authorizingRealm;
@@ -171,7 +169,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 
     @Override
     protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
-        PermissionsAuthorizationFilter.redirectToDefaultPath(request, response);
+        RedirectUtils.redirectToDefaultPath(request, response);
     }
 
     /**
@@ -194,13 +192,12 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
             }
         } else {
             if (logger.isTraceEnabled()) {
-                logger.trace("Attempting to access a path which requires authentication.  Forwarding to the " + "Authentication url ["
+                logger.trace("Attempting to access a path which requires authentication.  Forwarding to the "
+                        + "Authentication url ["
                         + getLoginUrl() + "]");
             }
             // 此过滤器优先级较高，未登录，则跳转登录页，方便 CAS 登录
             redirectToLogin(request, response);
-            // 去掉保存登录前的跳转地址  ThinkGem
-            //saveRequestAndRedirectToLogin(request, response);
             return false;
         }
     }
@@ -230,12 +227,12 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
     protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) {
 
         // 更新登录IP、时间、会话ID等
-        UserPrincipal loginInfo = (UserPrincipal) subject.getPrincipals();
+        LoginInfo loginInfo = (LoginInfo) subject.getPrincipals();
         SysUser user = SysUserUtils.getUserByLoginName(loginInfo.getLoginName());
         SysUserUtils.updateLoginInfo(user);
 
         // 登录成功后立即授权
-        authorizingRealm.executeAuthOnLoginSuccess(subject.getPrincipals());
+        authorizingRealm.doAuthOnLoginSuccess(subject.getPrincipals());
 
         // 记录用户登录日志
         SysLogLogin sysLogLogin = new SysLogLogin();
@@ -243,12 +240,12 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
         sysLogLogin.setOperation(OperateTypeEnum.LOGIN.value());
         sysLogLogin.setStatus(OperateStatusEnum.SUCCESS.value());
         sysLogLogin.setLoginName(loginInfo.getLoginName());
-        sysLogLogin.setUserAgent(UserAgentUtils.getUserAgent((HttpServletRequest)request).toString());
+        sysLogLogin.setUserAgent(UserAgentUtils.getUserAgent((HttpServletRequest) request).toString());
         SysLogUtils.saveSysLogLogin(sysLogLogin);
 
         // 登录操作如果是Ajax操作，直接返回登录信息字符串。
         Result result = new Result();
-        ServletUtils.renderString((HttpServletResponse) response,JsonMapper.toJson(result));
+        ServletUtils.renderString((HttpServletResponse) response, JsonMapper.toJson(result));
 
         return false;
     }
@@ -259,7 +256,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
     @Override
     protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
 
-        String loginName =  (String) token.getPrincipal();
+        String loginName = (String) token.getPrincipal();
         this.recordLoginFailTimes(loginName);
 
         // 记录用户登录日志
@@ -268,13 +265,13 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
         sysLogLogin.setOperation(OperateTypeEnum.LOGIN.value());
         sysLogLogin.setStatus(OperateStatusEnum.SUCCESS.value());
         sysLogLogin.setLoginName(loginName);
-        sysLogLogin.setUserAgent(UserAgentUtils.getUserAgent((HttpServletRequest)request).toString());
+        sysLogLogin.setUserAgent(UserAgentUtils.getUserAgent((HttpServletRequest) request).toString());
         SysLogUtils.saveSysLogLogin(sysLogLogin);
 
         setFailureAttribute(request, e);
 
         Result result = new Result();
-        ServletUtils.renderString((HttpServletResponse) response,JsonMapper.toJson(result));
+        ServletUtils.renderString((HttpServletResponse) response, JsonMapper.toJson(result));
 
         return false;
     }
@@ -284,17 +281,12 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
      */
     @SuppressWarnings("unchecked")
     private void recordLoginFailTimes(String loginName) {
-        Map<String, Integer> loginFailMap = (Map<String, Integer>) CaffeineUtils.get("loginFailMap");
-        if (loginFailMap == null) {
-            loginFailMap = MapUtils.newHashMap();
-            CacheUtils.put(LOGIN_FAIL_MAP_CACHE_NAME,"loginFailMap", loginFailMap);
-        }
-        Integer loginFailNum = loginFailMap.get(loginName);
+        Integer loginFailNum = (Integer) CaffeineUtils.get(Constants.LOGIN_FAIL_TIMES_CACHE, loginName);
         if (loginFailNum == null) {
             loginFailNum = 0;
         }
         loginFailNum++;
-        loginFailMap.put(loginName, loginFailNum);
+        CaffeineUtils.put(Constants.LOGIN_FAIL_TIMES_CACHE, loginName, loginFailNum);
     }
 
     public void setAuthorizingRealm(BaseAuthorizingRealm authorizingRealm) {

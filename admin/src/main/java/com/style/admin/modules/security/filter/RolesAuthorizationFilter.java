@@ -1,5 +1,7 @@
 package com.style.admin.modules.security.filter;
 
+import com.style.admin.modules.sys.utils.RedirectUtils;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.io.IOException;
@@ -11,11 +13,11 @@ public class RolesAuthorizationFilter extends org.apache.shiro.web.filter.authz.
 
     @Override
     protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
-        PermissionsAuthorizationFilter.redirectToDefaultPath(request, response);
+        RedirectUtils.redirectToDefaultPath(request, response);
     }
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
-        return PermissionsAuthorizationFilter.redirectTo403Page(request, response);
+        return RedirectUtils.redirectTo403Page(request, response);
     }
 }

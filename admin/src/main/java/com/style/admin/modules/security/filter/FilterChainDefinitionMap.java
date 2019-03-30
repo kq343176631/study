@@ -17,9 +17,21 @@ public class FilterChainDefinitionMap implements FactoryBean<Section> {
 
     private Section section;
 
+    public FilterChainDefinitionMap() {
+
+    }
+
     @Override
-    public Class<?> getObjectType() {
-        return this.getClass();
+    public Section getObject() throws BeansException {
+        if (this.section == null) {
+            Ini ini = new Ini();
+            ini.load(this.defaultFilterChainDefinitions);
+            this.section = ini.getSection("");
+            ini.load(this.filterChainDefinitions);
+            this.section.putAll(ini.getSection(""));
+            this.logger.debug("Init Section", this.section.entrySet());
+        }
+        return this.section;
     }
 
     @Override
@@ -35,19 +47,9 @@ public class FilterChainDefinitionMap implements FactoryBean<Section> {
         this.filterChainDefinitions = filterChainDefinitions;
     }
 
-    public FilterChainDefinitionMap() {
+    @Override
+    public Class<?> getObjectType() {
+        return this.getClass();
     }
 
-    @Override
-    public Section getObject() throws BeansException {
-        if (this.section == null) {
-            Ini ini = new Ini();
-            ini.load(this.defaultFilterChainDefinitions);
-            this.section = ini.getSection("");
-            ini.load(this.filterChainDefinitions);
-            this.section.putAll(ini.getSection(""));
-            this.logger.debug("Init Section", this.section.entrySet());
-        }
-        return this.section;
-    }
 }
