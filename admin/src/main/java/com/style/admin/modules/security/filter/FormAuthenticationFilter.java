@@ -263,7 +263,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
         SysLogLogin sysLogLogin = new SysLogLogin();
         sysLogLogin.setIp(IpUtils.getIpAddr((HttpServletRequest) request));
         sysLogLogin.setOperation(OperateTypeEnum.LOGIN.value());
-        sysLogLogin.setStatus(OperateStatusEnum.SUCCESS.value());
+        sysLogLogin.setStatus(OperateStatusEnum.FAIL.value());
         sysLogLogin.setLoginName(loginName);
         sysLogLogin.setUserAgent(UserAgentUtils.getUserAgent((HttpServletRequest) request).toString());
         SysLogUtils.saveSysLogLogin(sysLogLogin);

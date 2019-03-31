@@ -34,9 +34,6 @@ public class WebSessionManager extends DefaultWebSessionManager {
 
     /**
      * 创建会话，此时并没有保存会话。
-     *
-     * @param context context
-     * @return Session
      */
     @Override
     protected Session newSessionInstance(SessionContext context) {
@@ -50,10 +47,6 @@ public class WebSessionManager extends DefaultWebSessionManager {
 
     /**
      * 获取会话的属性
-     *
-     * @param sessionKey   sessionKey
-     * @param attributeKey attributeKey
-     * @return Object
      */
     @Override
     public Object getAttribute(SessionKey sessionKey, Object attributeKey) {
