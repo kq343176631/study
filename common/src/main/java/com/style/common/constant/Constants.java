@@ -86,10 +86,6 @@ public interface Constants {
     //===============         系  统  安  全      ================//
     //===========================================================//
 
-    int SALT_SIZE = 8;
-    int HASH_INTERATIONS = 1024;
-    String HASH_ALGORITHM = "SHA-1";
-
     String LOGIN_FAIL_TIMES_CACHE = "login-fail-times";
 
     String SYS_USER_CACHE = "sysUserCache";
@@ -97,6 +93,12 @@ public interface Constants {
 
     String AUTH_INFO_CACHE = "authInfoCache";
     String AUTH_INFO_CACHE_KEY_PREFIX = "auth_info_";
+
+    String ROLE_LIST_CACHE = "roleListCache";
+    String ROLE_LIST_CACHE_KEY_PREFIX = "role_list_cache_";
+
+    String MENU_LIST_CACHE = "menuListCache";
+    String MENU_LIST_CACHE_KEY_PREFIX = "menu_list_cache_";
 
 
     /**

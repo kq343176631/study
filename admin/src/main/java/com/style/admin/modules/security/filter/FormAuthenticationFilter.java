@@ -229,7 +229,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
         // 更新登录IP、时间、会话ID等
         LoginInfo loginInfo = (LoginInfo) subject.getPrincipals();
         SysUser user = SysUserUtils.getUserByLoginName(loginInfo.getLoginName());
-        SysUserUtils.updateLoginInfo(user);
+        //SysUserUtils.updateLoginInfo(user);
 
         // 登录成功后立即授权
         authorizingRealm.doAuthOnLoginSuccess(subject.getPrincipals());

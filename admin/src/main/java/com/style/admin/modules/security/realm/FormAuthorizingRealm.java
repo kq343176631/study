@@ -23,10 +23,14 @@ import java.util.Map;
  */
 public class FormAuthorizingRealm extends BaseAuthorizingRealm {
 
+    private static final int HASH_INTERATIONS = 1024;
+
+    private static final String HASH_ALGORITHM = "SHA-1";
+
     public FormAuthorizingRealm() {
         super();
-        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(Constants.HASH_ALGORITHM);
-        matcher.setHashIterations(Constants.HASH_INTERATIONS);
+        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(HASH_ALGORITHM);
+        matcher.setHashIterations(HASH_INTERATIONS);
         this.setCredentialsMatcher(matcher);
     }
 

@@ -38,29 +38,24 @@ public abstract class BaseAuthorizingRealm extends AuthorizingRealm {
      */
     @Override
     protected final AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        LoginInfo loginInfo = (LoginInfo) principals.getPrimaryPrincipal();
-        if (loginInfo == null) {
+        Object principal = principals.getPrimaryPrincipal();
+        if (principal == null) {
             return null;
         }
+        LoginInfo loginInfo = (LoginInfo) principal;
 
         this.HandleMultiAccountLogin(loginInfo);
 
-        // 获取当前已登录的用户
-        SysUser user = SysUserUtils.getUserByLoginName(loginInfo.getName());
-        if (user == null) {
-            return null;
-        }
-
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         // 添加用户角色信息
-        List<SysRole> sysRoleList = SysUserUtils.getSysRoleList(loginInfo.getName());
+        List<SysRole> sysRoleList = SysUserUtils.getSysRoleList(loginInfo.getLoginName());
         if (ListUtils.isNotEmpty(sysRoleList)) {
             for (SysRole role : sysRoleList) {
                 info.addRole(role.getName());
             }
         }
         // 添加用权限色信息
-        List<SysMenu> sysMenuList = SysUserUtils.getUserMenuList();
+        List<SysMenu> sysMenuList = SysUserUtils.getUserMenuList(loginInfo.getLoginName());
         if (ListUtils.isNotEmpty(sysMenuList)) {
             for (SysMenu menu : sysMenuList) {
                 if (StringUtils.isNotBlank(menu.getPermission())) {
@@ -83,13 +78,13 @@ public abstract class BaseAuthorizingRealm extends AuthorizingRealm {
         if (loginInfo == null) {
             return null;
         }
-        AuthorizationInfo info = (AuthorizationInfo)CacheUtils.get(Constants.AUTH_INFO_CACHE,
-                Constants.AUTH_INFO_CACHE_KEY_PREFIX+loginInfo.getLoginName());
+        AuthorizationInfo info = (AuthorizationInfo) CacheUtils.get(Constants.AUTH_INFO_CACHE,
+                Constants.AUTH_INFO_CACHE_KEY_PREFIX + loginInfo.getLoginName());
         if (info == null) {
             info = doGetAuthorizationInfo(principals);
             if (info != null) {
                 CacheUtils.put(Constants.AUTH_INFO_CACHE,
-                        Constants.AUTH_INFO_CACHE_KEY_PREFIX+loginInfo.getLoginName(), info);
+                        Constants.AUTH_INFO_CACHE_KEY_PREFIX + loginInfo.getLoginName(), info);
             }
         }
         return info;
