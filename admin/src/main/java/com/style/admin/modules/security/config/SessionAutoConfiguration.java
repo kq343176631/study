@@ -59,5 +59,8 @@ public class SessionAutoConfiguration {
         // 设置cookieId
         simpleCookie.setName(GlobalUtils.getProperty("session.session-id-cookie-name"));
         return simpleCookie;
+
+
+
     }
 }

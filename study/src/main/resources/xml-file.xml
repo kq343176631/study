@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<XML-FILE>
+<configs>
     <token>
         <device>
-            <validate>true,false,abc</validate>
+            <test>true,false,abc</test>
         </device>
+        <validate>
+            <expire name = "fff" sgb="gggg" >30</expire>
+            <expire gg="gggg" nnn="fff" >60</expire>
+            <expire>90</expire>
+        </validate>
         <person>
-            <validate>true</validate>
-            <expire description="人员令牌失效时间(分钟) ">60,70,80</expire>
+            <name>gggg</name>
+            <adrr>gggg</adrr>
         </person>
     </token>
-</XML-FILE>
+</configs>

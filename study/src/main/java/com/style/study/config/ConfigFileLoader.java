@@ -1,65 +1,75 @@
 package com.style.study.config;
 
-import com.style.utils.io.FileUtils;
 import com.style.utils.lang.StringUtils;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
-import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
+import org.apache.commons.configuration2.builder.fluent.Parameters;
+import org.apache.commons.configuration2.convert.DefaultListDelimiterHandler;
 import org.apache.commons.configuration2.ex.ConfigurationException;
-import org.apache.commons.configuration2.tree.NodeModel;
+import org.apache.commons.configuration2.io.FileHandler;
+import org.apache.commons.configuration2.resolver.DefaultEntityResolver;
+import org.apache.commons.configuration2.tree.DefaultExpressionEngine;
+import org.apache.commons.configuration2.tree.DefaultExpressionEngineSymbols;
+import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.springframework.beans.factory.xml.DelegatingEntityResolver;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.util.List;
 
 public class ConfigFileLoader {
 
-    public static XMLConfiguration loadXmlConfig(String xmlFilePath) {
+    public static FileBasedConfigurationBuilder<XMLConfiguration> loadXmlConfig(String xmlFilePath) {
 
         if (StringUtils.isBlank(xmlFilePath)) {
             return null;
         }
+        Parameters params = new Parameters();
 
-        Configurations configurations = new Configurations();
-        try {
 
-            XMLConfiguration xmlConfiguration = configurations.xml(xmlFilePath);
-            xmlConfiguration.addProperty("filePath",xmlFilePath);
-            //xmlConfiguration.setRootElementName();
-            return xmlConfiguration;
-
-        } catch (ConfigurationException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return new FileBasedConfigurationBuilder<>(XMLConfiguration.class)
+                .configure(params.xml()
+                        .setValidating(false)
+                        .setFileName("xml-file.xml")
+                        .setEntityResolver(new DefaultEntityResolver())
+                        .setThrowExceptionOnMissing(false)
+                        .setSchemaValidation(false)
+                        .setExpressionEngine(new DefaultExpressionEngine(DefaultExpressionEngineSymbols.DEFAULT_SYMBOLS))
+                        .setListDelimiterHandler(new DefaultListDelimiterHandler(',')));
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ConfigurationException {
 
-        XMLConfiguration xmlConfig = ConfigFileLoader.loadXmlConfig("xml-file.xml");
-        if(xmlConfig ==null){
+        FileBasedConfigurationBuilder<XMLConfiguration> xmlBuilder = ConfigFileLoader.loadXmlConfig("xml-file.xml");
+
+        if (xmlBuilder == null) {
             return;
         }
+        XMLConfiguration xmlConfig = xmlBuilder.getConfiguration();
+        if (xmlConfig == null) {
+            return;
+        }
+        xmlConfig.setProperty("token.validate.expire(0)[@name]",123);
+        xmlBuilder.save();
 
-        System.out.println("RootName:"+xmlConfig.getRootElementName());
-        System.out.println("token.person.expire:"+xmlConfig.getString("token.person.expire"));
-        //System.out.println("token.person.expire:"+xmlConfig.getProperty("token.person.expire"));
 
-        String outPath = FileUtils.getProjectPath()+ "/src/main/resources/xml"+StringUtils.getRandomStr(5)+".xml";
+    }
 
-        xmlConfig.clearTree("filePath");
-
-        NodeModel nodeModel= xmlConfig.getNodeModel();
-        //nodeModel.
-        /*File outputFile = new File(outPath);
-
-        try {
-            xmlConfig.write(new FileWriter(outputFile));
-        } catch (ConfigurationException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
+    /**
+     * @param xmlConfig
+     * @param key
+     * @param obj
+     * @param isMore    是否修改多个节点
+     */
+    public static void updateNodeValue(XMLConfiguration xmlConfig, String key, Object obj, boolean isMore) {
+        List<HierarchicalConfiguration<ImmutableNode>> subConfigs = xmlConfig.configurationsAt(key);
+        int size = subConfigs.size();
+        if (size <= 1 || !isMore) {
+            xmlConfig.setProperty(key + "(0)", obj);
+            return;
+        }
+        for (int i = 0; i < size; i++) {
+            xmlConfig.setProperty(key + "(" + i + ")", obj);
+        }
 
     }
 

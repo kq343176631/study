@@ -14,8 +14,8 @@
     <artifactId>study</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <name>Common Dependencies</name>
-    <description>Common Module</description>
+    <name>Study Dependencies</name>
+    <description>Study Module</description>
 
     <dependencies>
 
@@ -29,7 +29,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-configuration2</artifactId>
-            <version>2.1.1</version>
+            <version>2.4</version>
         </dependency>
 
         <!-- commons-beanutils -->
