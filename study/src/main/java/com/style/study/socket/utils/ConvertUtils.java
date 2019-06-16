@@ -183,9 +183,9 @@ public class ConvertUtils {
     }
 
     public static long unsignedIntToLong(int value) {
-        long IBase = 1;
+        long lBase = 1;
         if (value < 0) {
-            return (IBase << FOUR_BYTES_BITS) + value;
+            return (lBase << FOUR_BYTES_BITS) + value;
         }
         return value;
     }
@@ -243,7 +243,7 @@ public class ConvertUtils {
         }
         int pos = 0;
         int iv = 0;
-        int iBase = 0;
+        int iBase;
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             for (int i = INT_JAVA_BYTES - 1; i >= 0; i--) {
                 iBase = unsignedByteToShort(value[pos++]);
@@ -359,7 +359,7 @@ public class ConvertUtils {
         }
         int pos = 0;
         long lv = 0;
-        long lBase = 0;
+        long lBase;
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
             for (int i = LONG_JAVA_BYTES - 1; i >= 0; i--) {
                 lBase = unsignedByteToShort(value[pos++]);
