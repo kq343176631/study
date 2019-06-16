@@ -12,6 +12,8 @@ import java.nio.ByteOrder;
 
 public class ConvertUtils {
 
+    private static Logger logger = LoggerFactory.getLogger(ConvertUtils.class);
+
     private static final String DEFAULT_CHART_SET = "UTF-8";
 
     private static final int BYTE_JAVA_BYTES = 1;
@@ -43,9 +45,6 @@ public class ConvertUtils {
     private static final int BYTE_MAX_VALUE = -1;
 
     private static final int IDX_MAX_POS = 3;
-
-
-    private static Logger logger = LoggerFactory.getLogger(ConvertUtils.class);
 
     public static ByteBuffer responseToByteBuffer(ResponseMessage response, ByteOrder order) {
 
@@ -504,5 +503,4 @@ public class ConvertUtils {
         }
         return null;
     }
-
 }
