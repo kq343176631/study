@@ -21,27 +21,24 @@ public class ThreadPoolManager {
      * 线程池中：核心线程数量
      * 当正在运行的线程数量大于核心线程数量时，则创建新的线程去执行任务。
      */
-    private static final int CORE_THREAD_NUM=30;
+    private static final int CORE_THREAD_NUM = 30;
 
     /**
      * 线程池中：最大线程数量
      */
-    private static final int MAX_THREAD_NUM=50;
+    private static final int MAX_THREAD_NUM = 50;
 
     /**
      * 该线程池中非核心线程闲置超时时长
      */
-    private static final int KEEP_ALIVE_TIME=1000;
+    private static final int KEEP_ALIVE_TIME = 1000;
 
     private static ThreadPoolExecutor threadPool;
     /**
      * 该线程池中的任务队列：维护着等待执行的Runnable对象
      */
-    private static BlockingQueue<Runnable> workQueue;
+    private static final BlockingQueue<Runnable> workQueue;
 
-    /**
-     * 初始化线程池
-     */
     static {
         workQueue = new LinkedBlockingDeque<Runnable>(100);
         threadPool = new ThreadPoolExecutor(CORE_THREAD_NUM,
@@ -51,19 +48,19 @@ public class ThreadPoolManager {
                 workQueue);
     }
 
-    private ThreadPoolManager(){
+    private ThreadPoolManager() {
 
     }
 
-    public static ThreadPoolManager getInstance(){
+    public static ThreadPoolManager getInstance() {
         return instance;
     }
 
-    public void addSingleTask(Runnable task){
-        try{
+    public void addSingleTask(Runnable task) {
+        try {
             threadPool.execute(task);
-        }catch (Exception e){
-            logger.error("thread execute task:",e);
+        } catch (Exception e) {
+            logger.error("thread execute task:", e);
         }
 
     }

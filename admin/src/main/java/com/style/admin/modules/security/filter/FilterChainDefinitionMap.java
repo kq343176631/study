@@ -22,7 +22,7 @@ public class FilterChainDefinitionMap implements FactoryBean<Section> {
     }
 
     @Override
-    public Section getObject() throws BeansException {
+    public Section getObject() throws BeansException {      
         if (this.section == null) {
             Ini ini = new Ini();
             ini.load(this.defaultFilterChainDefinitions);

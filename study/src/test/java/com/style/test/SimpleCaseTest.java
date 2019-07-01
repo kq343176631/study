@@ -12,5 +12,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 )
 public class SimpleCaseTest {
 
-
+    public static void main(String[] args) {
+        String str = "";
+        str.length();
+        String[] strs = {"",""};
+    }
 }
