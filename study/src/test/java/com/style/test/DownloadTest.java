@@ -1,18 +1,16 @@
-package com.style.study.thread.download;
+package com.style.test;
 
-
+import com.style.study.thread.download.BigFileDownloader;
 import com.style.study.thread.util.Debug;
+import org.junit.Test;
 
-public class CaseRunner4_1 {
+public class DownloadTest {
 
-    public static void main(String[] args) throws Exception {
-        if (0 == args.length) {
-            args = new String[]{"http://yourserver.com/bigfile", "2", "3"};
-        }
-        main0(args);
-    }
+    private static final String FILE_DIR = "D:\\My Folder\\Downloads\\";
 
-    public static void main0(String[] args) throws Exception {
+    @Test
+    public void download() throws Exception {
+        String[] args = new String[]{"http://yourserver.com/bigfile", "2", "3"};
         final int argc = args.length;
         BigFileDownloader downloader = new BigFileDownloader(args[0]);
 
